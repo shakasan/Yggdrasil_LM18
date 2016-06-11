@@ -395,6 +395,10 @@ gpg --keyserver pool.sks-keyservers.net --recv-keys 1537994D
 gpg --export --armor 1537994D | sudo apt-key add -
 echo "deb https://dl.bintray.com/aluxian/deb stable main" | sudo tee -a /etc/apt/sources.list.d/whatsie.list
 
+msg "Ajout Repository Getdeb"
+wget -q -O- http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add -
+echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb apps" | sudo tee /etc/apt/sources.list.d/getdeb.list
+
 updateSystem
 ;;
 
@@ -446,7 +450,8 @@ pressKey
 Multimedia) #-------------------------------------------------------------------
 clear
 msg "Installation des Apps multimédia"
-sudo apt-get install -y spotify-client slowmovideo mpv audacious qmmp qmmp-plugin-projectm sayonara digikam inkscape blender picard dia shotcut aegisub aegisub-l10n hugin audacity arista asunder mypaint mypaint-data-extras synfigstudio kodi milkytracker mkvtoolnix-gui openshot pitivi smplayer smplayer-themes smplayer-translations selene gnome-mplayer handbrake avidemux avidemux-plugins-gtk banshee banshee-extension-soundmenu gpicview vlc-plugin-libde265 vlc shotwell qgifer darktable ffmpeg flacon scribus birdfont fontmatrix moc
+# to add if available : fontmatrix
+sudo apt-get install -y spotify-client slowmovideo mpv audacious qmmp qmmp-plugin-projectm sayonara digikam inkscape blender picard dia shotcut aegisub aegisub-l10n hugin audacity arista asunder mypaint mypaint-data-extras synfigstudio kodi milkytracker mkvtoolnix-gui openshot pitivi smplayer smplayer-themes smplayer-l10n selene gnome-mplayer handbrake avidemux avidemux-plugins-gtk banshee banshee-extension-soundmenu gpicview vlc-plugin-libde265 vlc shotwell qgifer darktable ffmpeg flacon scribus birdfont moc
 
 msg "Config du Theme DarkDot pour Mocp"
 sh -c "echo '\n\nalias mocp=\"mocp -T darkdot_theme\"\n' >> /home/$myHomedir/.bashrc"
