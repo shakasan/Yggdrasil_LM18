@@ -451,7 +451,7 @@ Multimedia) #-------------------------------------------------------------------
 clear
 msg "Installation des Apps multimédia"
 # to add if available : fontmatrix qgifer vlc-plugin-libde265 arista
-sudo apt-get install -y spotify-client slowmovideo mpv audacious qmmp qmmp-plugin-projectm sayonara digikam inkscape blender picard dia shotcut aegisub aegisub-l10n hugin audacity asunder mypaint mypaint-data-extras synfigstudio kodi milkytracker mkvtoolnix-gui openshot pitivi smplayer smplayer-themes smplayer-l10n selene gnome-mplayer handbrake avidemux2.6-qt avidemux2.6-plugins-qt mjpegtools twolame lame banshee banshee-extension-soundmenu gpicview vlc shotwell darktable ffmpeg flacon scribus birdfont moc
+sudo apt-get install -y spotify-client slowmovideo mpv audacious qmmp qmmp-plugin-projectm sayonara digikam inkscape blender picard dia shotcut aegisub aegisub-l10n hugin audacity asunder mypaint mypaint-data-extras synfigstudio kodi milkytracker mkvtoolnix-gui openshot pitivi smplayer smplayer-themes smplayer-l10n selene gnome-mplayer handbrake avidemux2.6-qt avidemux2.6-plugins-qt mjpegtools twolame lame banshee banshee-extension-soundmenu gpicview vlc shotwell darktable ffmpeg flacon scribus birdfont moc rawtherapee
 
 msg "Config du Theme DarkDot pour Mocp"
 sh -c "echo '\n\nalias mocp=\"mocp -T darkdot_theme\"\n' >> /home/$myHomedir/.bashrc"
@@ -514,7 +514,7 @@ msg "Installation des Apps internet"
 echo "opera-stable opera-stable/add-deb-source boolean false" | sudo debconf-set-selections
 
 # to add when available : owncloud-client skype-wrapper tribler qtox birdie (pushbullet) quiterss
-sudo apt-get install -y whatsie ring-gnome frogr dropbox syncthing-gtk syncthing opera-stable insync google-chrome-stable midori xchat-gnome xchat-gnome-indicator chromium-browser chromium-browser-l10n geary qupzilla dropbox filezilla hexchat mumble skype imagedownloader
+sudo apt-get install -y whatsie ring-gnome frogr dropbox syncthing-gtk syncthing opera-stable insync google-chrome-stable midori xchat-gnome xchat-gnome-indicator chromium-browser chromium-browser-l10n geary qupzilla dropbox filezilla hexchat mumble skype imagedownloader california
 
 cd /tmp
 
@@ -645,7 +645,8 @@ NetTools) #---------------------------------------------------------------------
 clear
 
 msg "Installation des outils réseau"
-sudo apt-get install -y whois iptraf iperf wireshark tshark zenmap gtkvncviewer dsniff aircrack-ng
+# to add when available : gtkvncviewer
+sudo apt-get install -y whois iptraf iperf wireshark tshark zenmap dsniff aircrack-ng
 
 pressKey
 ;;
@@ -668,12 +669,7 @@ Nautilus) #---------------------------------------------------------------------
 clear
 
 msg "Installation des extensions pour Nautilus"
-sudo apt-get install -y nautilus file-roller nautilus-emblems nautilus-image-manipulator nautilus-image-converter nautilus-compare nautilus-actions nautilus-sendto nautilus-share nautilus-wipe nautilus-script-audio-convert nautilus-filename-repairer nautilus-gtkhash nautilus-open-terminal nautilus-ideviceinfo ooo-thumbnailer nautilus-dropbox nautilus-pastebin nautilus-script-manager nautilus-columns nautilus-flickr-uploader nautilus-pushbullet
-
-if which megasync >/dev/null; then
-  msg "Installation Addon MegaSync pour Nautilus"
-	sudo apt-get install -y nautilus-megasync
-fi
+sudo apt-get install -y nautilus file-roller nautilus-emblems nautilus-image-manipulator nautilus-image-converter nautilus-compare nautilus-actions nautilus-sendto nautilus-share nautilus-wipe nautilus-script-audio-convert nautilus-filename-repairer nautilus-gtkhash nautilus-ideviceinfo ooo-thumbnailer nautilus-dropbox nautilus-script-manager nautilus-columns nautilus-flickr-uploader nautilus-pushbullet
 
 if which insync >/dev/null; then
   msg "Installation Addon InSync pour Nautilus"
@@ -687,7 +683,7 @@ Gimp) #-------------------------------------------------------------------------
 clear
 
 msg "Installation des extensions pour Gimp"
-sudo apt-get install -y gtkam-gimp gimp-gluas pandora gimp-data-extras gimp-lensfun gimp-gmic gimp-ufraw gimp-texturize gimp-flegita gimp-plugin-registry
+sudo apt-get install -y gtkam-gimp gimp-gluas pandora gimp-data-extras gimp-lensfun gimp-gmic gimp-ufraw gimp-texturize gimp-plugin-registry
 
 pressKey
 ;;
