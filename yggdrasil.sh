@@ -406,7 +406,7 @@ do
 # appMenu ----------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ Apps Menu ]" \
---menu "Choisissez les Apps à installer" 32 85 24 \
+--menu "Choisissez les Apps à installer" 33 85 25 \
 Base "Outils de base" \
 Multimedia "Apps multimédia" \
 eBook "Apps/outils pour eBook" \
@@ -416,6 +416,7 @@ Wine "Wine" \
 WineG3D "Wine opti Gallium3D (PPA oibaf requis)" \
 WineStaging "Wine unstable en parallèle de wine" \
 KodiBETA "Kodi Beta/Unstable" \
+KodiNightly "Kodi Nightly" \
 Jeux "Steam, jstest-gtk" \
 Graveur "Apps pour graveur CD/DVD/BD" \
 NetTools "Apps/Outils réseau" \
@@ -608,6 +609,21 @@ clear
 
 msg "Ajout du PPA de Kodi BETA"
 sudo add-apt-repository -y ppa:team-xbmc/unstable
+
+msg "Mise à jours du système"
+updateSystem
+
+msg "Installation de Kodi s/n"
+sudo apt-get install -y kodi
+
+pressKey
+;;
+
+KodiNightly) #------------------------------------------------------------------
+clear
+
+msg "Ajout du PPA de Kodi Nightly"
+sudo add-apt-repository -y ppa:team-xbmc/xbmc-nightly
 
 msg "Mise à jours du système"
 updateSystem
