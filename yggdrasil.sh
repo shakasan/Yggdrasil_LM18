@@ -813,7 +813,7 @@ clear
 msg "Installation des icones custom"
 mkdir -p /home/$myHomedir/.icons
 cd /home/$myHomedir/.icons
-wget --no-check-certificate https://github.com/shakasan/myInstallScript/blob/master/icons.7z
+icons.7z
 7z x icons.7z
 rm icons.7z
 
