@@ -1101,6 +1101,12 @@ msg "Installation des outils de Dev Python"
 sudo apt-get install -y python3-dev python3-pip python3-pyqt5
 
 if which pip3 >/dev/null; then
+  msg "Mise à jours de PIP"
+  sudo pip3 install --upgrade pip
+
+  msg "PIP install : setuptools"
+  sudo pip3 install setuptools
+
   msg "PIP install : flake8"
   sudo pip3 install flake8
 
