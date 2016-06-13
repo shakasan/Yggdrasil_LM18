@@ -778,11 +778,12 @@ Themes) #-----------------------------------------------------------------------
 clear
 
 msg "Installation des thèmes"
-# to add when available : ambiance-dark ambiance-dark-red mediterranean-theme polar-night-gtk hackstation-theme libra-theme zukitwo-dark-reloaded ceti-theme vertex-theme stylishdark-theme cenodark-gtk dorian-theme vimix-flat-themes delorean-dark dorian-theme-3.12 candra-gs-themes
-sudo apt-get install -y ambiance-crunchy arc-theme ambiance-colors radiance-colors paper-gtk-theme ambiance-flat-colors radiance-flat-colors vivacious-colors-gtk-dark vivacious-colors-gtk-light yosembiance-gtk-theme ambiance-blackout-colors ambiance-blackout-flat-colors ambiance-colors ambiance-flat-colors radiance-flat-colors vibrancy-colors vivacious-colors numix-gtk-theme
+# to add when available : ambiance-dark ambiance-dark-red mediterranean-theme polar-night-gtk hackstation-theme libra-theme zukitwo-dark-reloaded ceti-theme vertex-theme stylishdark-theme cenodark-gtk dorian-theme vimix-flat-themes delorean-dark dorian-theme-3.12 candra-gs-themes paper-gtk-theme
+sudo apt-get install -y ambiance-crunchy arc-theme ambiance-colors radiance-colors ambiance-flat-colors radiance-flat-colors vivacious-colors-gtk-dark vivacious-colors-gtk-light yosembiance-gtk-theme ambiance-blackout-colors ambiance-blackout-flat-colors ambiance-colors ambiance-flat-colors radiance-flat-colors vibrancy-colors vivacious-colors numix-gtk-theme
 
 msg "Installation des icônes"
-sudo apt-get install -y ultra-flat-icons myelementary elementary-icons ghost-flat-icons faenza-icon-theme faience-icon-theme paper-icon-theme vibrantly-simple-icon-theme rave-x-colors-icons ravefinity-x-icons numix-icon-theme numix-icon-theme-circle
+# to add when available : elementary-icons paper-icon-theme
+sudo apt-get install -y ultra-flat-icons myelementary  ghost-flat-icons faenza-icon-theme faience-icon-theme vibrantly-simple-icon-theme rave-x-colors-icons ravefinity-x-icons numix-icon-theme numix-icon-theme-circle
 
 pressKey
 ;;
