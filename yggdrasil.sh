@@ -1033,7 +1033,7 @@ PHP) #--------------------------------------------------------------------------
 clear
 
 msg "Installation des outils PHP"
-sudo apt-get install -y php5-cli
+sudo apt-get install -y php7.0-cli
 
 pressKey
 ;;
