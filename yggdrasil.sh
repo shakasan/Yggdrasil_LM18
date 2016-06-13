@@ -1270,7 +1270,7 @@ Geany) #------------------------------------------------------------------------
 clear
 
 msg "Installation de Geany"
-sudo apt-get install -s geany geany-plugins geany-plugin-markdown
+sudo apt-get install -y geany geany-plugins geany-plugin-markdown
 
 pressKey
 ;;
