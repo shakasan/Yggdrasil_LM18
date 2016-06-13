@@ -372,12 +372,6 @@ echo "deb http://nightly.apt.ring.cx/ubuntu_16.04/ ring main" | sudo tee /etc/ap
 sudo apt-key adv --keyserver pgp.mit.edu --recv-keys A295D773307D25A33AE72F2F64CD5FA175348F84
 sudo add-apt-repository universe
 
-#msg "Ajout Repository Lazarus/FreePascal"
-#gpg --keyserver hkp://pgp.mit.edu:11371 --recv-keys 6A11800F
-#gpg --export 6A11800F | sudo apt-key add -
-#sudo sh -c "echo 'deb http://www.hu.freepascal.org/lazarus/ lazarus-stable universe' > /etc/apt/sources.list.d/lazarus.list"
-#sudo sh -c "echo 'deb http://www.hu.freepascal.org/lazarus/ lazarus-testing universe' >> /etc/apt/sources.list.d/lazarus.list"
-
 #msg "Ajout Repository purple-facebook"
 #wget -O- https://jgeboski.github.io/obs.key | sudo apt-key add -
 #sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/jgeboski/xUbuntu_14.04/ ./' > /etc/apt/sources.list.d/jgeboski.list"
@@ -388,6 +382,7 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB31
 
 msg "Ajout Repository VirtualBox"
 wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
+wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc -O- | sudo apt-key add -
 echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
 
 msg "Ajout Repository Whatsie"
