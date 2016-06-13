@@ -812,8 +812,8 @@ clear
 
 msg "Installation des icones custom"
 mkdir -p /home/$myHomedir/.icons
+cp icons.7z /home/$myHomedir/.icons
 cd /home/$myHomedir/.icons
-icons.7z
 7z x icons.7z
 rm icons.7z
 
