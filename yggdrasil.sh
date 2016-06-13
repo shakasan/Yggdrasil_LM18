@@ -831,7 +831,6 @@ dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 CardReader "Installation de pcscd pour les CardReader" \
 eID "Installation middleware eID" \
 EpsonV500Photo "Installation driver Espon V500 Photo + iscan + Xsane" \
-#LogitechUnifying "Installation de Solaar pour les périph Logitech Unifying" \
 Microcode "Mise à jours du Microcode du CPU (Intel)" \
 WirelessIntel6320 "Config Intel Centrino Advanced-N 6320 (problème Bluetooth)" \
 Back "Revenir au menu principal" 2>"${menuHWINPUT}"
@@ -903,21 +902,6 @@ usb 0x04b8 0x0130' >> /etc/sane.d/epkowa.conf"
 pressKey
 ;;
 
-#LogitechUnifying) #-------------------------------------------------------------
-#clear
-
-#msg "Ajout du PPA de Solaar"
-#sudo add-apt-repository -y ppa:daniel.pavel/solaar
-
-#msg "Mise à jours du système"
-#updateSystem
-
-#msg "Installation de Solaar"
-#sudo apt-get install -y solaar
-
-#pressKey
-#;;
-
 Microcode) #--------------------------------------------------------------------
 clear
 
@@ -977,7 +961,6 @@ Ruby "Outils de dev Ruby" \
 QT "Outils de dev QT" \
 Python "Outils de dev Python" \
 AndroidEnv "Environnement Android (SDK, config, ...)" \
-#FpcLazarus "FreePascal + Lazarus IDE" \
 Atom "IDE Atom + extensions" \
 Anjuta "IDE Anjuta" \
 Brackets "IDE Brackets" \
@@ -1224,23 +1207,6 @@ update-menus
 pressKey
 ;;
 
-#FpcLazarus) #-------------------------------------------------------------------
-#clear
-
-#msg "Installation de FreePascal + Lazarus"
-
-#cd /tmp
-
-#wget http://downloads.sourceforge.net/project/lazarus/Lazarus%20Linux%20amd64%20DEB/Lazarus%201.4.4/fpc_2.6.4-150228_amd64.deb
-#wget http://downloads.sourceforge.net/project/lazarus/Lazarus%20Linux%20amd64%20DEB/Lazarus%201.4.4/fpc-src_2.6.4-150228_amd64.deb
-#wget http://downloads.sourceforge.net/project/lazarus/Lazarus%20Linux%20amd64%20DEB/Lazarus%201.4.4/lazarus_1.4.4-0_amd64.deb
-
-#sudo dpkg -i fpc* lazarus_1.4.4-0_amd64.deb
-#sudo apt-get install -fy
-
-#pressKey
-#;;
-
 Atom) #-------------------------------------------------------------------------
 clear
 
@@ -1374,10 +1340,6 @@ do
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ Configuration du système ]" \
 --menu "Configuration du système" 32 95 24 \
-#Kernel319 "Installation du Kernel 3.19 LTS Vivid" \
-#Kernel42 "Installation du Kernel 4.2 LTS Wily" \
-#Kernel44 "Installation du Kernel 4.4 LTS Xenial" \
-#Fstrim "Supprimer la verif de model dans cron pour Fstrim" \
 Ufw "Activation du firewall ufw" \
 NumLockX "Activation de NumLock dés le démarrage" \
 TmpRAM "Mise en RAM de /tmp" \
@@ -1389,42 +1351,6 @@ menuConfigItem=$(<"${menuConfigINPUT}")
 
 # configMenu's actions ---------------------------------------------------------
 case $menuConfigItem in
-
-#Kernel319) #--------------------------------------------------------------------
-#clear
-
-#msg "Installation du Kernel 3.19 LTS Vivid"
-#sudo apt-get install -y linux-generic-lts-vivid linux-headers-generic-lts-vivid
-
-#msg "> Mise à jours de GRUB"
-#sudo update-grub
-
-#pressKey
-#;;
-
-#Kernel42) #---------------------------------------------------------------------
-#clear
-
-#msg "Installation du Kernel 4.2 LTS Wily"
-#sudo apt-get install -y linux-generic-lts-wily linux-headers-generic-lts-wily
-
-#msg "Mise à jours de GRUB"
-#sudo update-grub
-
-#pressKey
-#;;
-
-#Kernel44) #---------------------------------------------------------------------
-#clear
-
-#msg "Installation du Kernel 4.4 LTS Xenial"
-#sudo apt-get install -y linux-generic-lts-xenial linux-headers-generic-lts-xenial
-
-#msg "Mise à jours de GRUB"
-#sudo update-grub
-
-#pressKey
-#;;
 
 #Fstrim) #-----------------------------------------------------------------------
 #clear
