@@ -537,7 +537,7 @@ mv Telegram /home/$myHomedir/Apps
 sh -c "/home/"$myHomedir"/Apps/Telegram/Telegram &" && sleep 10 && pkill Telegram
 
 msg "Téléchargement de Wickr"
-wget -O wickr.deb https://mywickr.info/download.php?p=364
+wget -O wickr.deb https://dls.wickr.com/Downloads/wickr-me_2.6.0_amd64.deb
 
 msg "Installation de Wickr"
 sudo dpkg -i wickr.deb
