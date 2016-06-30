@@ -406,9 +406,10 @@ do
 # appMenu ----------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ Apps Menu ]" \
---menu "Choisissez les Apps à installer" 33 85 25 \
+--menu "Choisissez les Apps à installer" 34 85 26 \
 Base "Outils de base" \
 Multimedia "Apps multimédia" \
+MultimediaExt "Apps multimédia (autres/ext)" \
 eBook "Apps/outils pour eBook" \
 Internet "Apps internet" \
 Utilitaires "Utilitaires divers" \
@@ -451,6 +452,14 @@ sudo apt-get install -y spotify-client slowmovideo mpv audacious qmmp qmmp-plugi
 
 msg "Config du Theme DarkDot pour Mocp"
 sh -c "echo '\n\nalias mocp=\"mocp -T darkdot_theme\"\n' >> /home/$myHomedir/.bashrc"
+
+pressKey
+;;
+
+MultimediaExt) #----------------------------------------------------------------
+clear
+msg "Installation des Apps multimédia"
+
 
 cd /tmp
 
