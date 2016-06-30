@@ -412,6 +412,7 @@ Multimedia "Apps multimédia" \
 MultimediaExt "Apps multimédia (autres/ext)" \
 eBook "Apps/outils pour eBook" \
 Internet "Apps internet" \
+InternetExt "Apps internet (autres/ext)" \
 Utilitaires "Utilitaires divers" \
 Wine "Wine" \
 WineG3D "Wine opti Gallium3D (PPA oibaf requis)" \
@@ -520,6 +521,14 @@ echo "opera-stable opera-stable/add-deb-source boolean false" | sudo debconf-set
 
 # to add when available : owncloud-client skype-wrapper tribler qtox birdie (pushbullet) quiterss
 sudo apt-get install -y whatsie ring-gnome frogr dropbox syncthing-gtk syncthing opera-stable insync google-chrome-stable midori xchat-gnome xchat-gnome-indicator chromium-browser chromium-browser-l10n geary qupzilla dropbox filezilla hexchat mumble skype imagedownloader california
+
+pressKey
+;;
+
+InternetExt) #------------------------------------------------------------------
+clear
+
+msg "Installation des Apps internet"
 
 cd /tmp
 
