@@ -459,8 +459,8 @@ pressKey
 
 MultimediaExt) #----------------------------------------------------------------
 clear
-msg "Installation des Apps multimédia"
 
+msg "Installation des Apps multimédia"
 
 cd /tmp
 
