@@ -293,7 +293,6 @@ sudo add-apt-repository -y ppa:webupd8team/atom # Atom IDE
 sudo add-apt-repository -y ppa:videolan/stable-daily # VLC
 sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make # ubuntu-make
 #sudo add-apt-repository -y ppa:skype-wrapper/ppa # skype-wrapper # no longer maintained ?
-#sudo add-apt-repository -y ppa:quiterss/quiterss # QuiteRSS # waiting PPA update
 sudo add-apt-repository -y ppa:nowrep/qupzilla # Qupzilla web browser
 sudo add-apt-repository -y ppa:atareao/atareao # pushbullet-indicator, imagedownloader, gqrcode, cpu-g
 sudo add-apt-repository -y ppa:costales/anoise # Anoise, ambiance sounds
@@ -328,6 +327,7 @@ sudo add-apt-repository -y ppa:ubuntuhandbook1/slowmovideo # SlowmoVideo
 #sudo add-apt-repository -y ppa:whatsapp-purple/ppa # WhatsApp plugin for Pidgin/libpurple # update ?
 sudo add-apt-repository -y ppa:transmissionbt/ppa # Transmission-BT (newest versions)
 sudo add-apt-repository -y ppa:geary-team/releases # Geary (newest versions)
+sudo add-apt-repository -y ppa:varlesh-l/papirus-pack # themes and icons
 
 msg "Ajout Repository Opera"
 echo "deb http://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera.list
@@ -801,7 +801,7 @@ sudo apt-get install -y ambiance-crunchy arc-theme ambiance-colors radiance-colo
 
 msg "Installation des icônes"
 # to add when available : elementary-icons paper-icon-theme
-sudo apt-get install -y ultra-flat-icons myelementary  ghost-flat-icons faenza-icon-theme faience-icon-theme vibrantly-simple-icon-theme rave-x-colors-icons ravefinity-x-icons numix-icon-theme numix-icon-theme-circle
+sudo apt-get install -y papirus-gtk-icon-theme ultra-flat-icons myelementary  ghost-flat-icons faenza-icon-theme faience-icon-theme vibrantly-simple-icon-theme rave-x-colors-icons ravefinity-x-icons numix-icon-theme numix-icon-theme-circle
 
 pressKey
 ;;
