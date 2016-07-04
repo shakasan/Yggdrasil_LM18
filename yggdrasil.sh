@@ -449,7 +449,7 @@ Multimedia) #-------------------------------------------------------------------
 clear
 msg "Installation des Apps multimédia"
 # to add if available : fontmatrix qgifer vlc-plugin-libde265 arista
-sudo apt-get install -y spotify-client slowmovideo mpv audacious qmmp qmmp-plugin-projectm sayonara digikam inkscape blender picard dia shotcut aegisub aegisub-l10n hugin audacity asunder mypaint mypaint-data-extras synfigstudio kodi milkytracker mkvtoolnix-gui openshot pitivi smplayer smplayer-themes smplayer-l10n selene gnome-mplayer handbrake avidemux2.6-qt avidemux2.6-plugins-qt mjpegtools twolame lame banshee banshee-extension-soundmenu gpicview vlc shotwell darktable ffmpeg flacon scribus birdfont moc rawtherapee
+sudo apt-get install -y spotify-client dvdstyler slowmovideo mpv audacious qmmp qmmp-plugin-projectm sayonara digikam inkscape blender picard dia shotcut aegisub aegisub-l10n hugin audacity asunder mypaint mypaint-data-extras synfigstudio kodi milkytracker mkvtoolnix-gui openshot pitivi smplayer smplayer-themes smplayer-l10n selene gnome-mplayer handbrake avidemux2.6-qt avidemux2.6-plugins-qt mjpegtools twolame lame banshee banshee-extension-soundmenu gpicview vlc shotwell darktable ffmpeg flacon scribus birdfont moc rawtherapee
 
 msg "Config du Theme DarkDot pour Mocp"
 sh -c "echo '\n\nalias mocp=\"mocp -T darkdot_theme\"\n' >> /home/$myHomedir/.bashrc"
