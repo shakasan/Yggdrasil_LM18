@@ -519,8 +519,8 @@ msg "Installation des Apps internet"
 
 echo "opera-stable opera-stable/add-deb-source boolean false" | sudo debconf-set-selections
 
-# to add when available : owncloud-client skype-wrapper tribler qtox birdie (pushbullet) quiterss
-sudo apt-get install -y whatsie ring-gnome frogr dropbox syncthing-gtk syncthing opera-stable insync google-chrome-stable midori xchat-gnome xchat-gnome-indicator chromium-browser chromium-browser-l10n geary qupzilla dropbox filezilla hexchat mumble skype imagedownloader california
+# to add when available : owncloud-client skype-wrapper tribler qtox birdie (pushbullet)
+sudo apt-get install -y whatsie ring-gnome frogr dropbox syncthing-gtk syncthing opera-stable quiterss insync google-chrome-stable midori xchat-gnome xchat-gnome-indicator chromium-browser chromium-browser-l10n geary qupzilla dropbox filezilla hexchat mumble skype imagedownloader california
 
 pressKey
 ;;
