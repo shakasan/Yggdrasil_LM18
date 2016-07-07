@@ -862,10 +862,10 @@ clear
 
 msg "Installation des icones custom"
 mkdir -p /home/$myHomedir/.icons
-cp icons.7z /home/$myHomedir/.icons
+cp icons.tar.gz /home/$myHomedir/.icons
 cd /home/$myHomedir/.icons
-7z x icons.7z
-rm icons.7z
+tar xzf icons.tar.gz
+rm icons.tar.gz
 
 pressKey
 ;;
