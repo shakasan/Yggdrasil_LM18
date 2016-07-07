@@ -561,10 +561,37 @@ msg "Installation de Wickr"
 sudo dpkg -i wickr.deb
 sudo apt-get install -fy
 
-msg "Installation de Wickr"
+msg "Téléchargement de Gyazo"
 wget https://packagecloud.io/install/repositories/gyazo/gyazo-for-linux/script.deb.sh
+
+msg "Installation de Gyazo"
 sudo os=ubuntu dist=xenial ./script.deb.sh
 sudo apt-get install -y gya
+
+msg "Téléchargement de Franz"
+mkdir -p Franz
+cd Franz
+wget -O franz.tgz https://github.com/imprecision/franz-app/releases/download/3.1.0/Franz-linux-x64-3.1.0.tgz
+
+msg "Installation de Franz"
+tar xzf franz.tgz
+cd ..
+mv Franz /home/$myHomedir/Apps
+
+msg "Création du raccourci pour Franz"
+mkdir -p /home/$myHomedir/.local/share/applications
+sh -c "echo '[Desktop Entry]\n\
+Encoding=UTF-8\n\
+Terminal=0\n\
+Exec=/home/"$myHomedir"/Apps/Franz/Franz\n\
+Icon=/home/"$myHomedir".icons/franz.png\n\
+Type=Application\n\
+Categories=Network;InstantMessaging;\n\
+StartupNotify=true\n\
+Name=Franz\n\
+GenericName=Franz\n\
+Name[en_US]=Franz.desktop\n\
+Comment=' > /home/"$myHomedir"/.local/share/applications/Franz.desktop"
 
 pressKey
 ;;
