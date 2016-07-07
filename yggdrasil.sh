@@ -561,6 +561,11 @@ msg "Installation de Wickr"
 sudo dpkg -i wickr.deb
 sudo apt-get install -fy
 
+msg "Installation de Wickr"
+wget https://packagecloud.io/install/repositories/gyazo/gyazo-for-linux/script.deb.sh
+sudo os=ubuntu dist=xenial ./script.deb.sh
+sudo apt-get install -y gya
+
 pressKey
 ;;
 
