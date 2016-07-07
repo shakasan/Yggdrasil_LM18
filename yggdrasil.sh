@@ -109,6 +109,7 @@ function updateSystem () {
   sudo apt-get -y dist-upgrade
 }
 
+# check if running on the right OS ^^
 function osCheck () {
   printf "$JAUNE""Vérification de l'OS\n\n""$NORMAL"
   OS=`lsb_release -d | gawk -F':' '{print $2}' | gawk -F'\t' '{print $2}'`
