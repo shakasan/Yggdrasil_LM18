@@ -834,7 +834,7 @@ sudo apt-get install -y ambiance-crunchy arc-theme ambiance-colors radiance-colo
 
 msg "Installation des icônes"
 # to add when available : elementary-icons paper-icon-theme
-sudo apt-get install -y papirus-gtk-icon-theme ultra-flat-icons myelementary  ghost-flat-icons faenza-icon-theme faience-icon-theme vibrantly-simple-icon-theme rave-x-colors-icons ravefinity-x-icons numix-icon-theme numix-icon-theme-circle
+sudo apt-get install -y arc-icons papirus-gtk-icon-theme ultra-flat-icons myelementary  ghost-flat-icons faenza-icon-theme faience-icon-theme vibrantly-simple-icon-theme rave-x-colors-icons ravefinity-x-icons numix-icon-theme numix-icon-theme-circle
 
 pressKey
 ;;
