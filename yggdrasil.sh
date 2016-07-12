@@ -891,6 +891,7 @@ do
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ HW Menu ]" \
 --menu "Hardware : driver et configration" 32 95 24 \
+Solaar "Solaar - Logitech Unifying Manager App" \
 CardReader "Installation de pcscd pour les CardReader" \
 eID "Installation middleware eID" \
 EpsonV500Photo "Installation driver Espon V500 Photo + iscan + Xsane" \
@@ -902,6 +903,15 @@ menuHWItem=$(<"${menuHWINPUT}")
 
 # hwMenu's actions -------------------------------------------------------------
 case $menuHWItem in
+
+Solaar) #-----------------------------------------------------------------------
+clear
+
+msg "Installation de Solaar"
+sudo apt-get install -y solaar
+
+pressKey
+;;
 
 CardReader) #-------------------------------------------------------------------
 clear
