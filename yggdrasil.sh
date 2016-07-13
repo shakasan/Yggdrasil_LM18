@@ -293,7 +293,6 @@ sudo add-apt-repository -y ppa:webupd8team/y-ppa-manager # Y-PPA-Manager
 sudo add-apt-repository -y ppa:webupd8team/atom # Atom IDE
 sudo add-apt-repository -y ppa:videolan/stable-daily # VLC
 sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make # ubuntu-make
-#sudo add-apt-repository -y ppa:skype-wrapper/ppa # skype-wrapper # no longer maintained ?
 sudo add-apt-repository -y ppa:nowrep/qupzilla # Qupzilla web browser
 sudo add-apt-repository -y ppa:atareao/atareao # pushbullet-indicator, imagedownloader, gqrcode, cpu-g
 sudo add-apt-repository -y ppa:costales/anoise # Anoise, ambiance sounds
@@ -321,8 +320,6 @@ sudo add-apt-repository -y ppa:djcj/hybrid # FFMpeg, MKVToolnix, ...
 sudo add-apt-repository -y ppa:diodon-team/stable # Diodon clipboard
 sudo add-apt-repository -y ppa:notepadqq-team/notepadqq # Notepadqq (Notepad++ clone)
 sudo add-apt-repository -y ppa:mariospr/frogr # Frogr, Flickr manager
-#sudo add-apt-repository -y ppa:webupd8team/tribler # Tribbler, P2P décentralisé # no longer maintained ?
-#sudo add-apt-repository -y ppa:zeal-developers/ppa # Zeal, dev doc manager # no longer maintained ?
 sudo add-apt-repository -y ppa:saiarcot895/myppa # apt-fast
 sudo add-apt-repository -y ppa:ubuntuhandbook1/slowmovideo # SlowmoVideo
 #sudo add-apt-repository -y ppa:whatsapp-purple/ppa # WhatsApp plugin for Pidgin/libpurple # update ?
