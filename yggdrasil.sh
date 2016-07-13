@@ -465,7 +465,8 @@ case $menuAppItem in
 Base) #-------------------------------------------------------------------------
 clear
 
-msg "Installation des outils de base"
+msg "Installing base apps and tools"
+
 runCmd "sudo apt-get install -y cifs-utils"; smsg "Installing cifs-utils"
 runCmd "sudo apt-get install -y xterm"; smsg "Installing xterm"
 runCmd "sudo apt-get install -y curl"; smsg "Installing curl"
@@ -490,7 +491,7 @@ pressKey
 Multimedia) #-------------------------------------------------------------------
 clear
 
-msg "Installation des Apps multimédia"
+msg "Installing Multimedia apps and tools"
 # to add if available : fontmatrix qgifer arista
 
 runCmd "sudo apt-get install -y spotify-client"; smsg "Installing spotify-client"
@@ -587,7 +588,7 @@ pressKey
 eBook) #------------------------------------------------------------------------
 clear
 
-msg "Installation des Apps/outils pour eBook"
+msg "Installation eBook apps and tools"
 
 runCmd "sudo apt-get install -y fbreader"; smsg "Installing fbreader"
 
@@ -604,7 +605,7 @@ pressKey
 Internet) #---------------------------------------------------------------------
 clear
 
-msg "Installation des Apps internet"
+msg "Installing Internet apps and tools"
 
 echo "opera-stable opera-stable/add-deb-source boolean false" | sudo debconf-set-selections
 
@@ -708,7 +709,7 @@ pressKey
 Utilitaires) #------------------------------------------------------------------
 clear
 
-msg "Installation d'Apps et Utilitaires divers"
+msg "Installing misc. utility apps and tools"
 
 echo "apt-fast	apt-fast/maxdownloads	string	5" | sudo debconf-set-selections
 echo "apt-fast	apt-fast/dlflag	boolean	true" | sudo debconf-set-selections
@@ -765,14 +766,13 @@ pressKey
 WineG3D) #----------------------------------------------------------------------
 clear
 
-msg "Ajout du PPA de Wine - commendsarnex/winedri3"
-sudo add-apt-repository -y ppa:commendsarnex/winedri3
+msg "Installing WineDRI3"
 
-msg "Mise à jours du système"
+runCmd "sudo add-apt-repository -y ppa:commendsarnex/winedri3"; smsg "Adding WineDRI3 PPA"
 updateSystem
-
-msg "Installation de Wine"
-sudo apt-get -y install wine1.9 winetricks playonlinux
+runCmd "sudo apt-get install -y wine1.9"; smsg "Installing wine1.9"
+runCmd "sudo apt-get install -y winetricks"; smsg "Installing winetricks"
+runCmd "sudo apt-get install -y playonlinux"; smsg "Installing playonlinux"
 
 pressKey
 ;;
@@ -780,14 +780,11 @@ pressKey
 WineStaging) #------------------------------------------------------------------
 clear
 
-msg "Ajout du PPA de Wine-Staging"
-sudo add-apt-repository -y ppa:pipelight/stable
+msg "Installing Wine-Staging"
 
-msg "Mise à jours du système"
+runCmd "sudo add-apt-repository -y ppa:pipelight/stable"; smsg "Adding WineStaging PPA"
 updateSystem
-
-msg "Installation de Wine-Staging"
-sudo apt-get -y install wine-staging-amd64
+runCmd "sudo apt-get install -y wine-staging-amd64"; smsg "Installing wine-staging-amd64"
 
 pressKey
 ;;
@@ -795,14 +792,11 @@ pressKey
 KodiBETA) #---------------------------------------------------------------------
 clear
 
-msg "Ajout du PPA de Kodi BETA"
-sudo add-apt-repository -y ppa:team-xbmc/unstable
+msg "Installing Kodi BETA"
 
-msg "Mise à jours du système"
+runCmd "sudo add-apt-repository -y ppa:team-xbmc/unstable"; smsg "Adding Kodi BETA PPA"
 updateSystem
-
-msg "Installation de Kodi s/n"
-sudo apt-get install -y kodi
+runCmd "sudo apt-get install -y kodi"; smsg "Installing kodi"
 
 pressKey
 ;;
@@ -810,14 +804,11 @@ pressKey
 KodiNightly) #------------------------------------------------------------------
 clear
 
-msg "Ajout du PPA de Kodi Nightly"
-sudo add-apt-repository -y ppa:team-xbmc/xbmc-nightly
+msg "Installing Kodi Nightly"
 
-msg "Mise à jours du système"
+runCmd "sudo add-apt-repository -y ppa:team-xbmc/xbmc-nightly"; smsg "Adding Kodi Nightly PPA"
 updateSystem
-
-msg "Installation de Kodi s/n"
-sudo apt-get install -y kodi
+runCmd "sudo apt-get install -y kodi"; smsg "Installing kodi"
 
 pressKey
 ;;
@@ -825,8 +816,10 @@ pressKey
 Jeux) #-------------------------------------------------------------------------
 clear
 
-msg "Installation de Steam, jstest-gtk"
-sudo apt-get install -y steam jstest-gtk
+msg "Installing Games apps and tools"
+
+runCmd "sudo apt-get install -y steam"; smsg "Installing steam"
+runCmd "sudo apt-get install -y jstest-gtk"; smsg "Installing jstest-gtk"
 
 pressKey
 ;;
@@ -834,8 +827,11 @@ pressKey
 Graveur) #----------------------------------------------------------------------
 clear
 
-msg "Installation des Apps pour graveurs CD/DVD/BD..."
-sudo apt-get install -y brasero k3b k3b-extrathemes xfburn
+msg "Installing CD/DVD/BR Burning apps and tools"
+
+runCmd "sudo apt-get install -y brasero"; smsg "Installing brasero"
+runCmd "sudo apt-get install -y k3b k3b-extrathemes"; smsg "Installing k3b k3b-extrathemes"
+runCmd "sudo apt-get install -y xfburn"; smsg "Installing xfburn"
 
 pressKey
 ;;
@@ -843,9 +839,16 @@ pressKey
 NetTools) #---------------------------------------------------------------------
 clear
 
-msg "Installation des outils réseau"
+msg "Installing Network apps and tools"
 # to add when available : gtkvncviewer
-sudo apt-get install -y whois iptraf iperf wireshark tshark zenmap dsniff aircrack-ng
+
+runCmd "sudo apt-get install -y whois"; smsg "Installing whois"
+runCmd "sudo apt-get install -y iptraf"; smsg "Installing iptraf"
+runCmd "sudo apt-get install -y iperf"; smsg "Installing iperf"
+runCmd "sudo apt-get install -y wireshark tshark"; smsg "Installing wireshark tshark"
+runCmd "sudo apt-get install -y zenmap"; smsg "Installing zenmap"
+runCmd "sudo apt-get install -y dsniff"; smsg "Installing dsniff"
+runCmd "sudo apt-get install -y aircrack-ng"; smsg "Installing aircrack-ng"
 
 pressKey
 ;;
@@ -853,12 +856,15 @@ pressKey
 Caja) #-------------------------------------------------------------------------
 clear
 
-msg "Installation des extensions pour Caja"
-sudo apt-get install -y caja-share caja-wallpaper caja-sendto caja-image-converter
+msg "Installing Caja extensions"
+
+runCmd "sudo apt-get install -y caja-share"; smsg "Installing caja-share"
+runCmd "sudo apt-get install -y caja-wallpaper"; smsg "Installing caja-wallpaper"
+runCmd "sudo apt-get install -y caja-sendto"; smsg "Installing caja-sendto"
+runCmd "sudo apt-get install -y caja-image-converter"; smsg "Installing caja-image-converter"
 
 if which insync >/dev/null; then
-  msg "Installation Addon InSync pour Caja"
-	sudo apt-get install -y insync-caja
+  runCmd "sudo apt-get install -y insync-caja"; smsg "Installing insync-caja"
 fi
 
 pressKey
@@ -867,12 +873,30 @@ pressKey
 Nautilus) #---------------------------------------------------------------------
 clear
 
-msg "Installation des extensions pour Nautilus"
-sudo apt-get install -y nautilus file-roller nautilus-emblems nautilus-image-manipulator nautilus-image-converter nautilus-compare nautilus-actions nautilus-sendto nautilus-share nautilus-wipe nautilus-script-audio-convert nautilus-filename-repairer nautilus-gtkhash nautilus-ideviceinfo ooo-thumbnailer nautilus-dropbox nautilus-script-manager nautilus-columns nautilus-flickr-uploader nautilus-pushbullet
+msg "Installing Nautilus and extensions"
+
+runCmd "sudo apt-get install -y nautilus"; smsg "Installing nautilus"
+runCmd "sudo apt-get install -y file-roller"; smsg "Installing file-roller"
+runCmd "sudo apt-get install -y nautilus-emblems"; smsg "Installing nautilus-emblems"
+runCmd "sudo apt-get install -y nautilus-image-manipulator"; smsg "Installing nautilus-image-manipulator"
+runCmd "sudo apt-get install -y nautilus-image-converter"; smsg "Installing nautilus-image-converter"
+runCmd "sudo apt-get install -y nautilus-compare"; smsg "Installing nautilus-compare"
+runCmd "sudo apt-get install -y nautilus-actions"; smsg "Installing nautilus-actions"
+runCmd "sudo apt-get install -y nautilus-sendto"; smsg "Installing nautilus-sendto"
+runCmd "sudo apt-get install -y nautilus-share"; smsg "Installing nautilus-share"
+runCmd "sudo apt-get install -y nautilus-wipe"; smsg "Installing nautilus-wipe"
+runCmd "sudo apt-get install -y nautilus-script-audio-convert"; smsg "Installing nautilus-script-audio-convert"
+runCmd "sudo apt-get install -y nautilus-filename-repairer"; smsg "Installing nautilus-filename-repairer"
+runCmd "sudo apt-get install -y nautilus-gtkhash"; smsg "Installing nautilus-gtkhash"
+runCmd "sudo apt-get install -y nautilus-ideviceinfo"; smsg "Installing nautilus-ideviceinfo"
+runCmd "sudo apt-get install -y ooo-thumbnailer"; smsg "Installing ooo-thumbnailer"
+runCmd "sudo apt-get install -y nautilus-dropbox"; smsg "Installing nautilus-dropbox"
+runCmd "sudo apt-get install -y nautilus-script-manager"; smsg "Installing nautilus-script-manager"
+runCmd "sudo apt-get install -y nautilus-columns"; smsg "Installing nautilus-columns"
+runCmd "sudo apt-get install -y nautilus-flickr-uploader"; smsg "Installing nautilus-flickr-uploader"
 
 if which insync >/dev/null; then
-  msg "Installation Addon InSync pour Nautilus"
-	sudo apt-get install -y insync-nautilus
+  runCmd "sudo apt-get install -y insync-nautilus"; smsg "Installing insync-nautilus"
 fi
 
 pressKey
@@ -881,8 +905,18 @@ pressKey
 Gimp) #-------------------------------------------------------------------------
 clear
 
-msg "Installation des extensions pour Gimp"
-sudo apt-get install -y gtkam-gimp gimp-gluas pandora gimp-data-extras gimp-lensfun gimp-gmic gimp-ufraw gimp-texturize gimp-plugin-registry
+msg "Installing Gimp extensions"
+
+runCmd "sudo apt-get install -y gtkam-gimp"; smsg "Installing gtkam-gimp"
+runCmd "sudo apt-get install -y gimp-gluas"; smsg "Installing gimp-gluas"
+runCmd "sudo apt-get install -y pandora"; smsg "Installing pandora"
+runCmd "sudo apt-get install -y gimp-data-extras"; smsg "Installing gimp-data-extras"
+runCmd "sudo apt-get install -y gimp-lensfun"; smsg "Installing gimp-lensfun"
+runCmd "sudo apt-get install -y gimp-gmic"; smsg "Installing gimp-gmic"
+runCmd "sudo apt-get install -y gimp-ufraw"; smsg "Installing gimp-ufraw"
+runCmd "sudo apt-get install -y gimp-texturize"; smsg "Installing gimp-texturize"
+runCmd "sudo apt-get install -y gimp-plugin-registry"; smsg "Installing gimp-plugin-registry"
+
 
 pressKey
 ;;
@@ -890,8 +924,40 @@ pressKey
 RhythmBox) #--------------------------------------------------------------------
 clear
 
-msg "Installation des extensions pour RhythmBox"
-sudo apt-get install -y rhythmbox-plugin-alternative-toolbar rhythmbox-plugin-artdisplay rhythmbox-plugin-cdrecorder rhythmbox-plugin-close-on-hide rhythmbox-plugin-countdown-playlist rhythmbox-plugin-coverart-browser rhythmbox-plugin-coverart-search rhythmbox-plugin-desktopart rhythmbox-plugin-equalizer rhythmbox-plugin-fileorganizer rhythmbox-plugin-fullscreen rhythmbox-plugin-hide rhythmbox-plugin-jumptowindow rhythmbox-plugin-llyrics rhythmbox-plugin-looper rhythmbox-plugin-opencontainingfolder rhythmbox-plugin-parametriceq rhythmbox-plugin-playlist-import-export rhythmbox-plugin-podcast-pos rhythmbox-plugin-randomalbumplayer rhythmbox-plugin-rating-filters rhythmbox-plugin-remembertherhythm rhythmbox-plugin-repeat-one-song rhythmbox-plugin-rhythmweb rhythmbox-plugin-screensaver rhythmbox-plugin-smallwindow rhythmbox-plugin-spectrum rhythmbox-plugin-suspend rhythmbox-plugin-tray-icon rhythmbox-plugin-visualizer rhythmbox-plugin-wikipedia rhythmbox-plugins
+msg "Installing RhythmBox extensions"
+
+runCmd "sudo apt-get install -y rhythmbox-plugin-alternative-toolbar"; smsg "Installing rhythmbox-plugin-alternative-toolbar"
+runCmd "sudo apt-get install -y rhythmbox-plugin-artdisplay"; smsg "Installing rhythmbox-plugin-artdisplay"
+runCmd "sudo apt-get install -y rhythmbox-plugin-cdrecorder"; smsg "Installing rhythmbox-plugin-cdrecorder"
+runCmd "sudo apt-get install -y rhythmbox-plugin-close-on-hide"; smsg "Installing rhythmbox-plugin-close-on-hide"
+runCmd "sudo apt-get install -y rhythmbox-plugin-countdown-playlist"; smsg "Installing rhythmbox-plugin-countdown-playlist"
+runCmd "sudo apt-get install -y rhythmbox-plugin-coverart-browser"; smsg "Installing rhythmbox-plugin-coverart-browser"
+runCmd "sudo apt-get install -y rhythmbox-plugin-coverart-search"; smsg "Installing rhythmbox-plugin-coverart-search"
+runCmd "sudo apt-get install -y rhythmbox-plugin-desktopart"; smsg "Installing rhythmbox-plugin-desktopart"
+runCmd "sudo apt-get install -y rhythmbox-plugin-equalizer"; smsg "Installing rhythmbox-plugin-equalizer"
+runCmd "sudo apt-get install -y rhythmbox-plugin-fileorganizer"; smsg "Installing rhythmbox-plugin-fileorganizer"
+runCmd "sudo apt-get install -y rhythmbox-plugin-fullscreen"; smsg "Installing rhythmbox-plugin-fullscreen"
+runCmd "sudo apt-get install -y rhythmbox-plugin-hide"; smsg "Installing rhythmbox-plugin-hide"
+runCmd "sudo apt-get install -y rhythmbox-plugin-jumptowindow"; smsg "Installing rhythmbox-plugin-jumptowindow"
+runCmd "sudo apt-get install -y rhythmbox-plugin-llyrics"; smsg "Installing rhythmbox-plugin-llyrics"
+runCmd "sudo apt-get install -y rhythmbox-plugin-looper"; smsg "Installing rhythmbox-plugin-looper"
+runCmd "sudo apt-get install -y rhythmbox-plugin-opencontainingfolder"; smsg "Installing rhythmbox-plugin-opencontainingfolder"
+runCmd "sudo apt-get install -y rhythmbox-plugin-parametriceq"; smsg "Installing rhythmbox-plugin-parametriceq"
+runCmd "sudo apt-get install -y rhythmbox-plugin-playlist-import-export"; smsg "Installing rhythmbox-plugin-playlist-import-export"
+runCmd "sudo apt-get install -y rhythmbox-plugin-podcast-pos"; smsg "Installing rhythmbox-plugin-podcast-pos"
+runCmd "sudo apt-get install -y rhythmbox-plugin-randomalbumplayer"; smsg "Installing rhythmbox-plugin-randomalbumplayer"
+runCmd "sudo apt-get install -y rhythmbox-plugin-rating-filters"; smsg "Installing rhythmbox-plugin-rating-filters"
+runCmd "sudo apt-get install -y rhythmbox-plugin-remembertherhythm"; smsg "Installing rhythmbox-plugin-remembertherhythm"
+runCmd "sudo apt-get install -y rhythmbox-plugin-repeat-one-song"; smsg "Installing rhythmbox-plugin-repeat-one-song"
+runCmd "sudo apt-get install -y rhythmbox-plugin-rhythmweb"; smsg "Installing rhythmbox-plugin-rhythmweb"
+runCmd "sudo apt-get install -y rhythmbox-plugin-screensaver"; smsg "Installing rhythmbox-plugin-screensaver"
+runCmd "sudo apt-get install -y rhythmbox-plugin-smallwindow"; smsg "Installing rhythmbox-plugin-smallwindow"
+runCmd "sudo apt-get install -y rhythmbox-plugin-spectrum"; smsg "Installing rhythmbox-plugin-spectrum"
+runCmd "sudo apt-get install -y rhythmbox-plugin-suspend"; smsg "Installing rhythmbox-plugin-suspend"
+runCmd "sudo apt-get install -y rhythmbox-plugin-tray-icon"; smsg "Installing rhythmbox-plugin-tray-icon"
+runCmd "sudo apt-get install -y rhythmbox-plugin-visualizer"; smsg "Installing rhythmbox-plugin-visualizer"
+runCmd "sudo apt-get install -y rhythmbox-plugin-wikipedia"; smsg "Installing rhythmbox-plugin-wikipedia"
+runCmd "sudo apt-get install -y rhythmbox-plugins"; smsg "Installing rhythmbox-plugins"
 
 pressKey
 ;;
@@ -899,9 +965,16 @@ pressKey
 Pidgin) #--------------------------------------------------------------------
 clear
 
-msg "Installation des extensions pour Pidgin"
+msg "Installing Pidgin extensions"
 # to add when available : pidgin-whatsapp
-sudo apt-get install -y telegram-purple pidgin-skype purple-hangouts pidgin-hangouts
+
+runCmd "sudo apt-get install -y telegram-purple"; smsg "Installing telegram-purple"
+runCmd "sudo apt-get install -y pidgin-skype"; smsg "Installing pidgin-skype"
+runCmd "sudo apt-get install -y purple-hangouts"; smsg "Installing purple-hangouts"
+runCmd "sudo apt-get install -y pidgin-hangouts"; smsg "Installing pidgin-hangouts"
+
+
+
 
 pressKey
 ;;
@@ -926,8 +999,8 @@ pressKey
 Unbound) #----------------------------------------------------------------------
 clear
 
-msg "Installation de Unbound"
-sudo apt-get install -y unbound
+msg "Installing Unbound"
+runCmd "sudo apt-get install -y unbound"; smsg "Installing unbound"
 
 pressKey
 ;;
@@ -967,11 +1040,37 @@ clear
 
 msg "Installation des thèmes"
 # to add when available : ambiance-dark ambiance-dark-red mediterranean-theme polar-night-gtk hackstation-theme libra-theme zukitwo-dark-reloaded ceti-theme vertex-theme stylishdark-theme cenodark-gtk dorian-theme vimix-flat-themes delorean-dark dorian-theme-3.12 candra-gs-themes paper-gtk-theme
-sudo apt-get install -y ambiance-crunchy arc-theme ambiance-colors radiance-colors ambiance-flat-colors radiance-flat-colors vivacious-colors-gtk-dark vivacious-colors-gtk-light yosembiance-gtk-theme ambiance-blackout-colors ambiance-blackout-flat-colors ambiance-colors ambiance-flat-colors radiance-flat-colors vibrancy-colors vivacious-colors numix-gtk-theme
+
+runCmd "sudo apt-get install -y ambiance-crunchy"; smsg "Installing ambiance-crunchy"
+runCmd "sudo apt-get install -y arc-theme"; smsg "Installing arc-theme"
+runCmd "sudo apt-get install -y ambiance-colors"; smsg "Installing ambiance-colors"
+runCmd "sudo apt-get install -y radiance-colors"; smsg "Installing radiance-colors"
+runCmd "sudo apt-get install -y ambiance-flat-colors"; smsg "Installing ambiance-flat-colors"
+runCmd "sudo apt-get install -y vivacious-colors-gtk-dark"; smsg "Installing vivacious-colors-gtk-dark"
+runCmd "sudo apt-get install -y vivacious-colors-gtk-light"; smsg "Installing vivacious-colors-gtk-light"
+runCmd "sudo apt-get install -y yosembiance-gtk-theme"; smsg "Installing yosembiance-gtk-theme"
+runCmd "sudo apt-get install -y ambiance-blackout-colors"; smsg "Installing ambiance-blackout-colors"
+runCmd "sudo apt-get install -y ambiance-blackout-flat-colors"; smsg "Installing ambiance-blackout-flat-colors"
+runCmd "sudo apt-get install -y radiance-flat-colors"; smsg "Installing radiance-flat-colors"
+runCmd "sudo apt-get install -y vibrancy-colors"; smsg "Installing vibrancy-colors"
+runCmd "sudo apt-get install -y vivacious-colors"; smsg "Installing vivacious-colors"
+runCmd "sudo apt-get install -y numix-gtk-theme"; smsg "Installing numix-gtk-theme"
 
 msg "Installation des icônes"
 # to add when available : elementary-icons paper-icon-theme
-sudo apt-get install -y arc-icons papirus-gtk-icon-theme ultra-flat-icons myelementary  ghost-flat-icons faenza-icon-theme faience-icon-theme vibrantly-simple-icon-theme rave-x-colors-icons ravefinity-x-icons numix-icon-theme numix-icon-theme-circle
+
+runCmd "sudo apt-get install -y arc-icons"; smsg "Installing arc-icons"
+runCmd "sudo apt-get install -y papirus-gtk-icon-theme"; smsg "Installing papirus-gtk-icon-theme"
+runCmd "sudo apt-get install -y ultra-flat-icons"; smsg "Installing ultra-flat-icons"
+runCmd "sudo apt-get install -y myelementary"; smsg "Installing myelementary"
+runCmd "sudo apt-get install -y ghost-flat-icons"; smsg "Installing ghost-flat-icons"
+runCmd "sudo apt-get install -y faenza-icon-theme"; smsg "Installing faenza-icon-theme"
+runCmd "sudo apt-get install -y faience-icon-theme"; smsg "Installing faience-icon-theme"
+runCmd "sudo apt-get install -y vibrantly-simple-icon-theme"; smsg "Installing vibrantly-simple-icon-theme"
+runCmd "sudo apt-get install -y rave-x-colors-icons"; smsg "Installing rave-x-colors-icons"
+runCmd "sudo apt-get install -y ravefinity-x-icons"; smsg "Installing ravefinity-x-icons"
+runCmd "sudo apt-get install -y numix-icon-theme"; smsg "Installing numix-icon-theme"
+runCmd "sudo apt-get install -y numix-icon-theme-circle"; smsg "Installing numix-icon-theme-circle"
 
 pressKey
 ;;
@@ -1044,8 +1143,8 @@ case $menuHWItem in
 Solaar) #-----------------------------------------------------------------------
 clear
 
-msg "Installation de Solaar"
-sudo apt-get install -y solaar
+msg "Installing Solaar"
+runCmd "sudo apt-get install -y solaar"; smsg "Installing solaar"
 
 pressKey
 ;;
@@ -1053,8 +1152,8 @@ pressKey
 CardReader) #-------------------------------------------------------------------
 clear
 
-msg "Installation de CardReader and utils"
-sudo apt-get install -y pcscd pcsc-tools
+msg "Installing CardReader and utils"
+runCmd "sudo apt-get install -y pcscd pcsc-tools"; smsg "Installing pcscd pcsc-tools"
 
 pressKey
 ;;
@@ -1166,7 +1265,6 @@ Java "Outils de dev Java" \
 JavaScript "Outils de dev JavaScript" \
 PHP "Outils de dev PHP" \
 LUA "Outils de dev LUA" \
-GO "Outils de dev GO" \
 Ruby "Outils de dev Ruby" \
 QT "Outils de dev QT" \
 Python "Outils de dev Python" \
@@ -1192,8 +1290,22 @@ case $menuDevItem in
 DevApps) #----------------------------------------------------------------------
 clear
 
-msg "Installation de divers outils de Dev"
-sudo apt-get install -y notepadqq agave utext gpick virtualbox-5.0 build-essential ubuntu-make ghex glade eric bluefish meld bluegriffon zeal
+msg "Installing base Dev apps and tools"
+
+runCmd "sudo apt-get install -y notepadqq"; smsg "Installing notepadqq"
+runCmd "sudo apt-get install -y agave"; smsg "Installing agave"
+runCmd "sudo apt-get install -y utext"; smsg "Installing utext"
+runCmd "sudo apt-get install -y gpick"; smsg "Installing gpick"
+runCmd "sudo apt-get install -y virtualbox-5.0"; smsg "Installing virtualbox-5.0"
+runCmd "sudo apt-get install -y build-essential"; smsg "Installing build-essential"
+runCmd "sudo apt-get install -y ubuntu-make"; smsg "Installing ubuntu-make"
+runCmd "sudo apt-get install -y ghex"; smsg "Installing ghex"
+runCmd "sudo apt-get install -y glade"; smsg "Installing glade"
+runCmd "sudo apt-get install -y eric"; smsg "Installing eric"
+runCmd "sudo apt-get install -y bluefish"; smsg "Installing bluefish"
+runCmd "sudo apt-get install -y meld"; smsg "Installing meld"
+runCmd "sudo apt-get install -y bluegriffon"; smsg "Installing bluegriffon"
+runCmd "sudo apt-get install -y zeal"; smsg "Installing zeal"
 
 pressKey
 ;;
@@ -1201,8 +1313,11 @@ pressKey
 Java) #-------------------------------------------------------------------------
 clear
 
-msg "Installation des outils Java"
-sudo apt-get install -y oracle-java7-installer oracle-java8-installer oracle-java8-set-default
+msg "Installing Java apps and tools"
+
+runCmd "sudo apt-get install -y oracle-java7-installer"; smsg "Installing oracle-java7-installer"
+runCmd "sudo apt-get install -y oracle-java8-installer"; smsg "Installing oracle-java8-installer"
+runCmd "sudo apt-get install -y oracle-java8-set-default"; smsg "Installing oracle-java8-set-default"
 
 pressKey
 ;;
@@ -1210,17 +1325,21 @@ pressKey
 JavaScript) #-------------------------------------------------------------------
 clear
 
-msg "Installation des outils JavaScript"
-sudo apt-get install -y npm nodejs-legacy javascript-common
+msg "Installing JavaScript apps and tools"
+
+runCmd "sudo apt-get install -y npm"; smsg "Installing npm"
+runCmd "sudo apt-get install -y nodejs-legacy"; smsg "Installing nodejs-legacy"
+runCmd "sudo apt-get install -y javascript-common"; smsg "Installing javascript-common"
+
 
 if which npm >/dev/null; then
-  msg "NPM install : remark-lint"
+  msg "NPM installing : remark-lint"
   sudo npm install remark-lint
 
-  msg "NPM install : jshint"
+  msg "NPM installing : jshint"
   sudo npm install -g jshint
 
-  msg "NPM install : jedi"
+  msg "NPM installing : jedi"
   sudo npm install -g jedi
 fi
 
@@ -1230,8 +1349,9 @@ pressKey
 PHP) #--------------------------------------------------------------------------
 clear
 
-msg "Installation des outils PHP"
-sudo apt-get install -y php7.0-cli
+msg "Installing PHP apps and tools"
+
+runCmd "sudo apt-get install -y php7.0-cli"; smsg "Installing php7.0-cli"
 
 pressKey
 ;;
@@ -1239,20 +1359,9 @@ pressKey
 LUA) #--------------------------------------------------------------------------
 clear
 
-msg "Installation des outils LUA"
-sudo apt-get install -y luajit
+msg "Installing LUA apps and tools"
 
-pressKey
-;;
-
-GO) #---------------------------------------------------------------------------
-clear
-
-msg "Installation des outils GO"
-sudo apt-get install -y gccgo-go
-
-msg "GO Lang : GO PATH dans .bashrc"
-sh -c "echo '\n\nexport GOPATH=$HOME/go\nexport PATH=$PATH:$GOROOT/bin:$GOPATH/bin\n' >> /home/$myHomedir/.bashrc"
+runCmd "sudo apt-get install -y luajit"; smsg "Installing luajit"
 
 pressKey
 ;;
@@ -1260,8 +1369,9 @@ pressKey
 Ruby) #---------------------------------------------------------------------------
 clear
 
-msg "Installation des outils Ruby"
-sudo apt-get install -y ruby-dev
+msg "Installing Ruby apps and tools"
+
+runCmd "sudo apt-get install -y ruby-dev"; smsg "Installing ruby-dev"
 
 pressKey
 ;;
@@ -1269,8 +1379,14 @@ pressKey
 QT) #---------------------------------------------------------------------------
 clear
 
-msg "Installation des outils de Dev QT"
-sudo apt-get install -y qt4-dev-tools qt4-linguist-tools qt5-doc qttools5-doc qttools5-dev-tools qttools5-examples qttools5-doc-html
+msg "Installing QT Dev apps and tools"
+
+runCmd "sudo apt-get install -y qt4-dev-tools"; smsg "Installing qt4-dev-tools"
+runCmd "sudo apt-get install -y qt4-linguist-tools"; smsg "Installing qt4-linguist-tools"
+runCmd "sudo apt-get install -y qt5-doc qttools5-doc"; smsg "Installing qt5-doc qttools5-doc"
+runCmd "sudo apt-get install -y qttools5-dev-tools"; smsg "Installing qttools5-dev-tools"
+runCmd "sudo apt-get install -y qttools5-examples"; smsg "Installing qttools5-examples"
+runCmd "sudo apt-get install -y qttools5-doc-html"; smsg "Installing qttools5-doc-html"
 
 msg "Création du lien symbolique permettant à qtchooser de prendre qt5 par défaut"
 sudo ln -s /usr/share/qtchooser/qt5-x86_64-linux-gnu.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
@@ -1295,43 +1411,46 @@ pressKey
 Python) #-----------------------------------------------------------------------
 clear
 
-msg "Installation des outils de Dev Python"
-sudo apt-get install -y python3-dev python3-pip python3-pyqt5
+msg "Installing Python Dev apps and tools"
+
+runCmd "sudo apt-get install -y python3-dev"; smsg "Installing python3-dev"
+runCmd "sudo apt-get install -y python3-pip"; smsg "Installing python3-pip"
+runCmd "sudo apt-get install -y python3-pyqt5"; smsg "Installing python3-pyqt5"
+
 
 if which pip3 >/dev/null; then
-  msg "Mise à jours de PIP"
+  msg "Upgrading PIP"
   sudo pip3 install --upgrade pip
 
-  msg "PIP install : setuptools"
+  msg "PIP installing : setuptools"
   sudo pip3 install setuptools
 
-  msg "PIP install : flake8"
+  msg "PIP installing : flake8"
   sudo pip3 install flake8
 
-  msg "PIP install : MyCLI"
+  msg "PIP installing : MyCLI"
   sudo pip3 install mycli
 
-  msg "PIP install : SpoofMAC"
+  msg "PIP installing : SpoofMAC"
   sudo pip3 install SpoofMAC
 
-  msg "PIP install : speedtest-cli"
+  msg "PIP installing : speedtest-cli"
   sudo pip3 install speedtest-cli
 
-  msg "PIP install : whatportis"
+  msg "PIP installing : whatportis"
   sudo pip3 install whatportis
 
-  msg "PIP install : py-term"
+  msg "PIP installing : py-term"
   sudo pip3 install py-term
 
-  msg "PIP install : weppy"
+  msg "PIP installing : weppy"
   sudo pip3 install weppy
 
-  msg "PIP install : retext"
+  msg "PIP installing : retext"
   sudo pip3 install retext
 
-  msg "PIP install : waybackpack"
+  msg "PIP installing : waybackpack"
   sudo pip3 install waybackpack
-
 fi
 
 pressKey
@@ -1426,12 +1545,37 @@ pressKey
 Atom) #-------------------------------------------------------------------------
 clear
 
-msg "Installation d'Atom + extensions"
-sudo apt-get install -y atom
+msg "Installing Atom and extensions"
+
+runCmd "sudo apt-get install -y atom"; smsg "Installing atom"
 
 if which apm >/dev/null; then
-  msg "Installation plugins Atom"
-  apm install git-time-machine color-picker file-icons language-conky language-lua minimap git-status todo-show highlight-selected minimap-highlight-selected pigments minimap-pigments linter linter-javac linter-csslint linter-coffeelint linter-golinter linter-htmlhint linter-lua linter-markdown linter-flake8 linter-php autocomplete-java dash
+  msg "Installing Atom extensions"
+
+  runCmd "apm install git-status"; smsg "APM Installing git-status"
+  runCmd "apm install git-time-machine"; smsg "APM Installing git-time-machine"
+  runCmd "apm install color-picker"; smsg "APM Installing color-picker"
+  runCmd "apm install file-icons"; smsg "APM Installing file-icons"
+  runCmd "apm install language-conky"; smsg "APM Installing language-conky"
+  runCmd "apm install language-lua"; smsg "APM Installing language-lua"
+  runCmd "apm install minimap"; smsg "APM Installing minimap"
+  runCmd "apm install highlight-selected"; smsg "APM Installing highlight-selected"
+  runCmd "apm install minimap-highlight-selected"; smsg "APM Installing minimap-highlight-selected"
+  runCmd "apm install pigments"; smsg "APM Installing pigments"
+  runCmd "apm install minimap-pigments"; smsg "APM Installing minimap-pigments"
+  runCmd "apm install todo-show"; smsg "APM Installing todo-show"
+  runCmd "apm install linter"; smsg "APM Installing linter"
+  runCmd "apm install linter-javac"; smsg "APM Installing linter-javac"
+  runCmd "apm install linter-csslint"; smsg "APM Installing linter-csslint"
+  runCmd "apm install linter-coffeelint"; smsg "APM Installing linter-coffeelint"
+  runCmd "apm install linter-golinter"; smsg "APM Installing linter-golinter"
+  runCmd "apm install linter-htmlhint"; smsg "APM Installing linter-htmlhint"
+  runCmd "apm install linter-lua"; smsg "APM Installing linter-lua"
+  runCmd "apm install linter-markdown"; smsg "APM Installing linter-markdown"
+  runCmd "apm install linter-flake8"; smsg "APM Installing linter-flake8"
+  runCmd "apm install linter-php"; smsg "APM Installing linter-php"
+  runCmd "apm install autocomplete-java"; smsg "APM Installing autocomplete-java"
+  runCmd "apm install dash"; smsg "APM Installing dash"
 fi
 
 pressKey
@@ -1440,8 +1584,9 @@ pressKey
 Anjuta) #-----------------------------------------------------------------------
 clear
 
-msg "Installation de Anjuta"
-sudo apt-get install -y anjuta anjuta-extras
+msg "Installing Anjuta"
+
+runCmd "sudo apt-get install -y anjuta anjuta-extras"; smsg "Installing anjuta anjuta-extras"
 
 pressKey
 ;;
@@ -1449,8 +1594,9 @@ pressKey
 Brackets) #---------------------------------------------------------------------
 clear
 
-msg "Installation de Brackets"
-sudo apt-get install -y brackets
+msg "Installing Brackets"
+
+runCmd "sudo apt-get install -y brackets"; smsg "Installing brackets"
 
 pressKey
 ;;
@@ -1458,8 +1604,9 @@ pressKey
 CodeBlocks) #-------------------------------------------------------------------
 clear
 
-msg "Installation de CodeBlocks"
-sudo apt-get install -y codeblocks codeblocks-contrib
+msg "Installing CodeBlocks"
+
+runCmd "sudo apt-get install -y codeblocks codeblocks-contrib"; smsg "Installing codeblocks codeblocks-contrib"
 
 pressKey
 ;;
@@ -1467,8 +1614,11 @@ pressKey
 Geany) #------------------------------------------------------------------------
 clear
 
-msg "Installation de Geany"
-sudo apt-get install -y geany geany-plugins geany-plugin-markdown
+msg "Installing Geany and extensions"
+
+runCmd "sudo apt-get install -y geany"; smsg "Installing geany"
+runCmd "sudo apt-get install -y geany-plugins"; smsg "Installing geany-plugins"
+runCmd "sudo apt-get install -y geany-plugin-markdown"; smsg "Installing geany-plugin-markdown"
 
 pressKey
 ;;
@@ -1530,8 +1680,11 @@ pressKey
 CAD) #--------------------------------------------------------------------------
 clear
 
-msg "Installation des outils de CAD"
-sudo apt-get install -y freecad librecad kicad kicad-locale-fr
+msg "Installing CAD apps and tools"
+
+runCmd "sudo apt-get install -y kicad kicad-locale-fr"; smsg "Installing kicad kicad-locale-fr"
+runCmd "sudo apt-get install -y librecad"; smsg "Installing librecad"
+runCmd "sudo apt-get install -y freecad"; smsg "Installing freecad"
 
 pressKey
 ;;
@@ -1571,8 +1724,9 @@ case $menuConfigItem in
 Ufw) #--------------------------------------------------------------------------
 clear
 
-msg "Acivatation du FireWall (UFW)"
-sudo ufw enable
+msg "Enabling FireWall (UFW)"
+
+runCmd "sudo ufw enable"; smsg "Enabling ufw"
 
 pressKey
 ;;
@@ -1608,7 +1762,7 @@ pressKey
 screenfetch) #------------------------------------------------------------------
 clear
 
-msg "Ajout de screenfetch à .bashrc"
+msg "Adding screenfetch to .bashrc"
 touch /home/$myHomedir/.bashrc
 echo "screenfetch" >> /home/"$myHomedir"/.bashrc
 
@@ -1670,7 +1824,7 @@ clear
 if which speedtest-cli >/dev/null; then
   sudo speedtest-cli
 else
-  printf "Outils Python + speedtest-cli via PIP requis"
+  printf "Python apps and tools + speedtest-cli app are required (PIP)"
 fi
 
 pressKey
@@ -1700,8 +1854,8 @@ pressKey
 Autoremove) #-------------------------------------------------------------------
 clear
 
-msg "Suppression des paquets inutiles"
-sudo apt-get -y autoremove
+msg "Cleaning useless deb package(s)"
+runCmd "sudo apt-get -y autoremove"; smsg "apt-get autoremove"
 
 pressKey
 ;;
