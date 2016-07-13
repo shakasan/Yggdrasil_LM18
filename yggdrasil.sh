@@ -77,6 +77,26 @@ trap "rm $menuSysToolsOUTPUT; rm $menuSysToolsINPUT; exit" SIGHUP SIGINT SIGTERM
 # Script's functions                                                           #
 #------------------------------------------------------------------------------#
 
+# run a shell command and display a message between [ ] depending on the ret_code
+function runCmd () {
+  typeset cmd="$1"
+  typeset ret_code
+
+  eval $cmd" &>> ~/log.txt"
+  ret_code=$?
+
+  if [ $ret_code == 0 ]; then
+    printf "[ ""$VERT""OK"$NORMAL" ] "
+  else
+    printf "[ ""$ROUGE""!!"$NORMAL" ] "
+  fi
+}
+
+# display a simple message
+function smsg () {
+    printf "$*\n"
+}
+
 # display a message + notification
 function msg () {
   printf "\n"
@@ -101,12 +121,14 @@ function pressKey () {
 
 # system update
 function updateSystem () {
-  msg "Mise à jours : update"
-  sudo apt-get update
-  msg "Mise à jours : upgrade"
-  sudo apt-get -y upgrade
-  msg "Mise à jours : dist-upgrade"
-  sudo apt-get -y dist-upgrade
+  runCmd "sudo apt-get update"
+  smsg "apt-get update"
+
+  runCmd "sudo apt-get -y upgrade"
+  smsg "apt-get -y upgrade"
+
+  runCmd "sudo apt-get -y dist-upgrade"
+  smsg "apt-get -y dist-upgrade"
 }
 
 # check if running on the right OS ^^
@@ -173,6 +195,9 @@ function depCheck () {
 #------------------------------------------------------------------------------#
 
 clear
+
+# log file is reset eveytime the script is run
+echo > ~/log.txt
 
 # Useless by itself, but is used to don't be annoyed later in the script
 # NEVER run the script as root or with sudo !!!!
@@ -269,6 +294,9 @@ pressKey
 
 PPA) #--------------------------------------------------------------------------
 clear
+
+msg "Ajout des dépôts"
+
 msg "Ajout Arch i386"
 sudo dpkg --add-architecture i386
 
@@ -438,19 +466,79 @@ Base) #-------------------------------------------------------------------------
 clear
 
 msg "Installation des outils de base"
-sudo apt-get install -y cifs-utils xterm curl mc bmon htop screen dconf-cli dconf-editor lnav exfat-fuse exfat-utils iftop iptraf mpg123 debconf-utils idle3-tools
+runCmd "sudo apt-get install -y cifs-utils"; smsg "Installing cifs-utils"
+runCmd "sudo apt-get install -y xterm"; smsg "Installing xterm"
+runCmd "sudo apt-get install -y curl"; smsg "Installing curl"
+runCmd "sudo apt-get install -y mc"; smsg "Installing mc"
+runCmd "sudo apt-get install -y bmon"; smsg "Installing bmon"
+runCmd "sudo apt-get install -y htop"; smsg "Installing htop"
+runCmd "sudo apt-get install -y screen"; smsg "Installing screen"
+runCmd "sudo apt-get install -y dconf-cli"; smsg "Installing dconf-cli"
+runCmd "sudo apt-get install -y dconf-editor"; smsg "Installing dconf-editor"
+runCmd "sudo apt-get install -y lnav"; smsg "Installing lnav"
+runCmd "sudo apt-get install -y exfat-fuse"; smsg "Installing exfat-fuse"
+runCmd "sudo apt-get install -y exfat-utils"; smsg "Installing exfat-utils"
+runCmd "sudo apt-get install -y iftop"; smsg "Installing iftop"
+runCmd "sudo apt-get install -y iptraf"; smsg "Installing iptraf"
+runCmd "sudo apt-get install -y mpg123"; smsg "Installing mpg123"
+runCmd "sudo apt-get install -y debconf-utils"; smsg "Installing debconf-utils"
+runCmd "sudo apt-get install -y idle3-tools"; smsg "Installing idle3-tools"
 
 pressKey
 ;;
 
 Multimedia) #-------------------------------------------------------------------
 clear
-msg "Installation des Apps multimédia"
-# to add if available : fontmatrix qgifer vlc-plugin-libde265 arista
-sudo apt-get install -y spotify-client dvdstyler slowmovideo mpv audacious qmmp qmmp-plugin-projectm sayonara digikam inkscape blender picard dia shotcut aegisub aegisub-l10n hugin audacity asunder mypaint mypaint-data-extras synfigstudio kodi milkytracker mkvtoolnix-gui openshot pitivi smplayer smplayer-themes smplayer-l10n selene gnome-mplayer handbrake avidemux2.6-qt avidemux2.6-plugins-qt mjpegtools twolame lame banshee banshee-extension-soundmenu gpicview vlc shotwell darktable ffmpeg flacon scribus birdfont moc rawtherapee
 
-msg "Config du Theme DarkDot pour Mocp"
-sh -c "echo '\n\nalias mocp=\"mocp -T darkdot_theme\"\n' >> /home/$myHomedir/.bashrc"
+msg "Installation des Apps multimédia"
+# to add if available : fontmatrix qgifer arista
+
+runCmd "sudo apt-get install -y spotify-client"; smsg "Installing spotify-client"
+runCmd "sudo apt-get install -y slowmovideo"; smsg "Installing slowmovideo"
+runCmd "sudo apt-get install -y sayonara"; smsg "Installing sayonara"
+runCmd "sudo apt-get install -y qmmp qmmp-plugin-projectm"; smsg "Installing qmmp qmmp-plugin-projectm"
+runCmd "sudo apt-get install -y shotcut"; smsg "Installing shotcut"
+runCmd "sudo apt-get install -y audacious"; smsg "Installing audacious"
+runCmd "sudo apt-get install -y dia"; smsg "Installing dia"
+runCmd "sudo apt-get install -y mpv"; smsg "Installing mpv"
+runCmd "sudo apt-get install -y picard"; smsg "Installing picard"
+runCmd "sudo apt-get install -y inkscape"; smsg "Installing inkscape"
+runCmd "sudo apt-get install -y aegisub aegisub-l10n"; smsg "Installing aegisub aegisub-l10n"
+runCmd "sudo apt-get install -y mypaint mypaint-data-extras"; smsg "Installing mypaint mypaint-data-extras"
+runCmd "sudo apt-get install -y audacity"; smsg "Installing audacity"
+runCmd "sudo apt-get install -y blender"; smsg "Installing blender"
+runCmd "sudo apt-get install -y kodi"; smsg "Installing kodi"
+runCmd "sudo apt-get install -y digikam"; smsg "Installing digikam"
+runCmd "sudo apt-get install -y synfigstudio"; smsg "Installing synfigstudio"
+runCmd "sudo apt-get install -y mkvtoolnix-gui"; smsg "Installing mkvtoolnix-gui"
+runCmd "sudo apt-get install -y rawtherapee"; smsg "Installing rawtherapee"
+runCmd "sudo apt-get install -y hugin"; smsg "Installing hugin"
+runCmd "sudo apt-get install -y asunder"; smsg "Installing asunder"
+runCmd "sudo apt-get install -y milkytracker"; smsg "Installing milkytracker"
+runCmd "sudo apt-get install -y pitivi"; smsg "Installing pitivi"
+runCmd "sudo apt-get install -y openshot"; smsg "Installing openshot"
+runCmd "sudo apt-get install -y smplayer smplayer-themes smplayer-l10n"; smsg "Installing smplayer smplayer-themes smplayer-l10n"
+runCmd "sudo apt-get install -y selene"; smsg "Installing selene"
+runCmd "sudo apt-get install -y gnome-mplayer"; smsg "Installing gnome-mplayer"
+runCmd "sudo apt-get install -y handbrake"; smsg "Installing handbrake"
+runCmd "sudo apt-get install -y avidemux2.6-qt avidemux2.6-plugins-qt"; smsg "Installing avidemux2.6-qt avidemux2.6-plugins-qt"
+runCmd "sudo apt-get install -y mjpegtools"; smsg "Installing mjpegtools"
+runCmd "sudo apt-get install -y twolame"; smsg "Installing twolame"
+runCmd "sudo apt-get install -y lame"; smsg "Installing lame"
+runCmd "sudo apt-get install -y banshee banshee-extension-soundmenu"; smsg "Installing banshee banshee-extension-soundmenu"
+runCmd "sudo apt-get install -y gpicview"; smsg "Installing gpicview"
+runCmd "sudo apt-get install -y vlc"; smsg "Installing vlc"
+runCmd "sudo apt-get install -y shotwell"; smsg "Installing shotwell"
+runCmd "sudo apt-get install -y darktable"; smsg "Installing darktable"
+runCmd "sudo apt-get install -y ffmpeg"; smsg "Installing ffmpeg"
+runCmd "sudo apt-get install -y flacon"; smsg "Installing flacon"
+runCmd "sudo apt-get install -y scribus"; smsg "Installing scribus"
+runCmd "sudo apt-get install -y birdfont"; smsg "Installing birdfont"
+runCmd "sudo apt-get install -y moc"; smsg "Installing moc"
+
+# DarkDot theme for Moc
+runCmd "echo 'alias mocp=\"mocp -T darkdot_theme\"' | tee -a /home/$myHomedir/.bashrc"
+smsg "Configuring DarkDot theme for Mocp"
 
 pressKey
 ;;
@@ -500,12 +588,15 @@ eBook) #------------------------------------------------------------------------
 clear
 
 msg "Installation des Apps/outils pour eBook"
-sudo apt-get install -y fbreader
+
+runCmd "sudo apt-get install -y fbreader"; smsg "Installing fbreader"
 
 cd /tmp
 
-msg "Installation de Calibre"
-sudo -v && wget --no-check-certificate -nv -O- https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"
+#msg "Installation de Calibre"
+#sudo -v && wget --no-check-certificate -nv -O- https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"
+runCmd "sudo -v && wget -q --no-check-certificate -nv -O- https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py | sudo python -c \"import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()\""
+smsg "Installing calibre"
 
 pressKey
 ;;
@@ -517,8 +608,28 @@ msg "Installation des Apps internet"
 
 echo "opera-stable opera-stable/add-deb-source boolean false" | sudo debconf-set-selections
 
-# to add when available : owncloud-client skype-wrapper tribler qtox birdie (pushbullet)
-sudo apt-get install -y whatsie ring-gnome frogr dropbox syncthing-gtk syncthing opera-stable quiterss insync google-chrome-stable midori xchat-gnome xchat-gnome-indicator chromium-browser chromium-browser-l10n geary qupzilla dropbox filezilla hexchat mumble skype imagedownloader california
+# to add when available :  skype-wrapper tribler qtox birdie (pushbullet)
+runCmd "sudo apt-get install -y owncloud-client"; smsg "Installing owncloud-client"
+runCmd "sudo apt-get install -y syncthing-gtk syncthing"; smsg "Installing syncthing-gtk syncthing"
+runCmd "sudo apt-get install -y insync"; smsg "Installing insync"
+runCmd "sudo apt-get install -y quiterss"; smsg "Installing quiterss"
+runCmd "sudo apt-get install -y frogr"; smsg "Installing frogr"
+runCmd "sudo apt-get install -y opera-stable"; smsg "Installing opera-stable"
+runCmd "sudo apt-get install -y google-chrome-stable"; smsg "Installing google-chrome-stable"
+runCmd "sudo apt-get install -y xchat-gnome xchat-gnome-indicator"; smsg "Installing xchat-gnome xchat-gnome-indicator"
+runCmd "sudo apt-get install -y chromium-browser chromium-browser-l10n"; smsg "Installing chromium-browser chromium-browser-l10n"
+runCmd "sudo apt-get install -y dropbox"; smsg "Installing dropbox"
+runCmd "sudo apt-get install -y qupzilla"; smsg "Installing qupzilla"
+runCmd "sudo apt-get install -y filezilla"; smsg "Installing filezilla"
+runCmd "sudo apt-get install -y hexchat"; smsg "Installing hexchat"
+runCmd "sudo apt-get install -y mumble"; smsg "Installing mumble"
+runCmd "sudo apt-get install -y skype"; smsg "Installing skype"
+runCmd "sudo apt-get install -y imagedownloader"; smsg "Installing imagedownloader"
+runCmd "sudo apt-get install -y california"; smsg "Installing california"
+runCmd "sudo apt-get install -y midori"; smsg "Installing midori"
+runCmd "sudo apt-get install -y geary"; smsg "Installing geary"
+runCmd "sudo apt-get install -y whatsie"; smsg "Installing whatsie"
+runCmd "sudo apt-get install -y ring-gnome"; smsg "Installing ring-gnome"
 
 pressKey
 ;;
@@ -598,11 +709,41 @@ Utilitaires) #------------------------------------------------------------------
 clear
 
 msg "Installation d'Apps et Utilitaires divers"
+
 echo "apt-fast	apt-fast/maxdownloads	string	5" | sudo debconf-set-selections
 echo "apt-fast	apt-fast/dlflag	boolean	true" | sudo debconf-set-selections
 echo "apt-fast	apt-fast/aptmanager	select	apt-get" | sudo debconf-set-selections
 echo "apt-fast	apt-fast/downloader	select	aria2c" | sudo debconf-set-selections
-sudo apt-get install -y qtqr cpu-g screenfetch xcalib conky-manager conky-all plank indicator-sound-switcher y-ppa-manager synapse anoise acetoneiso guake tilda psensor kazam bleachbit gparted gsmartcontrol terminator aptik gufw numlockx grub-customizer chmsee unetbootin zim diodon pyrenamer apt-fast
+
+runCmd "sudo apt-get install -y qtqr"; smsg "Installing qtqr"
+runCmd "sudo apt-get install -y cpu-g"; smsg "Installing cpu-g"
+runCmd "sudo apt-get install -y screenfetch"; smsg "Installing screenfetch"
+runCmd "sudo apt-get install -y xcalib"; smsg "Installing xcalib"
+runCmd "sudo apt-get install -y conky-manager conky-all"; smsg "Installing conky-manager conky-all"
+runCmd "sudo apt-get install -y plank"; smsg "Installing plank"
+runCmd "sudo apt-get install -y indicator-sound-switcher"; smsg "Installing indicator-sound-switcher"
+runCmd "sudo apt-get install -y y-ppa-manager"; smsg "Installing y-ppa-manager"
+runCmd "sudo apt-get install -y synapse"; smsg "Installing synapse"
+runCmd "sudo apt-get install -y anoise"; smsg "Installing anoise"
+runCmd "sudo apt-get install -y acetoneiso"; smsg "Installing acetoneiso"
+runCmd "sudo apt-get install -y guake"; smsg "Installing guake"
+runCmd "sudo apt-get install -y tilda"; smsg "Installing tilda"
+runCmd "sudo apt-get install -y psensor"; smsg "Installing psensor"
+runCmd "sudo apt-get install -y kazam"; smsg "Installing kazam"
+runCmd "sudo apt-get install -y bleachbit"; smsg "Installing bleachbit"
+runCmd "sudo apt-get install -y gparted"; smsg "Installing gparted"
+runCmd "sudo apt-get install -y gsmartcontrol"; smsg "Installing gsmartcontrol"
+runCmd "sudo apt-get install -y terminator"; smsg "Installing terminator"
+runCmd "sudo apt-get install -y aptik"; smsg "Installing aptik"
+runCmd "sudo apt-get install -y gufw"; smsg "Installing gufw"
+runCmd "sudo apt-get install -y numlockx"; smsg "Installing numlockx"
+runCmd "sudo apt-get install -y grub-customizer"; smsg "Installing grub-customizer"
+runCmd "sudo apt-get install -y chmsee"; smsg "Installing chmsee"
+runCmd "sudo apt-get install -y unetbootin"; smsg "Installing unetbootin"
+runCmd "sudo apt-get install -y zim"; smsg "Installing zim"
+runCmd "sudo apt-get install -y diodon"; smsg "Installing diodon"
+runCmd "sudo apt-get install -y pyrenamer"; smsg "Installing pyrenamer"
+runCmd "sudo apt-get install -y apt-fast"; smsg "Installing apt-fast"
 
 pressKey
 ;;
@@ -610,14 +751,13 @@ pressKey
 Wine) #-------------------------------------------------------------------------
 clear
 
-msg "Ajout du PPA de Wine"
-sudo add-apt-repository -y ppa:ubuntu-wine/ppa
+msg "Installing Wine"
 
-msg "Mise à jours du système"
+runCmd "sudo add-apt-repository -y ppa:ubuntu-wine/ppa"; smsg "Adding Wine PPA"
 updateSystem
-
-msg "Installation de Wine"
-sudo apt-get -y install wine1.8 winetricks playonlinux
+runCmd "sudo apt-get install -y wine1.8"; smsg "Installing wine1.8"
+runCmd "sudo apt-get install -y winetricks"; smsg "Installing winetricks"
+runCmd "sudo apt-get install -y playonlinux"; smsg "Installing playonlinux"
 
 pressKey
 ;;
@@ -1427,17 +1567,6 @@ menuConfigItem=$(<"${menuConfigINPUT}")
 
 # configMenu's actions ---------------------------------------------------------
 case $menuConfigItem in
-
-#Fstrim) #-----------------------------------------------------------------------
-#clear
-
-#msg "Modif /etc/cron.weekly/fstrim pour activer le TRIM pour tout les SSD"
-#sudo sed -i -e '
-#s!exec fstrim-all!exec fstrim-all --no-model-check!
-#' /etc/cron.weekly/fstrim
-
-#pressKey
-#;;
 
 Ufw) #--------------------------------------------------------------------------
 clear
