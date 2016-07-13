@@ -350,10 +350,10 @@ msg "Ajout Repository SyncThing"
 wget -qO - https://syncthing.net/release-key.txt | sudo apt-key add -
 echo "deb http://apt.syncthing.net/ syncthing release" | sudo tee /etc/apt/sources.list.d/syncthing.list
 
-#msg "Ajout Repository OwnCloud"
-#wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_14.04/Release.key
-#sudo apt-key add - < Release.key
-#sudo sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_14.04/ /' >> /etc/apt/sources.list.d/owncloud.list"
+msg "Ajout Repository OwnCloud"
+wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_16.04/Release.key
+sudo apt-key add - < Release.key
+sudo sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /' >> /etc/apt/sources.list.d/owncloud-client.list"
 
 #msg "Ajout Repository PlayOnLinux"
 #wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
