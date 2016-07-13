@@ -9,7 +9,7 @@
 # Script's cons. and vars.                                                     #
 #------------------------------------------------------------------------------#
 
-version="0.2"
+version="0.2.1"
 
 # myHomedir is used in full paths to the homedir
 myHomedir=$(whoami)
@@ -115,7 +115,7 @@ function pressKey () {
     mpg123 -q $scriptDir/notify.mp3 &
   fi
   printf "$INV"
-  read -p "Appuyer sur une <Enter> pour continuer ..."
+  read -p "Press <Enter> key to continue ..."
   printf "$NORMAL"
 }
 
@@ -133,13 +133,13 @@ function updateSystem () {
 
 # check if running on the right OS ^^
 function osCheck () {
-  printf "$JAUNE""Vérification de l'OS\n\n""$NORMAL"
+  printf "$JAUNE""OS requirement checking\n\n""$NORMAL"
   OS=`lsb_release -d | gawk -F':' '{print $2}' | gawk -F'\t' '{print $2}'`
 
   if [[ $OS == *"Linux Mint 18"* ]]; then
     printf "[ ""$VERT""OK"$NORMAL" ] Linux Mint 18.x\n"
   else
-    printf "[ ""$ROUGE""!!"$NORMAL" ] Linux Mint 18.x non identifiée. On quitte le script...\n"
+    printf "[ ""$ROUGE""!!"$NORMAL" ] Linux Mint 18.x not found. Bye...\n"
     printf "\n"
     exit
   fi
@@ -147,13 +147,13 @@ function osCheck () {
 
 # dependencies used in the script checked and installed if necessary
 function depCheck () {
-  printf "$JAUNE""Vérification des dépendances de base\n\n""$NORMAL"
+  printf "$JAUNE""Script dependencies checking\n\n""$NORMAL"
 
   # mpg123
   if which mpg123 >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] mpg123\n"
   else
-    printf "[ ""$ROUGE""!!"$NORMAL" ] mpg123 : installation ...\n"
+    printf "[ ""$ROUGE""!!"$NORMAL" ] mpg123 : installing ...\n"
     sudo apt-get install -y mpg123 >/dev/null
   fi
 
@@ -161,7 +161,7 @@ function depCheck () {
   if which notify-send >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] libnotify-bin\n"
   else
-    printf "[ ""$ROUGE""!!"$NORMAL" ] libnotify-bin : installation ...\n"
+    printf "[ ""$ROUGE""!!"$NORMAL" ] libnotify-bin : installing ...\n"
     sudo apt-get install -y libnotify-bin >/dev/null
   fi
 
@@ -169,7 +169,7 @@ function depCheck () {
   if which lsb_release >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] lsb-release\n"
   else
-    printf "[ ""$ROUGE""!!"$NORMAL" ] lsb-release : installation ...\n"
+    printf "[ ""$ROUGE""!!"$NORMAL" ] lsb-release : installing ...\n"
     sudo apt-get install -y lsb-release >/dev/null
   fi
 
@@ -177,7 +177,7 @@ function depCheck () {
   if which mount.cifs >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] cifs-utils\n"
   else
-    printf "[ ""$ROUGE""!!"$NORMAL" ] cifs-utils : installation ...\n"
+    printf "[ ""$ROUGE""!!"$NORMAL" ] cifs-utils : installing ...\n"
     sudo apt-get install -y cifs-utils >/dev/null
   fi
 
@@ -185,7 +185,7 @@ function depCheck () {
   if which dialog >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] dialog\n"
   else
-    printf "[ ""$ROUGE""!!"$NORMAL" ] dialog : installation ...\n"
+    printf "[ ""$ROUGE""!!"$NORMAL" ] dialog : installing ...\n"
     sudo apt-get install -y dialog >/dev/null
   fi
 }
@@ -196,8 +196,8 @@ function depCheck () {
 
 clear
 
-# log file is reset eveytime the script is run
-echo > ~/log.txt
+# add a mark to the log file at every script run
+echo "--------------------------------------------------------------------------------" >> ~/log.txt
 
 # Useless by itself, but is used to don't be annoyed later in the script
 # NEVER run the script as root or with sudo !!!!
@@ -250,24 +250,24 @@ do
 
 # menu -------------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
---title "[ Menu Principal ]" \
---menu "Cet utilitaire permet d'installer et customiser votre installation fraichement installée. A utiliser avec précaution ;-)" 32 85 24 \
------------ "---Partie obligatoire------------" \
-Source "Ouvrir Sotfware-Source (ajouter dépots sources et getdeb)" \
-Update "Mise à jours du système" \
-PPA "Ajout des PPAs requis" \
+--title "[ Main Menu ]" \
+--menu "This tools allow you to install extra apps and customize your fresh Linux Mint setup. Use it carefully ;-)" 32 85 24 \
+----------- "---Mandatory part----------------" \
+Source "Open Sotfware-Source, add source repository, change mirrors" \
+Update "System update" \
+PPA "Add PPA and repositories " \
 ----------- "---------------------------------" \
-AppInstall "Installation des Apps" \
-Custom "Customisation (themes,icones,...)" \
-Hardware "Installation et config du Hardware" \
-DevInstall "Installation des Apps de Dev" \
-SystemTweak "Configuration/Tweaking du système" \
+AppInstall "Apps Install" \
+Custom "Customize (themes,icons,...)" \
+Hardware "Hardware Install/Config" \
+DevInstall "Install Dev Apps" \
+SystemTweak "System Config/Tweak" \
 ----------- "---------------------------------" \
-SystemTools "Outils divers" \
-Reboot "Re-démarrer le système" \
+SystemTools "Misc. tools and utilities" \
+Reboot "System reboot" \
 ----------- "---------------------------------" \
-About "A propos de ce script ..." \
-Exit "Quitter" 2>"${menuINPUT}"
+About "About this script ..." \
+Exit "Exit" 2>"${menuINPUT}"
 
 menuitem=$(<"${menuINPUT}")
 
@@ -277,7 +277,7 @@ case $menuitem in
 Source) #-----------------------------------------------------------------------
 clear
 
-msg "On change les mirroirs + add Sources"
+msg "Change mirrors + add Sources repository"
 software-sources
 
 pressKey
@@ -286,7 +286,7 @@ pressKey
 Update) #-----------------------------------------------------------------------
 clear
 
-msg "Mise à jours du système"
+msg "System update"
 updateSystem
 
 pressKey
@@ -295,22 +295,22 @@ pressKey
 PPA) #--------------------------------------------------------------------------
 clear
 
-msg "Ajout des dépôts"
+msg "Adding PPA and repositories"
 
-msg "Ajout Arch i386"
+msg "Adding Arch i386"
 sudo dpkg --add-architecture i386
 
-msg "Ajout paquet apt-transport-https"
+msg "Adding apt-transport-https package"
 sudo apt-get install apt-transport-https
 
-msg "Licences Java 7/8 Oracle acceptées automatiquement"
+msg "Accept Licences Java 7/8 Oracle"
 sudo sh -c "echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections"
 sudo sh -c "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections"
 
-msg "Pré-config du paquet science-config"
+msg "Science-config package pre-config"
 sudo sh -c "echo sience-config science-config/group select '$myHomedir ($myHomedir)' | sudo debconf-set-selections"
 
-msg "Ajout des PPAs"
+msg "Adding PPAs"
 sudo add-apt-repository -y ppa:noobslab/themes # themes from noobslab
 sudo add-apt-repository -y ppa:noobslab/icons # icones from noobslab
 sudo add-apt-repository -y ppa:numix/ppa # Theme Numix
@@ -355,36 +355,32 @@ sudo add-apt-repository -y ppa:transmissionbt/ppa # Transmission-BT (newest vers
 sudo add-apt-repository -y ppa:geary-team/releases # Geary (newest versions)
 sudo add-apt-repository -y ppa:varlesh-l/papirus-pack # themes and icons
 
-msg "Ajout Repository Opera"
+msg "Adding Opera repository"
 echo "deb http://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera.list
 wget -qO- http://deb.opera.com/archive.key | sudo apt-key add -
 
-msg "Ajout Repository Google Chrome"
+msg "Adding Google Chrome repository"
 wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
 
-msg "Ajout Repository InSync"
+msg "Adding InSync repository"
 echo "deb http://apt.insynchq.com/ubuntu xenial non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list
 wget -qO - https://d2t3ff60b2tol4.cloudfront.net/services@insynchq.com.gpg.key | sudo apt-key add -
 
-msg "Ajout Repository Docker"
+msg "Adding Docker repository"
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main"  | sudo tee /etc/apt/sources.list.d/docker.list
 
-msg "Ajout Repository SyncThing"
+msg "Adding SyncThing repository"
 wget -qO - https://syncthing.net/release-key.txt | sudo apt-key add -
 echo "deb http://apt.syncthing.net/ syncthing release" | sudo tee /etc/apt/sources.list.d/syncthing.list
 
-msg "Ajout Repository OwnCloud"
+msg "Adding OwnCloud-Client repository"
 wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_16.04/Release.key
 sudo apt-key add - < Release.key
 sudo sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /' >> /etc/apt/sources.list.d/owncloud-client.list"
 
-#msg "Ajout Repository PlayOnLinux"
-#wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
-#sudo wget http://deb.playonlinux.com/playonlinux_trusty.list -O /etc/apt/sources.list.d/playonlinux.list
-
-msg "Ajout Repository MKVToolnix"
+msg "Adding MKVToolnix repository"
 wget -q -O - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | sudo apt-key add -
 echo "deb http://mkvtoolnix.download/ubuntu/xenial/ ./"  | sudo tee /etc/apt/sources.list.d/mkv.list
 echo "deb-src http://mkvtoolnix.download/ubuntu/xenial/ ./ "  | sudo tee -a /etc/apt/sources.list.d/mkv.list
@@ -393,7 +389,7 @@ echo "deb-src http://mkvtoolnix.download/ubuntu/xenial/ ./ "  | sudo tee -a /etc
 #echo "deb https://pkg.tox.chat/debian nightly $(lsb_release -cs)" | sudo tee /etc/apt/sources.list.d/tox.list
 #wget -qO - https://pkg.tox.chat/debian/pkg.gpg.key | sudo apt-key add -
 
-msg "Ajout Repository Ring"
+msg "Adding Ring repository"
 echo "deb http://nightly.apt.ring.cx/ubuntu_16.04/ ring main" | sudo tee /etc/apt/sources.list.d/ring-nightly-man.list
 sudo apt-key adv --keyserver pgp.mit.edu --recv-keys A295D773307D25A33AE72F2F64CD5FA175348F84
 sudo add-apt-repository universe
@@ -402,21 +398,21 @@ sudo add-apt-repository universe
 #wget -O- https://jgeboski.github.io/obs.key | sudo apt-key add -
 #sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/jgeboski/xUbuntu_14.04/ ./' > /etc/apt/sources.list.d/jgeboski.list"
 
-msg "Ajout Repository Spotify"
+msg "Adding Spotify repository"
 echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
 
-msg "Ajout Repository VirtualBox"
+msg "Adding VirtualBox repository"
 wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
 wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc -O- | sudo apt-key add -
 echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
 
-msg "Ajout Repository Whatsie"
+msg "Adding Whatsie repository"
 gpg --keyserver pool.sks-keyservers.net --recv-keys 1537994D
 gpg --export --armor 1537994D | sudo apt-key add -
 echo "deb https://dl.bintray.com/aluxian/deb stable main" | sudo tee -a /etc/apt/sources.list.d/whatsie.list
 
-msg "Ajout Repository Getdeb"
+msg "Adding Getdeb repository"
 wget -q -O- http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add -
 echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb apps" | sudo tee /etc/apt/sources.list.d/getdeb.list
 
@@ -432,30 +428,30 @@ do
 # appMenu ----------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ Apps Menu ]" \
---menu "Choisissez les Apps à installer" 34 85 26 \
-Base "Outils de base" \
-Multimedia "Apps multimédia" \
-MultimediaExt "Apps multimédia (autres/ext)" \
-eBook "Apps/outils pour eBook" \
-Internet "Apps internet" \
-InternetExt "Apps internet (autres/ext)" \
-Utilitaires "Utilitaires divers" \
+--menu "Choose apps to install" 34 85 26 \
+Base "Base apps and tools" \
+Multimedia "Multimedia apps and tools" \
+MultimediaExt "Multimedia apps and tools (others/external)" \
+eBook "eBook apps and tools" \
+Internet "Internet apps and tools" \
+InternetExt "Internet apps and tools (others/external)" \
+Utilitaires "Misc. utilities apps and tools" \
 Wine "Wine" \
-WineG3D "Wine opti Gallium3D (PPA oibaf requis)" \
-WineStaging "Wine unstable en parallèle de wine" \
-KodiBETA "Kodi Beta/Unstable" \
-KodiNightly "Kodi Nightly" \
+WineG3D "WineDRI3 (Gallium3D) (oibaf PPA required)" \
+WineStaging "Unstable Wine beside Stable Wine" \
+KodiBETA "Beta/Unstable Kodi" \
+KodiNightly "Nightly Kodi" \
 Jeux "Steam, jstest-gtk" \
-Graveur "Apps pour graveur CD/DVD/BD" \
-NetTools "Apps/Outils réseau" \
-Caja "Extensions pour Caja" \
-Nautilus "Extensions pour Nautilus" \
-Gimp "Extensions pour Gimp" \
-RhythmBox "Extensions pour RhythmBox" \
-Pidgin "Extensions pour Pidgin et libpurple" \
-Unbound "Unbound, cache DNS" \
+Graveur "CD/DVD/BD Burning Apps and tools" \
+NetTools "Network apps and tools" \
+Caja "Caja extensions" \
+Nautilus "Nautilus + extensions" \
+Gimp "Gimp extensions" \
+RhythmBox "RhythmBox extensions" \
+Pidgin "Pidgin/libpurple extensions" \
+Unbound "Unbound (DNS cache)" \
 Zsh "Shell ZSH + Oh-my-Zsh" \
-Back "Revenir au menu principal" 2>"${menuAppINPUT}"
+Back "Back to the Main Menu" 2>"${menuAppINPUT}"
 
 menuAppItem=$(<"${menuAppINPUT}")
 
@@ -547,7 +543,7 @@ pressKey
 MultimediaExt) #----------------------------------------------------------------
 clear
 
-msg "Installation des Apps multimédia"
+msg "Installing Multimedia apps and tools"
 
 cd /tmp
 
@@ -594,8 +590,6 @@ runCmd "sudo apt-get install -y fbreader"; smsg "Installing fbreader"
 
 cd /tmp
 
-#msg "Installation de Calibre"
-#sudo -v && wget --no-check-certificate -nv -O- https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"
 runCmd "sudo -v && wget -q --no-check-certificate -nv -O- https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py | sudo python -c \"import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()\""
 smsg "Installing calibre"
 
@@ -638,7 +632,7 @@ pressKey
 InternetExt) #------------------------------------------------------------------
 clear
 
-msg "Installation des Apps internet"
+msg "Installing Internet apps and tools"
 
 cd /tmp
 
@@ -827,7 +821,7 @@ pressKey
 Graveur) #----------------------------------------------------------------------
 clear
 
-msg "Installing CD/DVD/BR Burning apps and tools"
+msg "Installing CD/DVD/BD Burning apps and tools"
 
 runCmd "sudo apt-get install -y brasero"; smsg "Installing brasero"
 runCmd "sudo apt-get install -y k3b k3b-extrathemes"; smsg "Installing k3b k3b-extrathemes"
@@ -973,20 +967,17 @@ runCmd "sudo apt-get install -y pidgin-skype"; smsg "Installing pidgin-skype"
 runCmd "sudo apt-get install -y purple-hangouts"; smsg "Installing purple-hangouts"
 runCmd "sudo apt-get install -y pidgin-hangouts"; smsg "Installing pidgin-hangouts"
 
-
-
-
 pressKey
 ;;
 
 Zsh) #--------------------------------------------------------------------------
 clear
 
-msg "Installation de ZSH"
+msg "Installing ZSH"
 sudo apt-get install -y zsh
 
-msg "Installation de Oh-my-Zsh"
-msh "Taper exit pour sortir de Zsh et revenir vers Yggdrasil"
+msg "Installing Oh-my-Zsh"
+msh "Type exit to leave Zsh and go back to Yggdrasil script"
 cd /tmp
 rm install.sh
 wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh
@@ -1023,12 +1014,12 @@ while true
 do
 # customMenu -------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
---title "[ Custom Menu ]" \
---menu "Customisation du système" 32 85 24 \
-Themes "Themes et icones" \
-Plank "Themes pour Plank" \
-Icons "Pack d'icones pour les Apps installées hors PPA" \
-Back "Revenir au menu principal" 2>"${menuCustomINPUT}"
+--title "[ Customization Menu ]" \
+--menu "System Customization" 32 85 24 \
+Themes "System themes & icons" \
+Plank "Plank themes" \
+Icons "Extra icons pack" \
+Back "Back to the Main Menu" 2>"${menuCustomINPUT}"
 
 menuCustomItem=$(<"${menuCustomINPUT}")
 
@@ -1038,7 +1029,7 @@ case $menuCustomItem in
 Themes) #-----------------------------------------------------------------------
 clear
 
-msg "Installation des thèmes"
+msg "Installing themes"
 # to add when available : ambiance-dark ambiance-dark-red mediterranean-theme polar-night-gtk hackstation-theme libra-theme zukitwo-dark-reloaded ceti-theme vertex-theme stylishdark-theme cenodark-gtk dorian-theme vimix-flat-themes delorean-dark dorian-theme-3.12 candra-gs-themes paper-gtk-theme
 
 runCmd "sudo apt-get install -y ambiance-crunchy"; smsg "Installing ambiance-crunchy"
@@ -1056,7 +1047,7 @@ runCmd "sudo apt-get install -y vibrancy-colors"; smsg "Installing vibrancy-colo
 runCmd "sudo apt-get install -y vivacious-colors"; smsg "Installing vivacious-colors"
 runCmd "sudo apt-get install -y numix-gtk-theme"; smsg "Installing numix-gtk-theme"
 
-msg "Installation des icônes"
+msg "Installing icons"
 # to add when available : elementary-icons paper-icon-theme
 
 runCmd "sudo apt-get install -y arc-icons"; smsg "Installing arc-icons"
@@ -1079,6 +1070,8 @@ pressKey
 Plank) #------------------------------------------------------------------------
 clear
 
+msg "Installing Plank themes"
+
 if which plank >/dev/null; then
   if (( $(ps -ef | grep -v grep | grep plank | wc -l) > 0 )); then
     sh -c "cd ~ && mkdir -p ~/.temp-plank-themer && cd ~/.temp-plank-themer && wget https://github.com/rhoconlinux/plank-themer/archive/master.zip && unzip master.zip && cd plank-themer-master/ && rm -fR ~/.config/plank/dock1/theme_index; rm -fR ~/.config/plank/dock1/themes-repo; cp -a theme_index/ ~/.config/plank/dock1 && cp -a themes-repo/ ~/.config/plank/dock1 && cd ~ && rm -R ~/.temp-plank-themer && sh ~/.config/plank/dock1/theme_index/plank-on-dock-themer.sh"
@@ -1097,7 +1090,7 @@ pressKey
 Icons) #------------------------------------------------------------------------
 clear
 
-msg "Installation des icones custom"
+msg "Installing extra icons pack"
 mkdir -p /home/$myHomedir/.icons
 cp icons.tar.gz /home/$myHomedir/.icons
 cd /home/$myHomedir/.icons
@@ -1125,15 +1118,15 @@ while true
 do
 # hwMenu -----------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
---title "[ HW Menu ]" \
---menu "Hardware : driver et configration" 32 95 24 \
+--title "[ Hardware Menu ]" \
+--menu "Hardware : drivers & configration" 32 95 24 \
 Solaar "Solaar - Logitech Unifying Manager App" \
-CardReader "Installation de pcscd pour les CardReader" \
-eID "Installation middleware eID" \
-EpsonV500Photo "Installation driver Espon V500 Photo + iscan + Xsane" \
-Microcode "Mise à jours du Microcode du CPU (Intel)" \
-WirelessIntel6320 "Config Intel Centrino Advanced-N 6320 (problème Bluetooth)" \
-Back "Revenir au menu principal" 2>"${menuHWINPUT}"
+CardReader "CardReader pcscd app" \
+eID "eID middleware" \
+EpsonV500Photo "Espon V500 Photo driver + iScan + Xsane" \
+Microcode "CPU Microcode update (Intel)" \
+WirelessIntel6320 "Intel Centrino Advanced-N 6320 config (Bluetooth problems)" \
+Back "Back to the Main Menu" 2>"${menuHWINPUT}"
 
 menuHWItem=$(<"${menuHWINPUT}")
 
@@ -1163,7 +1156,7 @@ clear
 
 cd /tmp
 
-msg "Installation de eID"
+msg "Installing eID middleware"
 
 msg "Installation de eID : download du .deb"
 wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0" http://eid.belgium.be/sites/default/files/downloads/eid-archive_2016.2_all.deb
@@ -1258,29 +1251,29 @@ while true
 do
 # devMenu ----------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
---title "[ Dev Menu ]" \
---menu "Choisissez les Apps de Dev à installer" 32 85 24 \
-DevApps "Outils de Dev divers (Requis)" \
-Java "Outils de dev Java" \
-JavaScript "Outils de dev JavaScript" \
-PHP "Outils de dev PHP" \
-LUA "Outils de dev LUA" \
-Ruby "Outils de dev Ruby" \
-QT "Outils de dev QT" \
-Python "Outils de dev Python" \
-AndroidEnv "Environnement Android (SDK, config, ...)" \
-Atom "IDE Atom + extensions" \
-Anjuta "IDE Anjuta" \
-Brackets "IDE Brackets" \
-CodeBlocks "IDE CodeBlocks" \
-Geany "IDE Geany" \
-Eclipse "IDE Eclipse" \
-Idea "IDE Intellij IDEA (Java)" \
-PyCharm "IDE PyCharm (Python)" \
-VisualStudioCode "IDA Visual Studio Code" \
-AndroidStudio "IDE Android Studio (Android)" \
-CAD "Apps de CAD" \
-Back "Revenir au menu principal" 2>"${menuDevINPUT}"
+--title "[ Dev Apps and tools Menu ]" \
+--menu "Dev apps and tools to install and configure" 32 85 24 \
+DevApps "Base Dev apps and tools (Required)" \
+Java "Java Dev apps and tools" \
+JavaScript "JavaScript Dev apps and tools" \
+PHP "PHP Dev apps and tools" \
+LUA "LUA Dev apps and tools" \
+Ruby "Ruby Dev apps and tools" \
+QT "QT Dev apps and tools" \
+Python "Python Dev apps and tools" \
+AndroidEnv "Android Environnement (SDK, config, ...)" \
+Atom "Atom + extensions" \
+Anjuta "Anjuta" \
+Brackets "Brackets" \
+CodeBlocks "CodeBlocks" \
+Geany "Geany" \
+Eclipse "Eclipse" \
+Idea "Intellij IDEA (Java)" \
+PyCharm "PyCharm (Python)" \
+VisualStudioCode "Visual Studio Code" \
+AndroidStudio "Android Studio (Android)" \
+CAD "CAD Apps and tools" \
+Back "Back to the Main Menu" 2>"${menuDevINPUT}"
 
 menuDevItem=$(<"${menuDevINPUT}")
 
@@ -1331,16 +1324,10 @@ runCmd "sudo apt-get install -y npm"; smsg "Installing npm"
 runCmd "sudo apt-get install -y nodejs-legacy"; smsg "Installing nodejs-legacy"
 runCmd "sudo apt-get install -y javascript-common"; smsg "Installing javascript-common"
 
-
 if which npm >/dev/null; then
-  msg "NPM installing : remark-lint"
-  sudo npm install remark-lint
-
-  msg "NPM installing : jshint"
-  sudo npm install -g jshint
-
-  msg "NPM installing : jedi"
-  sudo npm install -g jedi
+  runCmd "sudo npm install remark-lint"; smsg "NPM Installing qt4-dev-tools"
+  runCmd "sudo npm install jshint"; smsg "NPM Installing jshint"
+  runCmd "sudo npm install jedi"; smsg "NPM Installing jedi"
 fi
 
 pressKey
@@ -1416,7 +1403,6 @@ msg "Installing Python Dev apps and tools"
 runCmd "sudo apt-get install -y python3-dev"; smsg "Installing python3-dev"
 runCmd "sudo apt-get install -y python3-pip"; smsg "Installing python3-pip"
 runCmd "sudo apt-get install -y python3-pyqt5"; smsg "Installing python3-pyqt5"
-
 
 if which pip3 >/dev/null; then
   msg "Upgrading PIP"
@@ -1627,7 +1613,7 @@ Eclipse) #----------------------------------------------------------------------
 clear
 
 if which umake >/dev/null; then
-  msg "Umake install : Eclipse"
+  msg "Umake installing : Eclipse"
   sudo umake ide eclipse
 fi
 
@@ -1638,7 +1624,7 @@ Idea) #-------------------------------------------------------------------------
 clear
 
 if which umake >/dev/null; then
-  msg "Umake install : Idea"
+  msg "Umake installing : Idea"
   sudo umake ide idea
 fi
 pressKey
@@ -1648,7 +1634,7 @@ PyCharm) #----------------------------------------------------------------------
 clear
 
 if which umake >/dev/null; then
-  msg "Umake install : PyCharm"
+  msg "Umake installing : PyCharm"
   sudo umake ide pycharm
 fi
 
@@ -1659,7 +1645,7 @@ VisualStudioCode) #-------------------------------------------------------------
 clear
 
 if which umake >/dev/null; then
-  msg "Umake install : Visual-studio-code"
+  msg "Umake installing : Visual-studio-code"
   sudo umake web visual-studio-code
 fi
 
@@ -1670,7 +1656,7 @@ AndroidStudio) #----------------------------------------------------------------
 clear
 
 if which umake >/dev/null; then
-  msg "Umake install : Android-Studio"
+  msg "Umake installing : Android-Studio"
   sudo umake android android-studio
 fi
 
@@ -1707,14 +1693,14 @@ while true
 do
 # configMenu -------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
---title "[ Configuration du système ]" \
---menu "Configuration du système" 32 95 24 \
-Ufw "Activation du firewall ufw" \
-NumLockX "Activation de NumLock dés le démarrage" \
-TmpRAM "Mise en RAM de /tmp" \
-screenfetch "Ajout de screenfetch à .bashrc" \
-historyTS "Activation du TimeStamp dans History" \
-Back "Revenir au menu principal" 2>"${menuConfigINPUT}"
+--title "[ System Configuration ]" \
+--menu "System configuration" 32 95 24 \
+Ufw "Enable Firewall (ufw)" \
+NumLockX "NumLock Enabled at boot time" \
+TmpRAM "/tmp stored in RAM" \
+screenfetch "screenfetch added to .bashrc" \
+historyTS "TimeStamp enabled in Shell History" \
+Back "Back to the Main Menu" 2>"${menuConfigINPUT}"
 
 menuConfigItem=$(<"${menuConfigINPUT}")
 
@@ -1796,14 +1782,14 @@ while true
 do
 # SysToolsMenu -----------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
---title "[ Outils système ]" \
---menu "Configuration du système" 32 95 24 \
-inxi "infos sur le système" \
-speedtest-cli "test de la bande passante" \
-packetloss "on vérifie s'il y a des pertes de packets (ping)" \
-OptimizeFirefox "Optimisation des bases SQLite de Firefox" \
-Autoremove "Suppression des paquets inutiles" \
-Back "Revenir au menu principal" 2>"${menuSysToolsINPUT}"
+--title "[ System tools ]" \
+--menu "System tools to diagnose and optimize" 32 95 24 \
+inxi "System informations" \
+speedtest-cli "Bandwidth test" \
+packetloss "Packetloss test (ping)" \
+OptimizeFirefox "Firefox SQLite databases optimization" \
+Autoremove "Remove useless Deb packages" \
+Back "Back to the Main Menu" 2>"${menuSysToolsINPUT}"
 
 menuSysToolsItem=$(<"${menuSysToolsINPUT}")
 
@@ -1871,9 +1857,9 @@ done
 ;;
 
 Reboot) #-----------------------------------------------------------------------
-dialog --title "ATTENTION" \
+dialog --title "WARNING" \
 --backtitle "Yggdrasil "$version \
---yesno "\nRe-démarrage du système ?\n" 7 60
+--yesno "\nSystem reboot ?\n" 7 60
 # depending of the choice ...
 responseReboot=$?
 case $responseReboot in
@@ -1882,27 +1868,28 @@ sudo reboot
 ;;
 1)
 clear
-msg "Annulé ..."
+msg "Canceled ..."
 ;;
 255)
 clear
-msg "[ESC] pressé"
+msg "[ESC] pressed"
 ;;
 esac
 ;;
 
 About) #------------------------------------------------------------------------
 dialog --backtitle "Yggdrasil "$version \
---title "[ A propos de ...]" \
+--title "[ About ...]" \
 --msgbox '\n
-Auteur : Francois B. (Makotosan/Shakasan)\n\n
-Email : shakasan@sirenacorp.be\n
+Author : Francois B. (Makotosan/Shakasan)\n\n
+Email : shakasan@sirenacorp.be\n\n
 Website : https://sirenacorp.be/\n\n
+Github : https://github.com/shakasan/Yggdrasil_LM18\n\n
 Licence : GPLv3\n\n
 Version : '$version'\n\n
-Ce script a été réalisé afin de me faciliter la vie lors des (re)installations de mes machines personnelles ;-)\n\n
-Premier script aussi conséquent en Shell et avec Dialog,...\n\n
-Les conseils sont donc les bienvenus ^^' 25 50
+This script has been written to makes my life easier when I have to (re)install my personal computers ;-)\n\n
+This is my first major shell sccript and use of Dialog,...\n\n
+Advices and remarks are welcome ^^' 25 70
 ;;
 
 Exit) #-------------------------------------------------------------------------
