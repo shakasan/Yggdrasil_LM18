@@ -77,6 +77,17 @@ trap "rm $menuSysToolsOUTPUT; rm $menuSysToolsINPUT; exit" SIGHUP SIGINT SIGTERM
 # Script's functions                                                           #
 #------------------------------------------------------------------------------#
 
+# display a message between [ ] depending of the ret_code
+function retCode () {
+  typeset ret_code="$1"
+
+  if [ $ret_code == 0 ]; then
+    printf "[ ""$VERT""OK"$NORMAL" ] "
+  else
+    printf "[ ""$ROUGE""!!"$NORMAL" ] "
+  fi
+}
+
 # run a shell command and display a message between [ ] depending on the ret_code
 function runCmd () {
   typeset cmd="$1"
@@ -121,6 +132,9 @@ function pressKey () {
 
 # system update
 function updateSystem () {
+
+  msg "System update"
+
   runCmd "sudo apt-get update"
   smsg "apt-get update"
 
@@ -188,6 +202,105 @@ function depCheck () {
     printf "[ ""$ROUGE""!!"$NORMAL" ] dialog : installing ...\n"
     sudo apt-get install -y dialog >/dev/null
   fi
+}
+
+addPPA () {
+  msg "Adding PPA and repositories"
+
+  runCmd "sudo dpkg --add-architecture i386"; smsg "Adding Arch i386"
+
+  runCmd "sudo apt-get install -y apt-transport-https"; smsg "Adding apt-transport-https package"
+
+  sudo sh -c "echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections" && retCode $? && smsg "Accepting Oracle Java SE 7"
+  sudo sh -c "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections" && retCode $? && smsg "Accepting Oracle Java SE 8"
+
+  sudo sh -c "echo sience-config science-config/group select '$myHomedir ($myHomedir)' | sudo debconf-set-selections"  && retCode $? && smsg "Science-config package pre-config"
+
+  runCmd "sudo add-apt-repository -y ppa:noobslab/themes"; smsg "Adding ppa:noobslab/themes PPA (themes)" # themes from noobslab
+  runCmd "sudo add-apt-repository -y ppa:noobslab/icons"; smsg "Adding ppa:noobslab/icons PPA (icons)" # icons from noobslab
+  runCmd "sudo add-apt-repository -y ppa:numix/ppa"; smsg "Adding ppa:numix/ppa PPA (themes)" # theme Numix
+  runCmd "sudo add-apt-repository -y ppa:ravefinity-project/ppa"; smsg "Adding ppa:ravefinity-project/ppa PPA" # Themes
+  runCmd "sudo add-apt-repository -y ppa:teejee2008/ppa"; smsg "Adding ppa:teejee2008/ppa PPA (Aptik, Conky-Manager)" # Aptik - Conky-Manage
+  runCmd "sudo add-apt-repository -y ppa:yktooo/ppa"; smsg "Adding ppa:yktooo/ppa PPA (indicator-sound-switcher)" # indicator-sound-switcher
+  runCmd "sudo add-apt-repository -y ppa:webupd8team/y-ppa-manager"; smsg "Adding ppa:webupd8team/y-ppa-manager PPA (y-ppa-manager)" # y-ppa-manager
+  runCmd "sudo add-apt-repository -y ppa:webupd8team/atom"; smsg "Adding ppa:webupd8team/atom PPA (Atom IDE)" # IDE
+  runCmd "sudo add-apt-repository -y ppa:videolan/stable-daily"; smsg "Adding ppa:videolan/stable-daily PPA (vlc)" # video player
+  runCmd "sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make"; smsg "Adding ppa:ubuntu-desktop/ubuntu-make PPA (umake)" # ubuntu-make
+  runCmd "sudo add-apt-repository -y ppa:nowrep/qupzilla"; smsg "Adding ppa:nowrep/qupzilla PPA (qupzilla)" # web browser
+  runCmd "sudo add-apt-repository -y ppa:atareao/atareao"; smsg "Adding ppa:atareao/atareao PPA (pushbullet-indicator, imagedownloader, gqrcode, cpu-g)" # pushbullet-indicator, imagedownloader, gqrcode, cpu-g
+  runCmd "sudo add-apt-repository -y ppa:costales/anoise"; smsg "Adding ppa:costales/anoise PPA (anoise)" # ambiance sounds
+  runCmd "sudo add-apt-repository -y ppa:fossfreedom/rhythmbox-plugins"; smsg "Adding ppa:fossfreedom/rhythmbox-plugins PPA (Rhythmbox plugins)" # Rhythmbox plugins
+  runCmd "sudo add-apt-repository -y ppa:nilarimogard/webupd8"; smsg "Adding ppa:nilarimogard/webupd8 PPA (Audacious, Grive2, Pidgin-indicator)" # Audacious, Grive2, Pidgin-indicator
+  runCmd "sudo add-apt-repository -y ppa:oibaf/graphics-drivers"; smsg "Adding ppa:oibaf/graphics-drivers PPA (free graphics-drivers + mesa)" # free graphics-drivers + mesa
+  runCmd "sudo add-apt-repository -y ppa:team-xbmc/ppa"; smsg "Adding ppa:team-xbmc/ppa PPA (Kodi)" # Kodi
+  runCmd "sudo add-apt-repository -y ppa:webupd8team/java"; smsg "Adding ppa:webupd8team/java PPA (Oracle Java SE 7/8)" # Oracle Java SE 7/8
+  runCmd "sudo add-apt-repository -y ppa:hugin/hugin-builds"; smsg "Adding ppa:hugin/hugin-builds PPA (Hugin)" # image editor
+  runCmd "sudo add-apt-repository -y ppa:mumble/release"; smsg "Adding ppa:mumble/release PPA (Mumble)" # Mumble
+  runCmd "sudo add-apt-repository -y ppa:atareao/utext"; smsg "Adding ppa:atareao/utext PPA (utext)" # Markdown editor
+  runCmd "sudo add-apt-repository -y ppa:danielrichter2007/grub-customizer"; smsg "Adding ppa:danielrichter2007/grub-customizer PPA (grub-customizer)" # grub-customizer
+  runCmd "sudo add-apt-repository -y ppa:lucioc/sayonara"; smsg "Adding ppa:lucioc/sayonara PPA (Sayonara)" # audio player
+  runCmd "sudo add-apt-repository -y ppa:haraldhv/shotcut"; smsg "Adding ppa:haraldhv/shotcut PPA (Shotcut)" # video editor
+  runCmd "sudo add-apt-repository -y ppa:flacon/ppa"; smsg "Adding ppa:flacon/ppa PPA (Flacon)" # audio extraction
+  runCmd "sudo add-apt-repository -y ppa:jaap.karssenberg/zim"; smsg "Adding ppa:jaap.karssenberg/zim PPA (Zim)" # local wiki
+  runCmd "sudo add-apt-repository -y ppa:pmjdebruijn/darktable-release"; smsg "Adding ppa:pmjdebruijn/darktable-release PPA (Darktable)" # raw editor
+  runCmd "sudo add-apt-repository -y ppa:js-reynaud/kicad-4"; smsg "Adding ppa:js-reynaud/kicad-4 PPA (Kicad 4)" # CAD
+  runCmd "sudo add-apt-repository -y ppa:stebbins/handbrake-releases"; smsg "Adding ppa:stebbins/handbrake-releases PPA (Handbrake)" # video transcoder
+  runCmd "sudo add-apt-repository -y ppa:webupd8team/brackets"; smsg "Adding ppa:webupd8team/brackets PPA (Adobe Brackets)" # IDE
+  runCmd "sudo add-apt-repository -y ppa:graphics-drivers/ppa"; smsg "Adding ppa:graphics-drivers/ppa PPA (Nvidia Graphics Drivers)" # non-free nvidia drivers
+  runCmd "sudo add-apt-repository -y ppa:djcj/hybrid"; smsg "Adding ppa:djcj/hybrid PPA (FFMpeg, MKVToolnix)" # FFMpeg, MKVToolnix
+  runCmd "sudo add-apt-repository -y ppa:diodon-team/stable"; smsg "Adding ppa:diodon-team/stable PPA (Diodon)" # clipboard manager
+  runCmd "sudo add-apt-repository -y ppa:notepadqq-team/notepadqq"; smsg "Adding ppa:notepadqq-team/notepadqq PPA (Notepadqq)" # notepad++ clone
+  runCmd "sudo add-apt-repository -y ppa:mariospr/frogr"; smsg "Adding ppa:mariospr/frogr PPA (Frogr)" # flickr manager
+  runCmd "sudo add-apt-repository -y ppa:saiarcot895/myppa"; smsg "Adding ppa:saiarcot895/myppa PPA (apt-fast)" # apt-fast tools
+  runCmd "sudo add-apt-repository -y ppa:ubuntuhandbook1/slowmovideo"; smsg "Adding ppa:ubuntuhandbook1/slowmovideo PPA (Slowmovideo)" # slow motion video editor
+  runCmd "sudo add-apt-repository -y ppa:transmissionbt/ppa"; smsg "Adding ppa:transmissionbt/ppa PPA (Transmission-BT)" # bittorrent client
+  runCmd "sudo add-apt-repository -y ppa:geary-team/releases"; smsg "Adding ppa:geary-team/releases PPA (Geary)" # email client
+  runCmd "sudo add-apt-repository -y ppa:varlesh-l/papirus-pack"; smsg "Adding ppa:varlesh-l/papirus-pack PPA (themes)" # themes
+
+  #sudo add-apt-repository -y ppa:birdie-team/stable # birdie, twitter client # no longer maintained ?
+  #sudo add-apt-repository -y ppa:mc3man/trusty-media # multimedia apps # no longer maintained ?
+  #sudo add-apt-repository -y ppa:whatsapp-purple/ppa # WhatsApp plugin for Pidgin/libpurple # update ?
+
+  wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - && retCode $? && smsg "Adding Opera repository key"
+  echo "deb http://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera.list && retCode $? && smsg "Adding Opera repository"
+
+  wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add - && retCode $? && smsg "Adding Chrome repository key"
+  echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list && retCode $? && smsg "Adding Chrome repository"
+
+  wget -qO - https://d2t3ff60b2tol4.cloudfront.net/services@insynchq.com.gpg.key | sudo apt-key add - && retCode $? && smsg "Adding InSync repository key"
+  echo "deb http://apt.insynchq.com/ubuntu xenial non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list && retCode $? && smsg "Adding InSync repository"
+
+  sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D && retCode $? && smsg "Adding Docker repository key"
+  echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main"  | sudo tee /etc/apt/sources.list.d/docker.list && retCode $? && smsg "Adding Docker repository"
+
+  wget -qO - https://syncthing.net/release-key.txt | sudo apt-key add - && retCode $? && smsg "Adding SyncThing repository key"
+  echo "deb http://apt.syncthing.net/ syncthing release" | sudo tee /etc/apt/sources.list.d/syncthing.list && retCode $? && smsg "Adding SyncThing repository"
+
+  msg "Adding OwnCloud-Client repository"
+  wget -qO - http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_16.04/Release.key | sudo apt-key add - && retCode $? && smsg "Adding OwnCloud-Client repository key"
+  echo "deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /" | sudo tee /etc/apt/sources.list.d/owncloud-client.list && retCode $? && smsg "Adding OwnCloud-Client repository"
+
+  wget -q -O - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | sudo apt-key add - && retCode $? && smsg "Adding MKVToolnix repository key"
+  echo "deb http://mkvtoolnix.download/ubuntu/xenial/ ./"  | sudo tee /etc/apt/sources.list.d/mkv.list && retCode $? && smsg "Adding MKVToolnix repository"
+  echo "deb-src http://mkvtoolnix.download/ubuntu/xenial/ ./ "  | sudo tee -a /etc/apt/sources.list.d/mkv.list && retCode $? && smsg "Adding MKVToolnix sources repository"
+
+  #wget -O- https://jgeboski.github.io/obs.key | sudo apt-key add - && retCode $? && smsg "Adding purple-facebook repository key"
+  #sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/jgeboski/xUbuntu_14.04/ ./' > /etc/apt/sources.list.d/jgeboski.list" && retCode $? && smsg "Adding purple-facebook repository"
+
+  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 && retCode $? && smsg "Adding Spotify repository key"
+  echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list && retCode $? && smsg "Adding Spotify repository"
+
+  wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add - && retCode $? && smsg "Adding VirtualBox repository old key"
+  wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc -O- | sudo apt-key add - && retCode $? && smsg "Adding VirtualBox repository key"
+  echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list && retCode $? && smsg "Adding VirtualBox repository"
+
+  gpg --keyserver pool.sks-keyservers.net --recv-keys 1537994D && gpg --export --armor 1537994D | sudo apt-key add - && retCode $? && smsg "Adding Whatsie repository key"
+  echo "deb https://dl.bintray.com/aluxian/deb stable main" | sudo tee -a /etc/apt/sources.list.d/whatsie.list && retCode $? && smsg "Adding Whatsie repository"
+
+  wget -q -O- http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add - && retCode $? && smsg "Adding Getdeb repository key"
+  echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb apps" | sudo tee /etc/apt/sources.list.d/getdeb.list && retCode $? && smsg "Adding Getdeb repository"
+
+  updateSystem
 }
 
 #------------------------------------------------------------------------------#
@@ -286,7 +399,6 @@ pressKey
 Update) #-----------------------------------------------------------------------
 clear
 
-msg "System update"
 updateSystem
 
 pressKey
@@ -295,128 +407,9 @@ pressKey
 PPA) #--------------------------------------------------------------------------
 clear
 
-msg "Adding PPA and repositories"
+addPPA
 
-msg "Adding Arch i386"
-sudo dpkg --add-architecture i386
-
-msg "Adding apt-transport-https package"
-sudo apt-get install apt-transport-https
-
-msg "Accept Licences Java 7/8 Oracle"
-sudo sh -c "echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections"
-sudo sh -c "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections"
-
-msg "Science-config package pre-config"
-sudo sh -c "echo sience-config science-config/group select '$myHomedir ($myHomedir)' | sudo debconf-set-selections"
-
-msg "Adding PPAs"
-sudo add-apt-repository -y ppa:noobslab/themes # themes from noobslab
-sudo add-apt-repository -y ppa:noobslab/icons # icones from noobslab
-sudo add-apt-repository -y ppa:numix/ppa # Theme Numix
-sudo add-apt-repository -y ppa:ravefinity-project/ppa # themes
-sudo add-apt-repository -y ppa:teejee2008/ppa # Aptik - Conky-Manager
-sudo add-apt-repository -y ppa:yktooo/ppa # indicator-sound-switcher
-sudo add-apt-repository -y ppa:webupd8team/y-ppa-manager # Y-PPA-Manager
-sudo add-apt-repository -y ppa:webupd8team/atom # Atom IDE
-sudo add-apt-repository -y ppa:videolan/stable-daily # VLC
-sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make # ubuntu-make
-sudo add-apt-repository -y ppa:nowrep/qupzilla # Qupzilla web browser
-sudo add-apt-repository -y ppa:atareao/atareao # pushbullet-indicator, imagedownloader, gqrcode, cpu-g
-sudo add-apt-repository -y ppa:costales/anoise # Anoise, ambiance sounds
-sudo add-apt-repository -y ppa:fossfreedom/rhythmbox-plugins # plugins pour Rhythmbox
-sudo add-apt-repository -y ppa:nilarimogard/webupd8 # Audacious, grive2, pidgin-indicator, ...
-sudo add-apt-repository -y ppa:oibaf/graphics-drivers # Pilotes graphique libre + MESA
-sudo add-apt-repository -y ppa:team-xbmc/ppa # Kodi
-sudo add-apt-repository -y ppa:webupd8team/java # oracle-java7/8
-sudo add-apt-repository -y ppa:hugin/hugin-builds # Hugin image editor
-sudo add-apt-repository -y ppa:mumble/release # Mumble
-sudo add-apt-repository -y ppa:atareao/utext # Utext, Markdown editor
-sudo add-apt-repository -y ppa:danielrichter2007/grub-customizer # grub-customizer
-#sudo add-apt-repository -y ppa:birdie-team/stable # birdie, twitter client # no longer maintained ?
-sudo add-apt-repository -y ppa:lucioc/sayonara # lecteur audio
-sudo add-apt-repository -y ppa:haraldhv/shotcut # Shotcut, video editor
-sudo add-apt-repository -y ppa:flacon/ppa # extraction audio
-#sudo add-apt-repository -y ppa:mc3man/trusty-media # multimedia apps # no longer maintained ?
-sudo add-apt-repository -y ppa:jaap.karssenberg/zim # Wiki en local
-sudo add-apt-repository -y ppa:pmjdebruijn/darktable-release # darktable (newest versions)
-sudo add-apt-repository -y ppa:js-reynaud/kicad-4 # Kicad 4
-sudo add-apt-repository -y ppa:stebbins/handbrake-releases # handbrake
-sudo add-apt-repository -y ppa:webupd8team/brackets # Brackets IDE, Adobe Open-Source IDE
-sudo add-apt-repository -y ppa:graphics-drivers/ppa # drivers Nvidia proprio
-sudo add-apt-repository -y ppa:djcj/hybrid # FFMpeg, MKVToolnix, ...
-sudo add-apt-repository -y ppa:diodon-team/stable # Diodon clipboard
-sudo add-apt-repository -y ppa:notepadqq-team/notepadqq # Notepadqq (Notepad++ clone)
-sudo add-apt-repository -y ppa:mariospr/frogr # Frogr, Flickr manager
-sudo add-apt-repository -y ppa:saiarcot895/myppa # apt-fast
-sudo add-apt-repository -y ppa:ubuntuhandbook1/slowmovideo # SlowmoVideo
-#sudo add-apt-repository -y ppa:whatsapp-purple/ppa # WhatsApp plugin for Pidgin/libpurple # update ?
-sudo add-apt-repository -y ppa:transmissionbt/ppa # Transmission-BT (newest versions)
-sudo add-apt-repository -y ppa:geary-team/releases # Geary (newest versions)
-sudo add-apt-repository -y ppa:varlesh-l/papirus-pack # themes and icons
-
-msg "Adding Opera repository"
-echo "deb http://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera.list
-wget -qO- http://deb.opera.com/archive.key | sudo apt-key add -
-
-msg "Adding Google Chrome repository"
-wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
-
-msg "Adding InSync repository"
-echo "deb http://apt.insynchq.com/ubuntu xenial non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list
-wget -qO - https://d2t3ff60b2tol4.cloudfront.net/services@insynchq.com.gpg.key | sudo apt-key add -
-
-msg "Adding Docker repository"
-sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main"  | sudo tee /etc/apt/sources.list.d/docker.list
-
-msg "Adding SyncThing repository"
-wget -qO - https://syncthing.net/release-key.txt | sudo apt-key add -
-echo "deb http://apt.syncthing.net/ syncthing release" | sudo tee /etc/apt/sources.list.d/syncthing.list
-
-msg "Adding OwnCloud-Client repository"
-wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_16.04/Release.key
-sudo apt-key add - < Release.key
-sudo sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /' >> /etc/apt/sources.list.d/owncloud-client.list"
-
-msg "Adding MKVToolnix repository"
-wget -q -O - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | sudo apt-key add -
-echo "deb http://mkvtoolnix.download/ubuntu/xenial/ ./"  | sudo tee /etc/apt/sources.list.d/mkv.list
-echo "deb-src http://mkvtoolnix.download/ubuntu/xenial/ ./ "  | sudo tee -a /etc/apt/sources.list.d/mkv.list
-
-#msg "Ajout Repository Tox/Qtox"
-#echo "deb https://pkg.tox.chat/debian nightly $(lsb_release -cs)" | sudo tee /etc/apt/sources.list.d/tox.list
-#wget -qO - https://pkg.tox.chat/debian/pkg.gpg.key | sudo apt-key add -
-
-msg "Adding Ring repository"
-echo "deb http://nightly.apt.ring.cx/ubuntu_16.04/ ring main" | sudo tee /etc/apt/sources.list.d/ring-nightly-man.list
-sudo apt-key adv --keyserver pgp.mit.edu --recv-keys A295D773307D25A33AE72F2F64CD5FA175348F84
-sudo add-apt-repository universe
-
-#msg "Ajout Repository purple-facebook"
-#wget -O- https://jgeboski.github.io/obs.key | sudo apt-key add -
-#sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/jgeboski/xUbuntu_14.04/ ./' > /etc/apt/sources.list.d/jgeboski.list"
-
-msg "Adding Spotify repository"
-echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
-
-msg "Adding VirtualBox repository"
-wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
-wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc -O- | sudo apt-key add -
-echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
-
-msg "Adding Whatsie repository"
-gpg --keyserver pool.sks-keyservers.net --recv-keys 1537994D
-gpg --export --armor 1537994D | sudo apt-key add -
-echo "deb https://dl.bintray.com/aluxian/deb stable main" | sudo tee -a /etc/apt/sources.list.d/whatsie.list
-
-msg "Adding Getdeb repository"
-wget -q -O- http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add -
-echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb apps" | sudo tee /etc/apt/sources.list.d/getdeb.list
-
-updateSystem
+pressKey
 ;;
 
 AppInstall) #-------------------------------------------------------------------
