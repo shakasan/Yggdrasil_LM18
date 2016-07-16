@@ -174,35 +174,35 @@ function depCheck () {
   if which mpg123 >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] mpg123 found\n"
   else
-    runCmd "sudo apt-get install -y mpg123"; smsg "Installing mpg123"
+    runCmd "sudo apt-get install -y mpg123"; smsg "mpg123 not foud...Installing..."
   fi
 
   # libnotify-bin (cmd : notify-send)
   if which notify-send >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] libnotify-bin found\n"
   else
-    runCmd "sudo apt-get install -y libnotify-bin"; smsg "Installing libnotify-bin"
+    runCmd "sudo apt-get install -y libnotify-bin"; smsg "libnotify-bin not found...Installing..."
   fi
 
   # lsb_release
   if which lsb_release >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] lsb-release found\n"
   else
-    runCmd "sudo apt-get install -y lsb-release"; smsg "Installing lsb-release"
+    runCmd "sudo apt-get install -y lsb-release"; smsg "lsb-release not found...Installing..."
   fi
 
   # cifs-utils
   if which mount.cifs >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] cifs-utils found\n"
   else
-    runCmd "sudo apt-get install -y cifs-utils"; smsg "Installing cifs-utils"
+    runCmd "sudo apt-get install -y cifs-utils"; smsg "cifs-utils not found...Installing..."
   fi
 
   # dialog
   if which dialog >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] dialog found\n"
   else
-    runCmd "sudo apt-get install -y dialog"; smsg "Installing dialog"
+    runCmd "sudo apt-get install -y dialog"; smsg "dialog not found...Installing..."
   fi
 }
 
