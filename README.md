@@ -10,7 +10,11 @@ The purpose of this script is to provide a full set of tools to install, customi
 Installation
 ------------
 
-*todo*
+```
+git clone https://github.com/shakasan/Yggdrasil_LM18.git
+cd Yggdrasil_LM18
+./yggdrasil.sh
+```
 
 Credits
 -------
