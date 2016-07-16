@@ -111,8 +111,12 @@ function runCmd () {
 }
 
 # display a simple message
-function smsg () {
+function smsgn () {
     printf "$*\n"
+}
+
+function smsg () {
+    printf "$*"
 }
 
 # display a message + notification
@@ -139,17 +143,16 @@ function pressKey () {
 
 # system update
 function updateSystem () {
-
   msg "System update"
 
   runCmd "sudo apt-get update"
-  smsg "apt-get update"
+  smsgn "apt-get update"
 
   runCmd "sudo apt-get -y upgrade"
-  smsg "apt-get -y upgrade"
+  smsgn "apt-get -y upgrade"
 
   runCmd "sudo apt-get -y dist-upgrade"
-  smsg "apt-get -y dist-upgrade"
+  smsgn "apt-get -y dist-upgrade"
 }
 
 # check if running on the right OS ^^
@@ -174,209 +177,209 @@ function depCheck () {
   if which mpg123 >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] mpg123 found\n"
   else
-    runCmd "sudo apt-get install -y mpg123"; smsg "mpg123 not foud...Installing..."
+    runCmd "sudo apt-get install -y mpg123"; smsgn "mpg123 not foud...Installing..."
   fi
 
   # libnotify-bin (cmd : notify-send)
   if which notify-send >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] libnotify-bin found\n"
   else
-    runCmd "sudo apt-get install -y libnotify-bin"; smsg "libnotify-bin not found...Installing..."
+    runCmd "sudo apt-get install -y libnotify-bin"; smsgn "libnotify-bin not found...Installing..."
   fi
 
   # lsb_release
   if which lsb_release >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] lsb-release found\n"
   else
-    runCmd "sudo apt-get install -y lsb-release"; smsg "lsb-release not found...Installing..."
+    runCmd "sudo apt-get install -y lsb-release"; smsgn "lsb-release not found...Installing..."
   fi
 
   # cifs-utils
   if which mount.cifs >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] cifs-utils found\n"
   else
-    runCmd "sudo apt-get install -y cifs-utils"; smsg "cifs-utils not found...Installing..."
+    runCmd "sudo apt-get install -y cifs-utils"; smsgn "cifs-utils not found...Installing..."
   fi
 
   # dialog
   if which dialog >/dev/null; then
     printf "[ ""$VERT""OK"$NORMAL" ] dialog found\n"
   else
-    runCmd "sudo apt-get install -y dialog"; smsg "dialog not found...Installing..."
+    runCmd "sudo apt-get install -y dialog"; smsgn "dialog not found...Installing..."
   fi
 }
 
-addPPA () {
+function addPPA () {
   msg "Adding PPA and repositories"
 
-  runCmd "sudo dpkg --add-architecture i386"; smsg "Adding Arch i386"
+  runCmd "sudo dpkg --add-architecture i386"; smsgn "Adding Arch i386"
 
-  runCmd "sudo apt-get install -y apt-transport-https"; smsg "Intalling apt-transport-https"
+  runCmd "sudo apt-get install -y apt-transport-https"; smsgn "Intalling apt-transport-https"
 
-  sudo sh -c "echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections" &>> $logFile && retCode $? && smsg "Accepting Oracle Java SE 7"
-  sudo sh -c "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections" &>> $logFile && retCode $? && smsg "Accepting Oracle Java SE 8"
+  sudo sh -c "echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections" &>> $logFile && retCode $? && smsgn "Accepting Oracle Java SE 7"
+  sudo sh -c "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections" &>> $logFile && retCode $? && smsgn "Accepting Oracle Java SE 8"
 
-  sudo sh -c "echo sience-config science-config/group select '$myHomedir ($myHomedir)' | sudo debconf-set-selections" &>> $logFile && retCode $? && smsg "Pre-configuring Science-config package"
+  sudo sh -c "echo sience-config science-config/group select '$myHomedir ($myHomedir)' | sudo debconf-set-selections" &>> $logFile && retCode $? && smsgn "Pre-configuring Science-config package"
 
-  runCmd "sudo add-apt-repository -y ppa:noobslab/themes"; smsg "Adding ppa:noobslab/themes PPA (themes)" # themes from noobslab
-  runCmd "sudo add-apt-repository -y ppa:noobslab/icons"; smsg "Adding ppa:noobslab/icons PPA (icons)" # icons from noobslab
-  runCmd "sudo add-apt-repository -y ppa:numix/ppa"; smsg "Adding ppa:numix/ppa PPA (themes)" # theme Numix
-  runCmd "sudo add-apt-repository -y ppa:ravefinity-project/ppa"; smsg "Adding ppa:ravefinity-project/ppa PPA" # Themes
-  runCmd "sudo add-apt-repository -y ppa:teejee2008/ppa"; smsg "Adding ppa:teejee2008/ppa PPA (Aptik, Conky-Manager)" # Aptik - Conky-Manage
-  runCmd "sudo add-apt-repository -y ppa:yktooo/ppa"; smsg "Adding ppa:yktooo/ppa PPA (indicator-sound-switcher)" # indicator-sound-switcher
-  runCmd "sudo add-apt-repository -y ppa:webupd8team/y-ppa-manager"; smsg "Adding ppa:webupd8team/y-ppa-manager PPA (y-ppa-manager)" # y-ppa-manager
-  runCmd "sudo add-apt-repository -y ppa:webupd8team/atom"; smsg "Adding ppa:webupd8team/atom PPA (Atom IDE)" # IDE
-  runCmd "sudo add-apt-repository -y ppa:videolan/stable-daily"; smsg "Adding ppa:videolan/stable-daily PPA (vlc)" # video player
-  runCmd "sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make"; smsg "Adding ppa:ubuntu-desktop/ubuntu-make PPA (umake)" # ubuntu-make
-  runCmd "sudo add-apt-repository -y ppa:nowrep/qupzilla"; smsg "Adding ppa:nowrep/qupzilla PPA (qupzilla)" # web browser
-  runCmd "sudo add-apt-repository -y ppa:atareao/atareao"; smsg "Adding ppa:atareao/atareao PPA (pushbullet-indicator, imagedownloader, gqrcode, cpu-g)" # pushbullet-indicator, imagedownloader, gqrcode, cpu-g
-  runCmd "sudo add-apt-repository -y ppa:costales/anoise"; smsg "Adding ppa:costales/anoise PPA (anoise)" # ambiance sounds
-  runCmd "sudo add-apt-repository -y ppa:fossfreedom/rhythmbox-plugins"; smsg "Adding ppa:fossfreedom/rhythmbox-plugins PPA (Rhythmbox plugins)" # Rhythmbox plugins
-  runCmd "sudo add-apt-repository -y ppa:nilarimogard/webupd8"; smsg "Adding ppa:nilarimogard/webupd8 PPA (Audacious, Grive2, Pidgin-indicator)" # Audacious, Grive2, Pidgin-indicator
-  runCmd "sudo add-apt-repository -y ppa:oibaf/graphics-drivers"; smsg "Adding ppa:oibaf/graphics-drivers PPA (free graphics-drivers + mesa)" # free graphics-drivers + mesa
-  runCmd "sudo add-apt-repository -y ppa:team-xbmc/ppa"; smsg "Adding ppa:team-xbmc/ppa PPA (Kodi)" # Kodi
-  runCmd "sudo add-apt-repository -y ppa:webupd8team/java"; smsg "Adding ppa:webupd8team/java PPA (Oracle Java SE 7/8)" # Oracle Java SE 7/8
-  runCmd "sudo add-apt-repository -y ppa:hugin/hugin-builds"; smsg "Adding ppa:hugin/hugin-builds PPA (Hugin)" # image editor
-  runCmd "sudo add-apt-repository -y ppa:mumble/release"; smsg "Adding ppa:mumble/release PPA (Mumble)" # Mumble
-  runCmd "sudo add-apt-repository -y ppa:atareao/utext"; smsg "Adding ppa:atareao/utext PPA (utext)" # Markdown editor
-  runCmd "sudo add-apt-repository -y ppa:danielrichter2007/grub-customizer"; smsg "Adding ppa:danielrichter2007/grub-customizer PPA (grub-customizer)" # grub-customizer
-  runCmd "sudo add-apt-repository -y ppa:lucioc/sayonara"; smsg "Adding ppa:lucioc/sayonara PPA (Sayonara)" # audio player
-  runCmd "sudo add-apt-repository -y ppa:haraldhv/shotcut"; smsg "Adding ppa:haraldhv/shotcut PPA (Shotcut)" # video editor
-  runCmd "sudo add-apt-repository -y ppa:flacon/ppa"; smsg "Adding ppa:flacon/ppa PPA (Flacon)" # audio extraction
-  runCmd "sudo add-apt-repository -y ppa:jaap.karssenberg/zim"; smsg "Adding ppa:jaap.karssenberg/zim PPA (Zim)" # local wiki
-  runCmd "sudo add-apt-repository -y ppa:pmjdebruijn/darktable-release"; smsg "Adding ppa:pmjdebruijn/darktable-release PPA (Darktable)" # raw editor
-  runCmd "sudo add-apt-repository -y ppa:js-reynaud/kicad-4"; smsg "Adding ppa:js-reynaud/kicad-4 PPA (Kicad 4)" # CAD
-  runCmd "sudo add-apt-repository -y ppa:stebbins/handbrake-releases"; smsg "Adding ppa:stebbins/handbrake-releases PPA (Handbrake)" # video transcoder
-  runCmd "sudo add-apt-repository -y ppa:webupd8team/brackets"; smsg "Adding ppa:webupd8team/brackets PPA (Adobe Brackets)" # IDE
-  runCmd "sudo add-apt-repository -y ppa:graphics-drivers/ppa"; smsg "Adding ppa:graphics-drivers/ppa PPA (Nvidia Graphics Drivers)" # non-free nvidia drivers
-  runCmd "sudo add-apt-repository -y ppa:djcj/hybrid"; smsg "Adding ppa:djcj/hybrid PPA (FFMpeg, MKVToolnix)" # FFMpeg, MKVToolnix
-  runCmd "sudo add-apt-repository -y ppa:diodon-team/stable"; smsg "Adding ppa:diodon-team/stable PPA (Diodon)" # clipboard manager
-  runCmd "sudo add-apt-repository -y ppa:notepadqq-team/notepadqq"; smsg "Adding ppa:notepadqq-team/notepadqq PPA (Notepadqq)" # notepad++ clone
-  runCmd "sudo add-apt-repository -y ppa:mariospr/frogr"; smsg "Adding ppa:mariospr/frogr PPA (Frogr)" # flickr manager
-  runCmd "sudo add-apt-repository -y ppa:saiarcot895/myppa"; smsg "Adding ppa:saiarcot895/myppa PPA (apt-fast)" # apt-fast tools
-  runCmd "sudo add-apt-repository -y ppa:ubuntuhandbook1/slowmovideo"; smsg "Adding ppa:ubuntuhandbook1/slowmovideo PPA (Slowmovideo)" # slow motion video editor
-  runCmd "sudo add-apt-repository -y ppa:transmissionbt/ppa"; smsg "Adding ppa:transmissionbt/ppa PPA (Transmission-BT)" # bittorrent client
-  runCmd "sudo add-apt-repository -y ppa:geary-team/releases"; smsg "Adding ppa:geary-team/releases PPA (Geary)" # email client
-  runCmd "sudo add-apt-repository -y ppa:varlesh-l/papirus-pack"; smsg "Adding ppa:varlesh-l/papirus-pack PPA (themes)" # themes
+  runCmd "sudo add-apt-repository -y ppa:noobslab/themes"; smsgn "Adding ppa:noobslab/themes PPA (themes)" # themes from noobslab
+  runCmd "sudo add-apt-repository -y ppa:noobslab/icons"; smsgn "Adding ppa:noobslab/icons PPA (icons)" # icons from noobslab
+  runCmd "sudo add-apt-repository -y ppa:numix/ppa"; smsgn "Adding ppa:numix/ppa PPA (themes)" # theme Numix
+  runCmd "sudo add-apt-repository -y ppa:ravefinity-project/ppa"; smsgn "Adding ppa:ravefinity-project/ppa PPA" # Themes
+  runCmd "sudo add-apt-repository -y ppa:teejee2008/ppa"; smsgn "Adding ppa:teejee2008/ppa PPA (Aptik, Conky-Manager)" # Aptik - Conky-Manage
+  runCmd "sudo add-apt-repository -y ppa:yktooo/ppa"; smsgn "Adding ppa:yktooo/ppa PPA (indicator-sound-switcher)" # indicator-sound-switcher
+  runCmd "sudo add-apt-repository -y ppa:webupd8team/y-ppa-manager"; smsgn "Adding ppa:webupd8team/y-ppa-manager PPA (y-ppa-manager)" # y-ppa-manager
+  runCmd "sudo add-apt-repository -y ppa:webupd8team/atom"; smsgn "Adding ppa:webupd8team/atom PPA (Atom IDE)" # IDE
+  runCmd "sudo add-apt-repository -y ppa:videolan/stable-daily"; smsgn "Adding ppa:videolan/stable-daily PPA (vlc)" # video player
+  runCmd "sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make"; smsgn "Adding ppa:ubuntu-desktop/ubuntu-make PPA (umake)" # ubuntu-make
+  runCmd "sudo add-apt-repository -y ppa:nowrep/qupzilla"; smsgn "Adding ppa:nowrep/qupzilla PPA (qupzilla)" # web browser
+  runCmd "sudo add-apt-repository -y ppa:atareao/atareao"; smsgn "Adding ppa:atareao/atareao PPA (pushbullet-indicator, imagedownloader, gqrcode, cpu-g)" # pushbullet-indicator, imagedownloader, gqrcode, cpu-g
+  runCmd "sudo add-apt-repository -y ppa:costales/anoise"; smsgn "Adding ppa:costales/anoise PPA (anoise)" # ambiance sounds
+  runCmd "sudo add-apt-repository -y ppa:fossfreedom/rhythmbox-plugins"; smsgn "Adding ppa:fossfreedom/rhythmbox-plugins PPA (Rhythmbox plugins)" # Rhythmbox plugins
+  runCmd "sudo add-apt-repository -y ppa:nilarimogard/webupd8"; smsgn "Adding ppa:nilarimogard/webupd8 PPA (Audacious, Grive2, Pidgin-indicator)" # Audacious, Grive2, Pidgin-indicator
+  runCmd "sudo add-apt-repository -y ppa:oibaf/graphics-drivers"; smsgn "Adding ppa:oibaf/graphics-drivers PPA (free graphics-drivers + mesa)" # free graphics-drivers + mesa
+  runCmd "sudo add-apt-repository -y ppa:team-xbmc/ppa"; smsgn "Adding ppa:team-xbmc/ppa PPA (Kodi)" # Kodi
+  runCmd "sudo add-apt-repository -y ppa:webupd8team/java"; smsgn "Adding ppa:webupd8team/java PPA (Oracle Java SE 7/8)" # Oracle Java SE 7/8
+  runCmd "sudo add-apt-repository -y ppa:hugin/hugin-builds"; smsgn "Adding ppa:hugin/hugin-builds PPA (Hugin)" # image editor
+  runCmd "sudo add-apt-repository -y ppa:mumble/release"; smsgn "Adding ppa:mumble/release PPA (Mumble)" # Mumble
+  runCmd "sudo add-apt-repository -y ppa:atareao/utext"; smsgn "Adding ppa:atareao/utext PPA (utext)" # Markdown editor
+  runCmd "sudo add-apt-repository -y ppa:danielrichter2007/grub-customizer"; smsgn "Adding ppa:danielrichter2007/grub-customizer PPA (grub-customizer)" # grub-customizer
+  runCmd "sudo add-apt-repository -y ppa:lucioc/sayonara"; smsgn "Adding ppa:lucioc/sayonara PPA (Sayonara)" # audio player
+  runCmd "sudo add-apt-repository -y ppa:haraldhv/shotcut"; smsgn "Adding ppa:haraldhv/shotcut PPA (Shotcut)" # video editor
+  runCmd "sudo add-apt-repository -y ppa:flacon/ppa"; smsgn "Adding ppa:flacon/ppa PPA (Flacon)" # audio extraction
+  runCmd "sudo add-apt-repository -y ppa:jaap.karssenberg/zim"; smsgn "Adding ppa:jaap.karssenberg/zim PPA (Zim)" # local wiki
+  runCmd "sudo add-apt-repository -y ppa:pmjdebruijn/darktable-release"; smsgn "Adding ppa:pmjdebruijn/darktable-release PPA (Darktable)" # raw editor
+  runCmd "sudo add-apt-repository -y ppa:js-reynaud/kicad-4"; smsgn "Adding ppa:js-reynaud/kicad-4 PPA (Kicad 4)" # CAD
+  runCmd "sudo add-apt-repository -y ppa:stebbins/handbrake-releases"; smsgn "Adding ppa:stebbins/handbrake-releases PPA (Handbrake)" # video transcoder
+  runCmd "sudo add-apt-repository -y ppa:webupd8team/brackets"; smsgn "Adding ppa:webupd8team/brackets PPA (Adobe Brackets)" # IDE
+  runCmd "sudo add-apt-repository -y ppa:graphics-drivers/ppa"; smsgn "Adding ppa:graphics-drivers/ppa PPA (Nvidia Graphics Drivers)" # non-free nvidia drivers
+  runCmd "sudo add-apt-repository -y ppa:djcj/hybrid"; smsgn "Adding ppa:djcj/hybrid PPA (FFMpeg, MKVToolnix)" # FFMpeg, MKVToolnix
+  runCmd "sudo add-apt-repository -y ppa:diodon-team/stable"; smsgn "Adding ppa:diodon-team/stable PPA (Diodon)" # clipboard manager
+  runCmd "sudo add-apt-repository -y ppa:notepadqq-team/notepadqq"; smsgn "Adding ppa:notepadqq-team/notepadqq PPA (Notepadqq)" # notepad++ clone
+  runCmd "sudo add-apt-repository -y ppa:mariospr/frogr"; smsgn "Adding ppa:mariospr/frogr PPA (Frogr)" # flickr manager
+  runCmd "sudo add-apt-repository -y ppa:saiarcot895/myppa"; smsgn "Adding ppa:saiarcot895/myppa PPA (apt-fast)" # apt-fast tools
+  runCmd "sudo add-apt-repository -y ppa:ubuntuhandbook1/slowmovideo"; smsgn "Adding ppa:ubuntuhandbook1/slowmovideo PPA (Slowmovideo)" # slow motion video editor
+  runCmd "sudo add-apt-repository -y ppa:transmissionbt/ppa"; smsgn "Adding ppa:transmissionbt/ppa PPA (Transmission-BT)" # bittorrent client
+  runCmd "sudo add-apt-repository -y ppa:geary-team/releases"; smsgn "Adding ppa:geary-team/releases PPA (Geary)" # email client
+  runCmd "sudo add-apt-repository -y ppa:varlesh-l/papirus-pack"; smsgn "Adding ppa:varlesh-l/papirus-pack PPA (themes)" # themes
   #sudo add-apt-repository -y ppa:whatsapp-purple/ppa # WhatsApp plugin for Pidgin/libpurple # update ?
 
-  wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsg "Adding Opera repository key"
-  echo "deb http://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera.list && retCode $? && smsg "Adding Opera repository"
+  wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Opera repository key"
+  echo "deb http://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera.list && retCode $? && smsgn "Adding Opera repository"
 
-  wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add - &>> $logFile && retCode $? && smsg "Adding Chrome repository key"
-  echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list && retCode $? && smsg "Adding Chrome repository"
+  wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Chrome repository key"
+  echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list && retCode $? && smsgn "Adding Chrome repository"
 
-  wget -qO - https://d2t3ff60b2tol4.cloudfront.net/services@insynchq.com.gpg.key | sudo apt-key add - &>> $logFile && retCode $? && smsg "Adding InSync repository key"
-  echo "deb http://apt.insynchq.com/ubuntu xenial non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list && retCode $? && smsg "Adding InSync repository"
+  wget -qO - https://d2t3ff60b2tol4.cloudfront.net/services@insynchq.com.gpg.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding InSync repository key"
+  echo "deb http://apt.insynchq.com/ubuntu xenial non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list && retCode $? && smsgn "Adding InSync repository"
 
-  sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D &>> $logFile && retCode $? && smsg "Adding Docker repository key"
-  echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main"  | sudo tee /etc/apt/sources.list.d/docker.list && retCode $? && smsg "Adding Docker repository"
+  sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D &>> $logFile && retCode $? && smsgn "Adding Docker repository key"
+  echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main"  | sudo tee /etc/apt/sources.list.d/docker.list && retCode $? && smsgn "Adding Docker repository"
 
-  wget -qO - https://syncthing.net/release-key.txt | sudo apt-key add - &>> $logFile && retCode $? && smsg "Adding SyncThing repository key"
-  echo "deb http://apt.syncthing.net/ syncthing release" | sudo tee /etc/apt/sources.list.d/syncthing.list && retCode $? && smsg "Adding SyncThing repository"
+  wget -qO - https://syncthing.net/release-key.txt | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding SyncThing repository key"
+  echo "deb http://apt.syncthing.net/ syncthing release" | sudo tee /etc/apt/sources.list.d/syncthing.list && retCode $? && smsgn "Adding SyncThing repository"
 
   msg "Adding OwnCloud-Client repository"
-  wget -qO - http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_16.04/Release.key | sudo apt-key add - &>> $logFile && retCode $? && smsg "Adding OwnCloud-Client repository key"
-  echo "deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /" | sudo tee /etc/apt/sources.list.d/owncloud-client.list && retCode $? && smsg "Adding OwnCloud-Client repository"
+  wget -qO - http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_16.04/Release.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding OwnCloud-Client repository key"
+  echo "deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /" | sudo tee /etc/apt/sources.list.d/owncloud-client.list && retCode $? && smsgn "Adding OwnCloud-Client repository"
 
-  wget -q -O - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | sudo apt-key add - &>> $logFile && retCode $? && smsg "Adding MKVToolnix repository key"
-  echo "deb http://mkvtoolnix.download/ubuntu/xenial/ ./"  | sudo tee /etc/apt/sources.list.d/mkv.list && retCode $? && smsg "Adding MKVToolnix repository"
-  echo "deb-src http://mkvtoolnix.download/ubuntu/xenial/ ./ "  | sudo tee -a /etc/apt/sources.list.d/mkv.list && retCode $? && smsg "Adding MKVToolnix sources repository"
+  wget -q -O - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding MKVToolnix repository key"
+  echo "deb http://mkvtoolnix.download/ubuntu/xenial/ ./"  | sudo tee /etc/apt/sources.list.d/mkv.list && retCode $? && smsgn "Adding MKVToolnix repository"
+  echo "deb-src http://mkvtoolnix.download/ubuntu/xenial/ ./ "  | sudo tee -a /etc/apt/sources.list.d/mkv.list && retCode $? && smsgn "Adding MKVToolnix sources repository"
 
-  wget -O- https://jgeboski.github.io/obs.key | sudo apt-key add - && retCode $? && smsg "Adding purple-facebook repository key"
-  sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/jgeboski/xUbuntu_16.04/ ./' > /etc/apt/sources.list.d/jgeboski.list" && retCode $? && smsg "Adding purple-facebook repository"
+  wget -O- https://jgeboski.github.io/obs.key | sudo apt-key add - && retCode $? && smsgn "Adding purple-facebook repository key"
+  sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/jgeboski/xUbuntu_16.04/ ./' > /etc/apt/sources.list.d/jgeboski.list" && retCode $? && smsgn "Adding purple-facebook repository"
 
-  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 &>> $logFile && retCode $? && smsg "Adding Spotify repository key"
-  echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list && retCode $? && smsg "Adding Spotify repository"
+  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 &>> $logFile && retCode $? && smsgn "Adding Spotify repository key"
+  echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list && retCode $? && smsgn "Adding Spotify repository"
 
-  wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add - &>> $logFile && retCode $? && smsg "Adding VirtualBox repository old key"
-  wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc -O- | sudo apt-key add - && retCode $? && smsg "Adding VirtualBox repository key"
-  echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list && retCode $? && smsg "Adding VirtualBox repository"
+  wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding VirtualBox repository old key"
+  wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc -O- | sudo apt-key add - && retCode $? && smsgn "Adding VirtualBox repository key"
+  echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list && retCode $? && smsgn "Adding VirtualBox repository"
 
-  gpg --keyserver pool.sks-keyservers.net --recv-keys 1537994D && gpg --export --armor 1537994D | sudo apt-key add - &>> $logFile && retCode $? && smsg "Adding Whatsie repository key"
-  echo "deb https://dl.bintray.com/aluxian/deb stable main" | sudo tee -a /etc/apt/sources.list.d/whatsie.list && retCode $? && smsg "Adding Whatsie repository"
+  gpg --keyserver pool.sks-keyservers.net --recv-keys 1537994D && gpg --export --armor 1537994D | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Whatsie repository key"
+  echo "deb https://dl.bintray.com/aluxian/deb stable main" | sudo tee -a /etc/apt/sources.list.d/whatsie.list && retCode $? && smsgn "Adding Whatsie repository"
 
-  wget -q -O- http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsg "Adding Getdeb repository key"
-  echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb apps" | sudo tee /etc/apt/sources.list.d/getdeb.list && retCode $? && smsg "Adding Getdeb repository"
+  wget -q -O- http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Getdeb repository key"
+  echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb apps" | sudo tee /etc/apt/sources.list.d/getdeb.list && retCode $? && smsgn "Adding Getdeb repository"
 
   updateSystem
 }
 
-installBase () {
+function installBase () {
   msg "Installing base apps and tools"
 
-  runCmd "sudo apt-get install -y cifs-utils"; smsg "Installing cifs-utils"
-  runCmd "sudo apt-get install -y xterm"; smsg "Installing xterm"
-  runCmd "sudo apt-get install -y curl"; smsg "Installing curl"
-  runCmd "sudo apt-get install -y mc"; smsg "Installing mc"
-  runCmd "sudo apt-get install -y bmon"; smsg "Installing bmon"
-  runCmd "sudo apt-get install -y htop"; smsg "Installing htop"
-  runCmd "sudo apt-get install -y screen"; smsg "Installing screen"
-  runCmd "sudo apt-get install -y dconf-cli"; smsg "Installing dconf-cli"
-  runCmd "sudo apt-get install -y dconf-editor"; smsg "Installing dconf-editor"
-  runCmd "sudo apt-get install -y lnav"; smsg "Installing lnav"
-  runCmd "sudo apt-get install -y exfat-fuse"; smsg "Installing exfat-fuse"
-  runCmd "sudo apt-get install -y exfat-utils"; smsg "Installing exfat-utils"
-  runCmd "sudo apt-get install -y iftop"; smsg "Installing iftop"
-  runCmd "sudo apt-get install -y iptraf"; smsg "Installing iptraf"
-  runCmd "sudo apt-get install -y mpg123"; smsg "Installing mpg123"
-  runCmd "sudo apt-get install -y debconf-utils"; smsg "Installing debconf-utils"
-  runCmd "sudo apt-get install -y idle3-tools"; smsg "Installing idle3-tools"
+  runCmd "sudo apt-get install -y cifs-utils"; smsgn "Installing cifs-utils"
+  runCmd "sudo apt-get install -y xterm"; smsgn "Installing xterm"
+  runCmd "sudo apt-get install -y curl"; smsgn "Installing curl"
+  runCmd "sudo apt-get install -y mc"; smsgn "Installing mc"
+  runCmd "sudo apt-get install -y bmon"; smsgn "Installing bmon"
+  runCmd "sudo apt-get install -y htop"; smsgn "Installing htop"
+  runCmd "sudo apt-get install -y screen"; smsgn "Installing screen"
+  runCmd "sudo apt-get install -y dconf-cli"; smsgn "Installing dconf-cli"
+  runCmd "sudo apt-get install -y dconf-editor"; smsgn "Installing dconf-editor"
+  runCmd "sudo apt-get install -y lnav"; smsgn "Installing lnav"
+  runCmd "sudo apt-get install -y exfat-fuse"; smsgn "Installing exfat-fuse"
+  runCmd "sudo apt-get install -y exfat-utils"; smsgn "Installing exfat-utils"
+  runCmd "sudo apt-get install -y iftop"; smsgn "Installing iftop"
+  runCmd "sudo apt-get install -y iptraf"; smsgn "Installing iptraf"
+  runCmd "sudo apt-get install -y mpg123"; smsgn "Installing mpg123"
+  runCmd "sudo apt-get install -y debconf-utils"; smsgn "Installing debconf-utils"
+  runCmd "sudo apt-get install -y idle3-tools"; smsgn "Installing idle3-tools"
 }
 
-installMultimedia () {
+function installMultimedia () {
   msg "Installing Multimedia apps and tools"
   # to add if available : fontmatrix qgifer arista
 
-  runCmd "sudo apt-get install -y spotify-client"; smsg "Installing spotify-client"
-  runCmd "sudo apt-get install -y slowmovideo"; smsg "Installing slowmovideo"
-  runCmd "sudo apt-get install -y sayonara"; smsg "Installing sayonara"
-  runCmd "sudo apt-get install -y qmmp qmmp-plugin-projectm"; smsg "Installing qmmp qmmp-plugin-projectm"
-  runCmd "sudo apt-get install -y shotcut"; smsg "Installing shotcut"
-  runCmd "sudo apt-get install -y audacious"; smsg "Installing audacious"
-  runCmd "sudo apt-get install -y dia"; smsg "Installing dia"
-  runCmd "sudo apt-get install -y mpv"; smsg "Installing mpv"
-  runCmd "sudo apt-get install -y picard"; smsg "Installing picard"
-  runCmd "sudo apt-get install -y inkscape"; smsg "Installing inkscape"
-  runCmd "sudo apt-get install -y aegisub aegisub-l10n"; smsg "Installing aegisub aegisub-l10n"
-  runCmd "sudo apt-get install -y mypaint mypaint-data-extras"; smsg "Installing mypaint mypaint-data-extras"
-  runCmd "sudo apt-get install -y audacity"; smsg "Installing audacity"
-  runCmd "sudo apt-get install -y blender"; smsg "Installing blender"
-  runCmd "sudo apt-get install -y kodi"; smsg "Installing kodi"
-  runCmd "sudo apt-get install -y digikam"; smsg "Installing digikam"
-  runCmd "sudo apt-get install -y synfigstudio"; smsg "Installing synfigstudio"
-  runCmd "sudo apt-get install -y mkvtoolnix-gui"; smsg "Installing mkvtoolnix-gui"
-  runCmd "sudo apt-get install -y rawtherapee"; smsg "Installing rawtherapee"
-  runCmd "sudo apt-get install -y hugin"; smsg "Installing hugin"
-  runCmd "sudo apt-get install -y asunder"; smsg "Installing asunder"
-  runCmd "sudo apt-get install -y milkytracker"; smsg "Installing milkytracker"
-  runCmd "sudo apt-get install -y pitivi"; smsg "Installing pitivi"
-  runCmd "sudo apt-get install -y openshot"; smsg "Installing openshot"
-  runCmd "sudo apt-get install -y smplayer smplayer-themes smplayer-l10n"; smsg "Installing smplayer smplayer-themes smplayer-l10n"
-  runCmd "sudo apt-get install -y selene"; smsg "Installing selene"
-  runCmd "sudo apt-get install -y gnome-mplayer"; smsg "Installing gnome-mplayer"
-  runCmd "sudo apt-get install -y handbrake"; smsg "Installing handbrake"
-  runCmd "sudo apt-get install -y avidemux2.6-qt avidemux2.6-plugins-qt"; smsg "Installing avidemux2.6-qt avidemux2.6-plugins-qt"
-  runCmd "sudo apt-get install -y mjpegtools"; smsg "Installing mjpegtools"
-  runCmd "sudo apt-get install -y twolame"; smsg "Installing twolame"
-  runCmd "sudo apt-get install -y lame"; smsg "Installing lame"
-  runCmd "sudo apt-get install -y banshee banshee-extension-soundmenu"; smsg "Installing banshee banshee-extension-soundmenu"
-  runCmd "sudo apt-get install -y gpicview"; smsg "Installing gpicview"
-  runCmd "sudo apt-get install -y vlc"; smsg "Installing vlc"
-  runCmd "sudo apt-get install -y shotwell"; smsg "Installing shotwell"
-  runCmd "sudo apt-get install -y darktable"; smsg "Installing darktable"
-  runCmd "sudo apt-get install -y ffmpeg"; smsg "Installing ffmpeg"
-  runCmd "sudo apt-get install -y flacon"; smsg "Installing flacon"
-  runCmd "sudo apt-get install -y scribus"; smsg "Installing scribus"
-  runCmd "sudo apt-get install -y birdfont"; smsg "Installing birdfont"
-  runCmd "sudo apt-get install -y moc"; smsg "Installing moc"
+  runCmd "sudo apt-get install -y spotify-client"; smsgn "Installing spotify-client"
+  runCmd "sudo apt-get install -y slowmovideo"; smsgn "Installing slowmovideo"
+  runCmd "sudo apt-get install -y sayonara"; smsgn "Installing sayonara"
+  runCmd "sudo apt-get install -y qmmp qmmp-plugin-projectm"; smsgn "Installing qmmp qmmp-plugin-projectm"
+  runCmd "sudo apt-get install -y shotcut"; smsgn "Installing shotcut"
+  runCmd "sudo apt-get install -y audacious"; smsgn "Installing audacious"
+  runCmd "sudo apt-get install -y dia"; smsgn "Installing dia"
+  runCmd "sudo apt-get install -y mpv"; smsgn "Installing mpv"
+  runCmd "sudo apt-get install -y picard"; smsgn "Installing picard"
+  runCmd "sudo apt-get install -y inkscape"; smsgn "Installing inkscape"
+  runCmd "sudo apt-get install -y aegisub aegisub-l10n"; smsgn "Installing aegisub aegisub-l10n"
+  runCmd "sudo apt-get install -y mypaint mypaint-data-extras"; smsgn "Installing mypaint mypaint-data-extras"
+  runCmd "sudo apt-get install -y audacity"; smsgn "Installing audacity"
+  runCmd "sudo apt-get install -y blender"; smsgn "Installing blender"
+  runCmd "sudo apt-get install -y kodi"; smsgn "Installing kodi"
+  runCmd "sudo apt-get install -y digikam"; smsgn "Installing digikam"
+  runCmd "sudo apt-get install -y synfigstudio"; smsgn "Installing synfigstudio"
+  runCmd "sudo apt-get install -y mkvtoolnix-gui"; smsgn "Installing mkvtoolnix-gui"
+  runCmd "sudo apt-get install -y rawtherapee"; smsgn "Installing rawtherapee"
+  runCmd "sudo apt-get install -y hugin"; smsgn "Installing hugin"
+  runCmd "sudo apt-get install -y asunder"; smsgn "Installing asunder"
+  runCmd "sudo apt-get install -y milkytracker"; smsgn "Installing milkytracker"
+  runCmd "sudo apt-get install -y pitivi"; smsgn "Installing pitivi"
+  runCmd "sudo apt-get install -y openshot"; smsgn "Installing openshot"
+  runCmd "sudo apt-get install -y smplayer smplayer-themes smplayer-l10n"; smsgn "Installing smplayer smplayer-themes smplayer-l10n"
+  runCmd "sudo apt-get install -y selene"; smsgn "Installing selene"
+  runCmd "sudo apt-get install -y gnome-mplayer"; smsgn "Installing gnome-mplayer"
+  runCmd "sudo apt-get install -y handbrake"; smsgn "Installing handbrake"
+  runCmd "sudo apt-get install -y avidemux2.6-qt avidemux2.6-plugins-qt"; smsgn "Installing avidemux2.6-qt avidemux2.6-plugins-qt"
+  runCmd "sudo apt-get install -y mjpegtools"; smsgn "Installing mjpegtools"
+  runCmd "sudo apt-get install -y twolame"; smsgn "Installing twolame"
+  runCmd "sudo apt-get install -y lame"; smsgn "Installing lame"
+  runCmd "sudo apt-get install -y banshee banshee-extension-soundmenu"; smsgn "Installing banshee banshee-extension-soundmenu"
+  runCmd "sudo apt-get install -y gpicview"; smsgn "Installing gpicview"
+  runCmd "sudo apt-get install -y vlc"; smsgn "Installing vlc"
+  runCmd "sudo apt-get install -y shotwell"; smsgn "Installing shotwell"
+  runCmd "sudo apt-get install -y darktable"; smsgn "Installing darktable"
+  runCmd "sudo apt-get install -y ffmpeg"; smsgn "Installing ffmpeg"
+  runCmd "sudo apt-get install -y flacon"; smsgn "Installing flacon"
+  runCmd "sudo apt-get install -y scribus"; smsgn "Installing scribus"
+  runCmd "sudo apt-get install -y birdfont"; smsgn "Installing birdfont"
+  runCmd "sudo apt-get install -y moc"; smsgn "Installing moc"
 
   # DarkDot theme for Moc
   runCmd "echo 'alias mocp=\"mocp -T darkdot_theme\"' | tee -a /home/$myHomedir/.bashrc"
-  smsg "Configuring DarkDot theme for Mocp"
+  smsgn "Configuring DarkDot theme for Mocp"
 }
 
-installMultimediaExt () {
+function installMultimediaExt () {
   msg "Installing Multimedia apps and tools"
 
   cd /tmp
@@ -413,48 +416,48 @@ installMultimediaExt () {
   sudo apt-get install -fy
 }
 
-installEbook () {
+function installEbook () {
   msg "Installation eBook apps and tools"
 
-  runCmd "sudo apt-get install -y fbreader"; smsg "Installing fbreader"
+  runCmd "sudo apt-get install -y fbreader"; smsgn "Installing fbreader"
 
   cd /tmp
 
   runCmd "sudo -v && wget -q --no-check-certificate -nv -O- https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py | sudo python -c \"import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()\""
-  smsg "Installing calibre"
+  smsgn "Installing calibre"
 }
 
-installInternet () {
+function installInternet () {
   msg "Installing Internet apps and tools"
 
   echo "opera-stable opera-stable/add-deb-source boolean false" | sudo debconf-set-selections
 
   # to add when available :  skype-wrapper tribler qtox birdie (pushbullet)
-  runCmd "sudo apt-get install -y owncloud-client"; smsg "Installing owncloud-client"
-  runCmd "sudo apt-get install -y syncthing-gtk syncthing"; smsg "Installing syncthing-gtk syncthing"
-  runCmd "sudo apt-get install -y insync"; smsg "Installing insync"
-  runCmd "sudo apt-get install -y quiterss"; smsg "Installing quiterss"
-  runCmd "sudo apt-get install -y frogr"; smsg "Installing frogr"
-  runCmd "sudo apt-get install -y opera-stable"; smsg "Installing opera-stable"
-  runCmd "sudo apt-get install -y google-chrome-stable"; smsg "Installing google-chrome-stable"
-  runCmd "sudo apt-get install -y xchat-gnome xchat-gnome-indicator"; smsg "Installing xchat-gnome xchat-gnome-indicator"
-  runCmd "sudo apt-get install -y chromium-browser chromium-browser-l10n"; smsg "Installing chromium-browser chromium-browser-l10n"
-  runCmd "sudo apt-get install -y dropbox"; smsg "Installing dropbox"
-  runCmd "sudo apt-get install -y qupzilla"; smsg "Installing qupzilla"
-  runCmd "sudo apt-get install -y filezilla"; smsg "Installing filezilla"
-  runCmd "sudo apt-get install -y hexchat"; smsg "Installing hexchat"
-  runCmd "sudo apt-get install -y mumble"; smsg "Installing mumble"
-  runCmd "sudo apt-get install -y skype"; smsg "Installing skype"
-  runCmd "sudo apt-get install -y imagedownloader"; smsg "Installing imagedownloader"
-  runCmd "sudo apt-get install -y california"; smsg "Installing california"
-  runCmd "sudo apt-get install -y midori"; smsg "Installing midori"
-  runCmd "sudo apt-get install -y geary"; smsg "Installing geary"
-  runCmd "sudo apt-get install -y whatsie"; smsg "Installing whatsie"
-  runCmd "sudo apt-get install -y ring-gnome"; smsg "Installing ring-gnome"
-  runCmd "sudo apt-get install -y corebird"; smsg "Installing corebird"
+  runCmd "sudo apt-get install -y owncloud-client"; smsgn "Installing owncloud-client"
+  runCmd "sudo apt-get install -y syncthing-gtk syncthing"; smsgn "Installing syncthing-gtk syncthing"
+  runCmd "sudo apt-get install -y insync"; smsgn "Installing insync"
+  runCmd "sudo apt-get install -y quiterss"; smsgn "Installing quiterss"
+  runCmd "sudo apt-get install -y frogr"; smsgn "Installing frogr"
+  runCmd "sudo apt-get install -y opera-stable"; smsgn "Installing opera-stable"
+  runCmd "sudo apt-get install -y google-chrome-stable"; smsgn "Installing google-chrome-stable"
+  runCmd "sudo apt-get install -y xchat-gnome xchat-gnome-indicator"; smsgn "Installing xchat-gnome xchat-gnome-indicator"
+  runCmd "sudo apt-get install -y chromium-browser chromium-browser-l10n"; smsgn "Installing chromium-browser chromium-browser-l10n"
+  runCmd "sudo apt-get install -y dropbox"; smsgn "Installing dropbox"
+  runCmd "sudo apt-get install -y qupzilla"; smsgn "Installing qupzilla"
+  runCmd "sudo apt-get install -y filezilla"; smsgn "Installing filezilla"
+  runCmd "sudo apt-get install -y hexchat"; smsgn "Installing hexchat"
+  runCmd "sudo apt-get install -y mumble"; smsgn "Installing mumble"
+  runCmd "sudo apt-get install -y skype"; smsgn "Installing skype"
+  runCmd "sudo apt-get install -y imagedownloader"; smsgn "Installing imagedownloader"
+  runCmd "sudo apt-get install -y california"; smsgn "Installing california"
+  runCmd "sudo apt-get install -y midori"; smsgn "Installing midori"
+  runCmd "sudo apt-get install -y geary"; smsgn "Installing geary"
+  runCmd "sudo apt-get install -y whatsie"; smsgn "Installing whatsie"
+  runCmd "sudo apt-get install -y ring-gnome"; smsgn "Installing ring-gnome"
+  runCmd "sudo apt-get install -y corebird"; smsgn "Installing corebird"
 }
 
-installInternetExt () {
+function installInternetExt () {
   msg "Installing Internet apps and tools"
 
   cd /tmp
@@ -521,7 +524,7 @@ installInternetExt () {
   Comment=' > /home/"$myHomedir"/.local/share/applications/Franz.desktop"
 }
 
-installMiscUtilities () {
+function installMiscUtilities () {
   msg "Installing misc. utility apps and tools"
 
   echo "apt-fast	apt-fast/maxdownloads	string	5" | sudo debconf-set-selections
@@ -529,214 +532,213 @@ installMiscUtilities () {
   echo "apt-fast	apt-fast/aptmanager	select	apt-get" | sudo debconf-set-selections
   echo "apt-fast	apt-fast/downloader	select	aria2c" | sudo debconf-set-selections
 
-  runCmd "sudo apt-get install -y qtqr"; smsg "Installing qtqr"
-  runCmd "sudo apt-get install -y cpu-g"; smsg "Installing cpu-g"
-  runCmd "sudo apt-get install -y screenfetch"; smsg "Installing screenfetch"
-  runCmd "sudo apt-get install -y xcalib"; smsg "Installing xcalib"
-  runCmd "sudo apt-get install -y conky-manager conky-all"; smsg "Installing conky-manager conky-all"
-  runCmd "sudo apt-get install -y plank"; smsg "Installing plank"
-  runCmd "sudo apt-get install -y indicator-sound-switcher"; smsg "Installing indicator-sound-switcher"
-  runCmd "sudo apt-get install -y y-ppa-manager"; smsg "Installing y-ppa-manager"
-  runCmd "sudo apt-get install -y synapse"; smsg "Installing synapse"
-  runCmd "sudo apt-get install -y anoise"; smsg "Installing anoise"
-  runCmd "sudo apt-get install -y acetoneiso"; smsg "Installing acetoneiso"
-  runCmd "sudo apt-get install -y guake"; smsg "Installing guake"
-  runCmd "sudo apt-get install -y tilda"; smsg "Installing tilda"
-  runCmd "sudo apt-get install -y psensor"; smsg "Installing psensor"
-  runCmd "sudo apt-get install -y kazam"; smsg "Installing kazam"
-  runCmd "sudo apt-get install -y bleachbit"; smsg "Installing bleachbit"
-  runCmd "sudo apt-get install -y gparted"; smsg "Installing gparted"
-  runCmd "sudo apt-get install -y gsmartcontrol"; smsg "Installing gsmartcontrol"
-  runCmd "sudo apt-get install -y terminator"; smsg "Installing terminator"
-  runCmd "sudo apt-get install -y aptik"; smsg "Installing aptik"
-  runCmd "sudo apt-get install -y gufw"; smsg "Installing gufw"
-  runCmd "sudo apt-get install -y numlockx"; smsg "Installing numlockx"
-  runCmd "sudo apt-get install -y grub-customizer"; smsg "Installing grub-customizer"
-  runCmd "sudo apt-get install -y chmsee"; smsg "Installing chmsee"
-  runCmd "sudo apt-get install -y unetbootin"; smsg "Installing unetbootin"
-  runCmd "sudo apt-get install -y zim"; smsg "Installing zim"
-  runCmd "sudo apt-get install -y diodon"; smsg "Installing diodon"
-  runCmd "sudo apt-get install -y pyrenamer"; smsg "Installing pyrenamer"
-  runCmd "sudo apt-get install -y apt-fast"; smsg "Installing apt-fast"
+  runCmd "sudo apt-get install -y qtqr"; smsgn "Installing qtqr"
+  runCmd "sudo apt-get install -y cpu-g"; smsgn "Installing cpu-g"
+  runCmd "sudo apt-get install -y screenfetch"; smsgn "Installing screenfetch"
+  runCmd "sudo apt-get install -y xcalib"; smsgn "Installing xcalib"
+  runCmd "sudo apt-get install -y conky-manager conky-all"; smsgn "Installing conky-manager conky-all"
+  runCmd "sudo apt-get install -y plank"; smsgn "Installing plank"
+  runCmd "sudo apt-get install -y indicator-sound-switcher"; smsgn "Installing indicator-sound-switcher"
+  runCmd "sudo apt-get install -y y-ppa-manager"; smsgn "Installing y-ppa-manager"
+  runCmd "sudo apt-get install -y synapse"; smsgn "Installing synapse"
+  runCmd "sudo apt-get install -y anoise"; smsgn "Installing anoise"
+  runCmd "sudo apt-get install -y acetoneiso"; smsgn "Installing acetoneiso"
+  runCmd "sudo apt-get install -y guake"; smsgn "Installing guake"
+  runCmd "sudo apt-get install -y tilda"; smsgn "Installing tilda"
+  runCmd "sudo apt-get install -y psensor"; smsgn "Installing psensor"
+  runCmd "sudo apt-get install -y kazam"; smsgn "Installing kazam"
+  runCmd "sudo apt-get install -y bleachbit"; smsgn "Installing bleachbit"
+  runCmd "sudo apt-get install -y gparted"; smsgn "Installing gparted"
+  runCmd "sudo apt-get install -y gsmartcontrol"; smsgn "Installing gsmartcontrol"
+  runCmd "sudo apt-get install -y terminator"; smsgn "Installing terminator"
+  runCmd "sudo apt-get install -y aptik"; smsgn "Installing aptik"
+  runCmd "sudo apt-get install -y gufw"; smsgn "Installing gufw"
+  runCmd "sudo apt-get install -y numlockx"; smsgn "Installing numlockx"
+  runCmd "sudo apt-get install -y grub-customizer"; smsgn "Installing grub-customizer"
+  runCmd "sudo apt-get install -y chmsee"; smsgn "Installing chmsee"
+  runCmd "sudo apt-get install -y unetbootin"; smsgn "Installing unetbootin"
+  runCmd "sudo apt-get install -y zim"; smsgn "Installing zim"
+  runCmd "sudo apt-get install -y diodon"; smsgn "Installing diodon"
+  runCmd "sudo apt-get install -y pyrenamer"; smsgn "Installing pyrenamer"
+  runCmd "sudo apt-get install -y apt-fast"; smsgn "Installing apt-fast"
 }
 
-installWine () {
+function installWine () {
   msg "Installing Wine"
 
-  runCmd "sudo add-apt-repository -y ppa:ubuntu-wine/ppa"; smsg "Adding Wine PPA"
+  runCmd "sudo add-apt-repository -y ppa:ubuntu-wine/ppa"; smsgn "Adding Wine PPA"
   updateSystem
-  runCmd "sudo apt-get install -y wine1.8"; smsg "Installing wine1.8"
-  runCmd "sudo apt-get install -y winetricks"; smsg "Installing winetricks"
-  runCmd "sudo apt-get install -y playonlinux"; smsg "Installing playonlinux"
+  runCmd "sudo apt-get install -y wine1.8"; smsgn "Installing wine1.8"
+  runCmd "sudo apt-get install -y winetricks"; smsgn "Installing winetricks"
+  runCmd "sudo apt-get install -y playonlinux"; smsgn "Installing playonlinux"
 }
 
-installWineDRI3 () {
+function installWineDRI3 () {
   msg "Installing WineDRI3"
 
-  runCmd "sudo add-apt-repository -y ppa:commendsarnex/winedri3"; smsg "Adding WineDRI3 PPA"
+  runCmd "sudo add-apt-repository -y ppa:commendsarnex/winedri3"; smsgn "Adding WineDRI3 PPA"
   updateSystem
-  runCmd "sudo apt-get install -y wine1.9"; smsg "Installing wine1.9"
-  runCmd "sudo apt-get install -y winetricks"; smsg "Installing winetricks"
-  runCmd "sudo apt-get install -y playonlinux"; smsg "Installing playonlinux"
+  runCmd "sudo apt-get install -y wine1.9"; smsgn "Installing wine1.9"
+  runCmd "sudo apt-get install -y winetricks"; smsgn "Installing winetricks"
+  runCmd "sudo apt-get install -y playonlinux"; smsgn "Installing playonlinux"
 }
 
-installWineStaging () {
+function installWineStaging () {
   msg "Installing Wine-Staging"
 
-  runCmd "sudo add-apt-repository -y ppa:pipelight/stable"; smsg "Adding WineStaging PPA"
+  runCmd "sudo add-apt-repository -y ppa:pipelight/stable"; smsgn "Adding WineStaging PPA"
   updateSystem
-  runCmd "sudo apt-get install -y wine-staging-amd64"; smsg "Installing wine-staging-amd64"
+  runCmd "sudo apt-get install -y wine-staging-amd64"; smsgn "Installing wine-staging-amd64"
 }
 
-installKodiBETA () {
+function installKodiBETA () {
   msg "Installing Kodi BETA"
 
-  runCmd "sudo add-apt-repository -y ppa:team-xbmc/unstable"; smsg "Adding Kodi BETA PPA"
+  runCmd "sudo add-apt-repository -y ppa:team-xbmc/unstable"; smsgn "Adding Kodi BETA PPA"
   updateSystem
-  runCmd "sudo apt-get install -y kodi"; smsg "Installing kodi"
+  runCmd "sudo apt-get install -y kodi"; smsgn "Installing kodi"
 }
 
-installKodiNightly () {
+function installKodiNightly () {
   msg "Installing Kodi Nightly"
 
-  runCmd "sudo add-apt-repository -y ppa:team-xbmc/xbmc-nightly"; smsg "Adding Kodi Nightly PPA"
+  runCmd "sudo add-apt-repository -y ppa:team-xbmc/xbmc-nightly"; smsgn "Adding Kodi Nightly PPA"
   updateSystem
-  runCmd "sudo apt-get install -y kodi"; smsg "Installing kodi"
+  runCmd "sudo apt-get install -y kodi"; smsgn "Installing kodi"
 }
 
-installGames () {
+function installGames () {
   msg "Installing Games apps and tools"
 
-  runCmd "sudo apt-get install -y steam"; smsg "Installing steam"
-  runCmd "sudo apt-get install -y jstest-gtk"; smsg "Installing jstest-gtk"
+  runCmd "sudo apt-get install -y steam"; smsgn "Installing steam"
+  runCmd "sudo apt-get install -y jstest-gtk"; smsgn "Installing jstest-gtk"
 }
 
-installBurningTools () {
+function installBurningTools () {
   msg "Installing CD/DVD/BD Burning apps and tools"
 
-  runCmd "sudo apt-get install -y brasero"; smsg "Installing brasero"
-  runCmd "sudo apt-get install -y k3b k3b-extrathemes"; smsg "Installing k3b k3b-extrathemes"
-  runCmd "sudo apt-get install -y xfburn"; smsg "Installing xfburn"
+  runCmd "sudo apt-get install -y brasero"; smsgn "Installing brasero"
+  runCmd "sudo apt-get install -y k3b k3b-extrathemes"; smsgn "Installing k3b k3b-extrathemes"
+  runCmd "sudo apt-get install -y xfburn"; smsgn "Installing xfburn"
 }
 
-installNetTools () {
+function installNetTools () {
   msg "Installing Network apps and tools"
   # to add when available : gtkvncviewer
 
-  runCmd "sudo apt-get install -y whois"; smsg "Installing whois"
-  runCmd "sudo apt-get install -y iptraf"; smsg "Installing iptraf"
-  runCmd "sudo apt-get install -y iperf"; smsg "Installing iperf"
-  runCmd "sudo apt-get install -y wireshark tshark"; smsg "Installing wireshark tshark"
-  runCmd "sudo apt-get install -y zenmap"; smsg "Installing zenmap"
-  runCmd "sudo apt-get install -y dsniff"; smsg "Installing dsniff"
-  runCmd "sudo apt-get install -y aircrack-ng"; smsg "Installing aircrack-ng"
+  runCmd "sudo apt-get install -y whois"; smsgn "Installing whois"
+  runCmd "sudo apt-get install -y iptraf"; smsgn "Installing iptraf"
+  runCmd "sudo apt-get install -y iperf"; smsgn "Installing iperf"
+  runCmd "sudo apt-get install -y wireshark tshark"; smsgn "Installing wireshark tshark"
+  runCmd "sudo apt-get install -y zenmap"; smsgn "Installing zenmap"
+  runCmd "sudo apt-get install -y dsniff"; smsgn "Installing dsniff"
+  runCmd "sudo apt-get install -y aircrack-ng"; smsgn "Installing aircrack-ng"
 }
 
-installCajaPlugins () {
+function installCajaPlugins () {
   msg "Installing Caja extensions"
 
-  runCmd "sudo apt-get install -y caja-share"; smsg "Installing caja-share"
-  runCmd "sudo apt-get install -y caja-wallpaper"; smsg "Installing caja-wallpaper"
-  runCmd "sudo apt-get install -y caja-sendto"; smsg "Installing caja-sendto"
-  runCmd "sudo apt-get install -y caja-image-converter"; smsg "Installing caja-image-converter"
+  runCmd "sudo apt-get install -y caja-share"; smsgn "Installing caja-share"
+  runCmd "sudo apt-get install -y caja-wallpaper"; smsgn "Installing caja-wallpaper"
+  runCmd "sudo apt-get install -y caja-sendto"; smsgn "Installing caja-sendto"
+  runCmd "sudo apt-get install -y caja-image-converter"; smsgn "Installing caja-image-converter"
 
   if which insync >/dev/null; then
-    runCmd "sudo apt-get install -y insync-caja"; smsg "Installing insync-caja"
+    runCmd "sudo apt-get install -y insync-caja"; smsgn "Installing insync-caja"
   fi
 }
 
-installNautilusAndPlugins () {
+function installNautilusAndPlugins () {
   msg "Installing Nautilus and extensions"
 
-  runCmd "sudo apt-get install -y nautilus"; smsg "Installing nautilus"
-  runCmd "sudo apt-get install -y file-roller"; smsg "Installing file-roller"
-  runCmd "sudo apt-get install -y nautilus-emblems"; smsg "Installing nautilus-emblems"
-  runCmd "sudo apt-get install -y nautilus-image-manipulator"; smsg "Installing nautilus-image-manipulator"
-  runCmd "sudo apt-get install -y nautilus-image-converter"; smsg "Installing nautilus-image-converter"
-  runCmd "sudo apt-get install -y nautilus-compare"; smsg "Installing nautilus-compare"
-  runCmd "sudo apt-get install -y nautilus-actions"; smsg "Installing nautilus-actions"
-  runCmd "sudo apt-get install -y nautilus-sendto"; smsg "Installing nautilus-sendto"
-  runCmd "sudo apt-get install -y nautilus-share"; smsg "Installing nautilus-share"
-  runCmd "sudo apt-get install -y nautilus-wipe"; smsg "Installing nautilus-wipe"
-  runCmd "sudo apt-get install -y nautilus-script-audio-convert"; smsg "Installing nautilus-script-audio-convert"
-  runCmd "sudo apt-get install -y nautilus-filename-repairer"; smsg "Installing nautilus-filename-repairer"
-  runCmd "sudo apt-get install -y nautilus-gtkhash"; smsg "Installing nautilus-gtkhash"
-  runCmd "sudo apt-get install -y nautilus-ideviceinfo"; smsg "Installing nautilus-ideviceinfo"
-  runCmd "sudo apt-get install -y ooo-thumbnailer"; smsg "Installing ooo-thumbnailer"
-  runCmd "sudo apt-get install -y nautilus-dropbox"; smsg "Installing nautilus-dropbox"
-  runCmd "sudo apt-get install -y nautilus-script-manager"; smsg "Installing nautilus-script-manager"
-  runCmd "sudo apt-get install -y nautilus-columns"; smsg "Installing nautilus-columns"
-  runCmd "sudo apt-get install -y nautilus-flickr-uploader"; smsg "Installing nautilus-flickr-uploader"
+  runCmd "sudo apt-get install -y nautilus"; smsgn "Installing nautilus"
+  runCmd "sudo apt-get install -y file-roller"; smsgn "Installing file-roller"
+  runCmd "sudo apt-get install -y nautilus-emblems"; smsgn "Installing nautilus-emblems"
+  runCmd "sudo apt-get install -y nautilus-image-manipulator"; smsgn "Installing nautilus-image-manipulator"
+  runCmd "sudo apt-get install -y nautilus-image-converter"; smsgn "Installing nautilus-image-converter"
+  runCmd "sudo apt-get install -y nautilus-compare"; smsgn "Installing nautilus-compare"
+  runCmd "sudo apt-get install -y nautilus-actions"; smsgn "Installing nautilus-actions"
+  runCmd "sudo apt-get install -y nautilus-sendto"; smsgn "Installing nautilus-sendto"
+  runCmd "sudo apt-get install -y nautilus-share"; smsgn "Installing nautilus-share"
+  runCmd "sudo apt-get install -y nautilus-wipe"; smsgn "Installing nautilus-wipe"
+  runCmd "sudo apt-get install -y nautilus-script-audio-convert"; smsgn "Installing nautilus-script-audio-convert"
+  runCmd "sudo apt-get install -y nautilus-filename-repairer"; smsgn "Installing nautilus-filename-repairer"
+  runCmd "sudo apt-get install -y nautilus-gtkhash"; smsgn "Installing nautilus-gtkhash"
+  runCmd "sudo apt-get install -y nautilus-ideviceinfo"; smsgn "Installing nautilus-ideviceinfo"
+  runCmd "sudo apt-get install -y ooo-thumbnailer"; smsgn "Installing ooo-thumbnailer"
+  runCmd "sudo apt-get install -y nautilus-dropbox"; smsgn "Installing nautilus-dropbox"
+  runCmd "sudo apt-get install -y nautilus-script-manager"; smsgn "Installing nautilus-script-manager"
+  runCmd "sudo apt-get install -y nautilus-columns"; smsgn "Installing nautilus-columns"
+  runCmd "sudo apt-get install -y nautilus-flickr-uploader"; smsgn "Installing nautilus-flickr-uploader"
 
   if which insync >/dev/null; then
-    runCmd "sudo apt-get install -y insync-nautilus"; smsg "Installing insync-nautilus"
+    runCmd "sudo apt-get install -y insync-nautilus"; smsgn "Installing insync-nautilus"
   fi
 }
 
-installGimpPlugins () {
+function installGimpPlugins () {
   msg "Installing Gimp extensions"
 
-  runCmd "sudo apt-get install -y gtkam-gimp"; smsg "Installing gtkam-gimp"
-  runCmd "sudo apt-get install -y gimp-gluas"; smsg "Installing gimp-gluas"
-  runCmd "sudo apt-get install -y pandora"; smsg "Installing pandora"
-  runCmd "sudo apt-get install -y gimp-data-extras"; smsg "Installing gimp-data-extras"
-  runCmd "sudo apt-get install -y gimp-lensfun"; smsg "Installing gimp-lensfun"
-  runCmd "sudo apt-get install -y gimp-gmic"; smsg "Installing gimp-gmic"
-  runCmd "sudo apt-get install -y gimp-ufraw"; smsg "Installing gimp-ufraw"
-  runCmd "sudo apt-get install -y gimp-texturize"; smsg "Installing gimp-texturize"
-  runCmd "sudo apt-get install -y gimp-plugin-registry"; smsg "Installing gimp-plugin-registry"
+  runCmd "sudo apt-get install -y gtkam-gimp"; smsgn "Installing gtkam-gimp"
+  runCmd "sudo apt-get install -y gimp-gluas"; smsgn "Installing gimp-gluas"
+  runCmd "sudo apt-get install -y pandora"; smsgn "Installing pandora"
+  runCmd "sudo apt-get install -y gimp-data-extras"; smsgn "Installing gimp-data-extras"
+  runCmd "sudo apt-get install -y gimp-lensfun"; smsgn "Installing gimp-lensfun"
+  runCmd "sudo apt-get install -y gimp-gmic"; smsgn "Installing gimp-gmic"
+  runCmd "sudo apt-get install -y gimp-ufraw"; smsgn "Installing gimp-ufraw"
+  runCmd "sudo apt-get install -y gimp-texturize"; smsgn "Installing gimp-texturize"
+  runCmd "sudo apt-get install -y gimp-plugin-registry"; smsgn "Installing gimp-plugin-registry"
 }
 
-installRhythmBoxPlugins () {
+function installRhythmBoxPlugins () {
   msg "Installing RhythmBox extensions"
 
-  runCmd "sudo apt-get install -y rhythmbox-plugin-alternative-toolbar"; smsg "Installing rhythmbox-plugin-alternative-toolbar"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-artdisplay"; smsg "Installing rhythmbox-plugin-artdisplay"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-cdrecorder"; smsg "Installing rhythmbox-plugin-cdrecorder"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-close-on-hide"; smsg "Installing rhythmbox-plugin-close-on-hide"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-countdown-playlist"; smsg "Installing rhythmbox-plugin-countdown-playlist"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-coverart-browser"; smsg "Installing rhythmbox-plugin-coverart-browser"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-coverart-search"; smsg "Installing rhythmbox-plugin-coverart-search"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-desktopart"; smsg "Installing rhythmbox-plugin-desktopart"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-equalizer"; smsg "Installing rhythmbox-plugin-equalizer"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-fileorganizer"; smsg "Installing rhythmbox-plugin-fileorganizer"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-fullscreen"; smsg "Installing rhythmbox-plugin-fullscreen"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-hide"; smsg "Installing rhythmbox-plugin-hide"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-jumptowindow"; smsg "Installing rhythmbox-plugin-jumptowindow"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-llyrics"; smsg "Installing rhythmbox-plugin-llyrics"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-looper"; smsg "Installing rhythmbox-plugin-looper"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-opencontainingfolder"; smsg "Installing rhythmbox-plugin-opencontainingfolder"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-parametriceq"; smsg "Installing rhythmbox-plugin-parametriceq"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-playlist-import-export"; smsg "Installing rhythmbox-plugin-playlist-import-export"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-podcast-pos"; smsg "Installing rhythmbox-plugin-podcast-pos"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-randomalbumplayer"; smsg "Installing rhythmbox-plugin-randomalbumplayer"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-rating-filters"; smsg "Installing rhythmbox-plugin-rating-filters"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-remembertherhythm"; smsg "Installing rhythmbox-plugin-remembertherhythm"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-repeat-one-song"; smsg "Installing rhythmbox-plugin-repeat-one-song"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-rhythmweb"; smsg "Installing rhythmbox-plugin-rhythmweb"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-screensaver"; smsg "Installing rhythmbox-plugin-screensaver"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-smallwindow"; smsg "Installing rhythmbox-plugin-smallwindow"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-spectrum"; smsg "Installing rhythmbox-plugin-spectrum"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-suspend"; smsg "Installing rhythmbox-plugin-suspend"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-tray-icon"; smsg "Installing rhythmbox-plugin-tray-icon"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-visualizer"; smsg "Installing rhythmbox-plugin-visualizer"
-  runCmd "sudo apt-get install -y rhythmbox-plugin-wikipedia"; smsg "Installing rhythmbox-plugin-wikipedia"
-  runCmd "sudo apt-get install -y rhythmbox-plugins"; smsg "Installing rhythmbox-plugins"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-alternative-toolbar"; smsgn "Installing rhythmbox-plugin-alternative-toolbar"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-artdisplay"; smsgn "Installing rhythmbox-plugin-artdisplay"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-cdrecorder"; smsgn "Installing rhythmbox-plugin-cdrecorder"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-close-on-hide"; smsgn "Installing rhythmbox-plugin-close-on-hide"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-countdown-playlist"; smsgn "Installing rhythmbox-plugin-countdown-playlist"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-coverart-browser"; smsgn "Installing rhythmbox-plugin-coverart-browser"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-coverart-search"; smsgn "Installing rhythmbox-plugin-coverart-search"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-desktopart"; smsgn "Installing rhythmbox-plugin-desktopart"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-equalizer"; smsgn "Installing rhythmbox-plugin-equalizer"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-fileorganizer"; smsgn "Installing rhythmbox-plugin-fileorganizer"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-fullscreen"; smsgn "Installing rhythmbox-plugin-fullscreen"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-hide"; smsgn "Installing rhythmbox-plugin-hide"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-jumptowindow"; smsgn "Installing rhythmbox-plugin-jumptowindow"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-llyrics"; smsgn "Installing rhythmbox-plugin-llyrics"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-looper"; smsgn "Installing rhythmbox-plugin-looper"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-opencontainingfolder"; smsgn "Installing rhythmbox-plugin-opencontainingfolder"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-parametriceq"; smsgn "Installing rhythmbox-plugin-parametriceq"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-playlist-import-export"; smsgn "Installing rhythmbox-plugin-playlist-import-export"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-podcast-pos"; smsgn "Installing rhythmbox-plugin-podcast-pos"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-randomalbumplayer"; smsgn "Installing rhythmbox-plugin-randomalbumplayer"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-rating-filters"; smsgn "Installing rhythmbox-plugin-rating-filters"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-remembertherhythm"; smsgn "Installing rhythmbox-plugin-remembertherhythm"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-repeat-one-song"; smsgn "Installing rhythmbox-plugin-repeat-one-song"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-rhythmweb"; smsgn "Installing rhythmbox-plugin-rhythmweb"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-screensaver"; smsgn "Installing rhythmbox-plugin-screensaver"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-smallwindow"; smsgn "Installing rhythmbox-plugin-smallwindow"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-spectrum"; smsgn "Installing rhythmbox-plugin-spectrum"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-suspend"; smsgn "Installing rhythmbox-plugin-suspend"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-tray-icon"; smsgn "Installing rhythmbox-plugin-tray-icon"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-visualizer"; smsgn "Installing rhythmbox-plugin-visualizer"
+  runCmd "sudo apt-get install -y rhythmbox-plugin-wikipedia"; smsgn "Installing rhythmbox-plugin-wikipedia"
+  runCmd "sudo apt-get install -y rhythmbox-plugins"; smsgn "Installing rhythmbox-plugins"
 }
 
-installPidginPlugins () {
+function installPidginPlugins () {
   msg "Installing Pidgin extensions"
   # to add when available : pidgin-whatsapp
-  runCmd "sudo apt-get install -y telegram-purple"; smsg "Installing telegram-purple"
-  runCmd "sudo apt-get install -y pidgin-skype"; smsg "Installing pidgin-skype"
-  runCmd "sudo apt-get install -y purple-facebook"; smsg "Installing purple-facebook"
-  runCmd "sudo apt-get install -y purple-hangouts"; smsg "Installing purple-hangouts"
-  runCmd "sudo apt-get install -y pidgin-hangouts"; smsg "Installing pidgin-hangouts"
+  runCmd "sudo apt-get install -y telegram-purple"; smsgn "Installing telegram-purple"
+  runCmd "sudo apt-get install -y pidgin-skype"; smsgn "Installing pidgin-skype"
+  runCmd "sudo apt-get install -y purple-facebook"; smsgn "Installing purple-facebook"
+  runCmd "sudo apt-get install -y purple-hangouts"; smsgn "Installing purple-hangouts"
+  runCmd "sudo apt-get install -y pidgin-hangouts"; smsgn "Installing pidgin-hangouts"
 }
 
-installZsh () {
-  msg "Installing ZSH"
-  sudo apt-get install -y zsh
+function installZsh () {
+  runCmd "sudo apt-get install -y zsh"; smsgn "Installing zsh"
 
   msg "Installing Oh-my-Zsh"
   msh "Type exit to leave Zsh and go back to Yggdrasil script"
@@ -747,50 +749,48 @@ installZsh () {
   ./install.sh
 }
 
-installUnbound () {
+function installUnbound () {
   msg "Installing Unbound"
-  runCmd "sudo apt-get install -y unbound"; smsg "Installing unbound"
+  runCmd "sudo apt-get install -y unbound"; smsgn "Installing unbound"
 }
 
-installThemes () {
+function installThemes () {
   msg "Installing themes"
   # to add when available : ambiance-dark ambiance-dark-red mediterranean-theme polar-night-gtk hackstation-theme libra-theme zukitwo-dark-reloaded ceti-theme vertex-theme stylishdark-theme cenodark-gtk dorian-theme vimix-flat-themes delorean-dark dorian-theme-3.12 candra-gs-themes paper-gtk-theme
-
-  runCmd "sudo apt-get install -y ambiance-crunchy"; smsg "Installing ambiance-crunchy"
-  runCmd "sudo apt-get install -y arc-theme"; smsg "Installing arc-theme"
-  runCmd "sudo apt-get install -y ambiance-colors"; smsg "Installing ambiance-colors"
-  runCmd "sudo apt-get install -y radiance-colors"; smsg "Installing radiance-colors"
-  runCmd "sudo apt-get install -y ambiance-flat-colors"; smsg "Installing ambiance-flat-colors"
-  runCmd "sudo apt-get install -y vivacious-colors-gtk-dark"; smsg "Installing vivacious-colors-gtk-dark"
-  runCmd "sudo apt-get install -y vivacious-colors-gtk-light"; smsg "Installing vivacious-colors-gtk-light"
-  runCmd "sudo apt-get install -y yosembiance-gtk-theme"; smsg "Installing yosembiance-gtk-theme"
-  runCmd "sudo apt-get install -y ambiance-blackout-colors"; smsg "Installing ambiance-blackout-colors"
-  runCmd "sudo apt-get install -y ambiance-blackout-flat-colors"; smsg "Installing ambiance-blackout-flat-colors"
-  runCmd "sudo apt-get install -y radiance-flat-colors"; smsg "Installing radiance-flat-colors"
-  runCmd "sudo apt-get install -y vibrancy-colors"; smsg "Installing vibrancy-colors"
-  runCmd "sudo apt-get install -y vivacious-colors"; smsg "Installing vivacious-colors"
-  runCmd "sudo apt-get install -y numix-gtk-theme"; smsg "Installing numix-gtk-theme"
+  runCmd "sudo apt-get install -y ambiance-crunchy"; smsgn "Installing ambiance-crunchy"
+  runCmd "sudo apt-get install -y arc-theme"; smsgn "Installing arc-theme"
+  runCmd "sudo apt-get install -y ambiance-colors"; smsgn "Installing ambiance-colors"
+  runCmd "sudo apt-get install -y radiance-colors"; smsgn "Installing radiance-colors"
+  runCmd "sudo apt-get install -y ambiance-flat-colors"; smsgn "Installing ambiance-flat-colors"
+  runCmd "sudo apt-get install -y vivacious-colors-gtk-dark"; smsgn "Installing vivacious-colors-gtk-dark"
+  runCmd "sudo apt-get install -y vivacious-colors-gtk-light"; smsgn "Installing vivacious-colors-gtk-light"
+  runCmd "sudo apt-get install -y yosembiance-gtk-theme"; smsgn "Installing yosembiance-gtk-theme"
+  runCmd "sudo apt-get install -y ambiance-blackout-colors"; smsgn "Installing ambiance-blackout-colors"
+  runCmd "sudo apt-get install -y ambiance-blackout-flat-colors"; smsgn "Installing ambiance-blackout-flat-colors"
+  runCmd "sudo apt-get install -y radiance-flat-colors"; smsgn "Installing radiance-flat-colors"
+  runCmd "sudo apt-get install -y vibrancy-colors"; smsgn "Installing vibrancy-colors"
+  runCmd "sudo apt-get install -y vivacious-colors"; smsgn "Installing vivacious-colors"
+  runCmd "sudo apt-get install -y numix-gtk-theme"; smsgn "Installing numix-gtk-theme"
 }
 
-installIcons () {
+function installIcons () {
   msg "Installing icons"
   # to add when available : elementary-icons paper-icon-theme
-
-  runCmd "sudo apt-get install -y arc-icons"; smsg "Installing arc-icons"
-  runCmd "sudo apt-get install -y papirus-gtk-icon-theme"; smsg "Installing papirus-gtk-icon-theme"
-  runCmd "sudo apt-get install -y ultra-flat-icons"; smsg "Installing ultra-flat-icons"
-  runCmd "sudo apt-get install -y myelementary"; smsg "Installing myelementary"
-  runCmd "sudo apt-get install -y ghost-flat-icons"; smsg "Installing ghost-flat-icons"
-  runCmd "sudo apt-get install -y faenza-icon-theme"; smsg "Installing faenza-icon-theme"
-  runCmd "sudo apt-get install -y faience-icon-theme"; smsg "Installing faience-icon-theme"
-  runCmd "sudo apt-get install -y vibrantly-simple-icon-theme"; smsg "Installing vibrantly-simple-icon-theme"
-  runCmd "sudo apt-get install -y rave-x-colors-icons"; smsg "Installing rave-x-colors-icons"
-  runCmd "sudo apt-get install -y ravefinity-x-icons"; smsg "Installing ravefinity-x-icons"
-  runCmd "sudo apt-get install -y numix-icon-theme"; smsg "Installing numix-icon-theme"
-  runCmd "sudo apt-get install -y numix-icon-theme-circle"; smsg "Installing numix-icon-theme-circle"
+  runCmd "sudo apt-get install -y arc-icons"; smsgn "Installing arc-icons"
+  runCmd "sudo apt-get install -y papirus-gtk-icon-theme"; smsgn "Installing papirus-gtk-icon-theme"
+  runCmd "sudo apt-get install -y ultra-flat-icons"; smsgn "Installing ultra-flat-icons"
+  runCmd "sudo apt-get install -y myelementary"; smsgn "Installing myelementary"
+  runCmd "sudo apt-get install -y ghost-flat-icons"; smsgn "Installing ghost-flat-icons"
+  runCmd "sudo apt-get install -y faenza-icon-theme"; smsgn "Installing faenza-icon-theme"
+  runCmd "sudo apt-get install -y faience-icon-theme"; smsgn "Installing faience-icon-theme"
+  runCmd "sudo apt-get install -y vibrantly-simple-icon-theme"; smsgn "Installing vibrantly-simple-icon-theme"
+  runCmd "sudo apt-get install -y rave-x-colors-icons"; smsgn "Installing rave-x-colors-icons"
+  runCmd "sudo apt-get install -y ravefinity-x-icons"; smsgn "Installing ravefinity-x-icons"
+  runCmd "sudo apt-get install -y numix-icon-theme"; smsgn "Installing numix-icon-theme"
+  runCmd "sudo apt-get install -y numix-icon-theme-circle"; smsgn "Installing numix-icon-theme-circle"
 }
 
-installPlankThemes () {
+function installPlankThemes () {
   msg "Installing Plank themes"
 
   if which plank >/dev/null; then
@@ -802,30 +802,26 @@ installPlankThemes () {
       sh -c "cd ~ && mkdir -p ~/.temp-plank-themer && cd ~/.temp-plank-themer && wget https://github.com/rhoconlinux/plank-themer/archive/master.zip && unzip master.zip && cd plank-themer-master/ && rm -fR ~/.config/plank/dock1/theme_index; rm -fR ~/.config/plank/dock1/themes-repo; cp -a theme_index/ ~/.config/plank/dock1 && cp -a themes-repo/ ~/.config/plank/dock1 && cd ~ && rm -R ~/.temp-plank-themer && sh ~/.config/plank/dock1/theme_index/plank-on-dock-themer.sh"
     fi
   else
-    msg "Plank doit être installé en premier"
+    msg "Plank must be installed first"
   fi
 }
 
-installIconsExt () {
+function installIconsExt () {
   msg "Installing extra icons pack"
-  mkdir -p /home/$myHomedir/.icons
-  cp icons.tar.gz /home/$myHomedir/.icons
-  cd /home/$myHomedir/.icons
-  tar xzf icons.tar.gz
-  rm icons.tar.gz
+  mkdir -p /home/$myHomedir/.icons && cp icons.tar.gz /home/$myHomedir/.icons && cd /home/$myHomedir/.icons && tar xzf icons.tar.gz && rm icons.tar.gz retCode $? && smsgn "Installing extra icons"
 }
 
-installSolaar () {
+function installSolaar () {
   msg "Installing Solaar"
-  runCmd "sudo apt-get install -y solaar"; smsg "Installing solaar"
+  runCmd "sudo apt-get install -y solaar"; smsgn "Installing solaar"
 }
 
-installCardReader () {
+function installCardReader () {
   msg "Installing CardReader and utils"
-  runCmd "sudo apt-get install -y pcscd pcsc-tools"; smsg "Installing pcscd pcsc-tools"
+  runCmd "sudo apt-get install -y pcscd pcsc-tools"; smsgn "Installing pcscd pcsc-tools"
 }
 
-installEid () {
+function installEid () {
   cd /tmp
 
   msg "Installing eID middleware"
@@ -851,7 +847,7 @@ installEid () {
   sudo apt-get install -y eid-mw libacr38u
 }
 
-installEpsonV500Photo () {
+function installEpsonV500Photo () {
   cd /tmp
 
   msg "Téléchargement de iScan"
@@ -870,7 +866,7 @@ installEpsonV500Photo () {
   usb 0x04b8 0x0130' >> /etc/sane.d/epkowa.conf"
 }
 
-updateMicrocode () {
+function updateMicrocode () {
   msg "Mise à jours du Microcode du Processeur"
   oldMicrocode=`cat /proc/cpuinfo | grep -i --color microcode -m 1`
   intel=`cat /proc/cpuinfo | grep -i Intel | wc -l`
@@ -881,7 +877,7 @@ updateMicrocode () {
   msg "Microcode passé de la version "$oldMicrocode" à la version "$newMicrocode
 }
 
-fixWirelessIntel6320 () {
+function fixWirelessIntel6320 () {
   msg "Backup du fichier iwlwifi.conf"
   sudo cp /etc/modprobe.d/iwlwifi.conf /etc/modprobe.d/iwlwifi.conf.bak
 
@@ -891,74 +887,74 @@ fixWirelessIntel6320 () {
   msg "!!! REBOOT Nécessaire !!!"
 }
 
-installDevApps () {
+function installDevApps () {
   msg "Installing base Dev apps and tools"
 
-  runCmd "sudo apt-get install -y notepadqq"; smsg "Installing notepadqq"
-  runCmd "sudo apt-get install -y agave"; smsg "Installing agave"
-  runCmd "sudo apt-get install -y utext"; smsg "Installing utext"
-  runCmd "sudo apt-get install -y gpick"; smsg "Installing gpick"
-  runCmd "sudo apt-get install -y virtualbox-5.1"; smsg "Installing virtualbox-5.1"
-  runCmd "sudo apt-get install -y build-essential"; smsg "Installing build-essential"
-  runCmd "sudo apt-get install -y ubuntu-make"; smsg "Installing ubuntu-make"
-  runCmd "sudo apt-get install -y ghex"; smsg "Installing ghex"
-  runCmd "sudo apt-get install -y glade"; smsg "Installing glade"
-  runCmd "sudo apt-get install -y eric"; smsg "Installing eric"
-  runCmd "sudo apt-get install -y bluefish"; smsg "Installing bluefish"
-  runCmd "sudo apt-get install -y meld"; smsg "Installing meld"
-  runCmd "sudo apt-get install -y bluegriffon"; smsg "Installing bluegriffon"
-  runCmd "sudo apt-get install -y zeal"; smsg "Installing zeal"
+  runCmd "sudo apt-get install -y notepadqq"; smsgn "Installing notepadqq"
+  runCmd "sudo apt-get install -y agave"; smsgn "Installing agave"
+  runCmd "sudo apt-get install -y utext"; smsgn "Installing utext"
+  runCmd "sudo apt-get install -y gpick"; smsgn "Installing gpick"
+  runCmd "sudo apt-get install -y virtualbox-5.1"; smsgn "Installing virtualbox-5.1"
+  runCmd "sudo apt-get install -y build-essential"; smsgn "Installing build-essential"
+  runCmd "sudo apt-get install -y ubuntu-make"; smsgn "Installing ubuntu-make"
+  runCmd "sudo apt-get install -y ghex"; smsgn "Installing ghex"
+  runCmd "sudo apt-get install -y glade"; smsgn "Installing glade"
+  runCmd "sudo apt-get install -y eric"; smsgn "Installing eric"
+  runCmd "sudo apt-get install -y bluefish"; smsgn "Installing bluefish"
+  runCmd "sudo apt-get install -y meld"; smsgn "Installing meld"
+  runCmd "sudo apt-get install -y bluegriffon"; smsgn "Installing bluegriffon"
+  runCmd "sudo apt-get install -y zeal"; smsgn "Installing zeal"
 }
 
-installJava () {
+function installJava () {
   msg "Installing Java apps and tools"
 
-  runCmd "sudo apt-get install -y oracle-java7-installer"; smsg "Installing oracle-java7-installer"
-  runCmd "sudo apt-get install -y oracle-java8-installer"; smsg "Installing oracle-java8-installer"
-  runCmd "sudo apt-get install -y oracle-java8-set-default"; smsg "Installing oracle-java8-set-default"
+  runCmd "sudo apt-get install -y oracle-java7-installer"; smsgn "Installing oracle-java7-installer"
+  runCmd "sudo apt-get install -y oracle-java8-installer"; smsgn "Installing oracle-java8-installer"
+  runCmd "sudo apt-get install -y oracle-java8-set-default"; smsgn "Installing oracle-java8-set-default"
 }
 
-installJavaScript () {
+function installJavaScript () {
   msg "Installing JavaScript apps and tools"
 
-  runCmd "sudo apt-get install -y npm"; smsg "Installing npm"
-  runCmd "sudo apt-get install -y nodejs-legacy"; smsg "Installing nodejs-legacy"
-  runCmd "sudo apt-get install -y javascript-common"; smsg "Installing javascript-common"
+  runCmd "sudo apt-get install -y npm"; smsgn "Installing npm"
+  runCmd "sudo apt-get install -y nodejs-legacy"; smsgn "Installing nodejs-legacy"
+  runCmd "sudo apt-get install -y javascript-common"; smsgn "Installing javascript-common"
 
   if which npm >/dev/null; then
-    runCmd "sudo npm install remark-lint"; smsg "NPM Installing qt4-dev-tools"
-    runCmd "sudo npm install jshint"; smsg "NPM Installing jshint"
-    runCmd "sudo npm install jedi"; smsg "NPM Installing jedi"
+    runCmd "sudo npm install remark-lint"; smsgn "NPM Installing qt4-dev-tools"
+    runCmd "sudo npm install jshint"; smsgn "NPM Installing jshint"
+    runCmd "sudo npm install jedi"; smsgn "NPM Installing jedi"
   fi
 }
 
-installPHP () {
+function installPHP () {
   msg "Installing PHP apps and tools"
 
-  runCmd "sudo apt-get install -y php7.0-cli"; smsg "Installing php7.0-cli"
+  runCmd "sudo apt-get install -y php7.0-cli"; smsgn "Installing php7.0-cli"
 }
 
-installLUA () {
+function installLUA () {
   msg "Installing LUA apps and tools"
 
-  runCmd "sudo apt-get install -y luajit"; smsg "Installing luajit"
+  runCmd "sudo apt-get install -y luajit"; smsgn "Installing luajit"
 }
 
-installRuby () {
+function installRuby () {
   msg "Installing Ruby apps and tools"
 
-  runCmd "sudo apt-get install -y ruby-dev"; smsg "Installing ruby-dev"
+  runCmd "sudo apt-get install -y ruby-dev"; smsgn "Installing ruby-dev"
 }
 
-installQT () {
+function installQT () {
   msg "Installing QT Dev apps and tools"
 
-  runCmd "sudo apt-get install -y qt4-dev-tools"; smsg "Installing qt4-dev-tools"
-  runCmd "sudo apt-get install -y qt4-linguist-tools"; smsg "Installing qt4-linguist-tools"
-  runCmd "sudo apt-get install -y qt5-doc qttools5-doc"; smsg "Installing qt5-doc qttools5-doc"
-  runCmd "sudo apt-get install -y qttools5-dev-tools"; smsg "Installing qttools5-dev-tools"
-  runCmd "sudo apt-get install -y qttools5-examples"; smsg "Installing qttools5-examples"
-  runCmd "sudo apt-get install -y qttools5-doc-html"; smsg "Installing qttools5-doc-html"
+  runCmd "sudo apt-get install -y qt4-dev-tools"; smsgn "Installing qt4-dev-tools"
+  runCmd "sudo apt-get install -y qt4-linguist-tools"; smsgn "Installing qt4-linguist-tools"
+  runCmd "sudo apt-get install -y qt5-doc qttools5-doc"; smsgn "Installing qt5-doc qttools5-doc"
+  runCmd "sudo apt-get install -y qttools5-dev-tools"; smsgn "Installing qttools5-dev-tools"
+  runCmd "sudo apt-get install -y qttools5-examples"; smsgn "Installing qttools5-examples"
+  runCmd "sudo apt-get install -y qttools5-doc-html"; smsgn "Installing qttools5-doc-html"
 
   msg "Création du lien symbolique permettant à qtchooser de prendre qt5 par défaut"
   sudo ln -s /usr/share/qtchooser/qt5-x86_64-linux-gnu.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
@@ -978,12 +974,12 @@ installQT () {
   update-menus
 }
 
-installPython () {
+function installPython () {
   msg "Installing Python Dev apps and tools"
 
-  runCmd "sudo apt-get install -y python3-dev"; smsg "Installing python3-dev"
-  runCmd "sudo apt-get install -y python3-pip"; smsg "Installing python3-pip"
-  runCmd "sudo apt-get install -y python3-pyqt5"; smsg "Installing python3-pyqt5"
+  runCmd "sudo apt-get install -y python3-dev"; smsgn "Installing python3-dev"
+  runCmd "sudo apt-get install -y python3-pip"; smsgn "Installing python3-pip"
+  runCmd "sudo apt-get install -y python3-pyqt5"; smsgn "Installing python3-pyqt5"
 
   if which pip3 >/dev/null; then
     msg "Upgrading PIP"
@@ -1021,7 +1017,7 @@ installPython () {
   fi
 }
 
-installAndroidEnv () {
+function installAndroidEnv () {
   msg="Installation d'un environnement Android"
 
   cd /tmp
@@ -1103,118 +1099,119 @@ installAndroidEnv () {
   update-menus
 }
 
-installAtom () {
+function installAtom () {
   msg "Installing Atom and extensions"
 
-  runCmd "sudo apt-get install -y atom"; smsg "Installing atom"
+  runCmd "sudo apt-get install -y atom"; smsgn "Installing atom"
 
   if which apm >/dev/null; then
     msg "Installing Atom extensions"
 
-    runCmd "apm install git-status"; smsg "APM Installing git-status"
-    runCmd "apm install git-time-machine"; smsg "APM Installing git-time-machine"
-    runCmd "apm install color-picker"; smsg "APM Installing color-picker"
-    runCmd "apm install file-icons"; smsg "APM Installing file-icons"
-    runCmd "apm install language-conky"; smsg "APM Installing language-conky"
-    runCmd "apm install language-lua"; smsg "APM Installing language-lua"
-    runCmd "apm install minimap"; smsg "APM Installing minimap"
-    runCmd "apm install highlight-selected"; smsg "APM Installing highlight-selected"
-    runCmd "apm install minimap-highlight-selected"; smsg "APM Installing minimap-highlight-selected"
-    runCmd "apm install pigments"; smsg "APM Installing pigments"
-    runCmd "apm install minimap-pigments"; smsg "APM Installing minimap-pigments"
-    runCmd "apm install todo-show"; smsg "APM Installing todo-show"
-    runCmd "apm install linter"; smsg "APM Installing linter"
-    runCmd "apm install linter-javac"; smsg "APM Installing linter-javac"
-    runCmd "apm install linter-csslint"; smsg "APM Installing linter-csslint"
-    runCmd "apm install linter-coffeelint"; smsg "APM Installing linter-coffeelint"
-    runCmd "apm install linter-golinter"; smsg "APM Installing linter-golinter"
-    runCmd "apm install linter-htmlhint"; smsg "APM Installing linter-htmlhint"
-    runCmd "apm install linter-lua"; smsg "APM Installing linter-lua"
-    runCmd "apm install linter-markdown"; smsg "APM Installing linter-markdown"
-    runCmd "apm install linter-flake8"; smsg "APM Installing linter-flake8"
-    runCmd "apm install linter-php"; smsg "APM Installing linter-php"
-    runCmd "apm install autocomplete-java"; smsg "APM Installing autocomplete-java"
-    runCmd "apm install dash"; smsg "APM Installing dash"
+    runCmd "apm install git-status"; smsgn "APM Installing git-status"
+    runCmd "apm install git-time-machine"; smsgn "APM Installing git-time-machine"
+    runCmd "apm install color-picker"; smsgn "APM Installing color-picker"
+    runCmd "apm install file-icons"; smsgn "APM Installing file-icons"
+    runCmd "apm install language-conky"; smsgn "APM Installing language-conky"
+    runCmd "apm install language-lua"; smsgn "APM Installing language-lua"
+    runCmd "apm install minimap"; smsgn "APM Installing minimap"
+    runCmd "apm install highlight-selected"; smsgn "APM Installing highlight-selected"
+    runCmd "apm install minimap-highlight-selected"; smsgn "APM Installing minimap-highlight-selected"
+    runCmd "apm install pigments"; smsgn "APM Installing pigments"
+    runCmd "apm install minimap-pigments"; smsgn "APM Installing minimap-pigments"
+    runCmd "apm install todo-show"; smsgn "APM Installing todo-show"
+    runCmd "apm install linter"; smsgn "APM Installing linter"
+    runCmd "apm install linter-javac"; smsgn "APM Installing linter-javac"
+    runCmd "apm install linter-csslint"; smsgn "APM Installing linter-csslint"
+    runCmd "apm install linter-coffeelint"; smsgn "APM Installing linter-coffeelint"
+    runCmd "apm install linter-golinter"; smsgn "APM Installing linter-golinter"
+    runCmd "apm install linter-htmlhint"; smsgn "APM Installing linter-htmlhint"
+    runCmd "apm install linter-lua"; smsgn "APM Installing linter-lua"
+    runCmd "apm install linter-markdown"; smsgn "APM Installing linter-markdown"
+    runCmd "apm install linter-flake8"; smsgn "APM Installing linter-flake8"
+    runCmd "apm install linter-php"; smsgn "APM Installing linter-php"
+    runCmd "apm install autocomplete-java"; smsgn "APM Installing autocomplete-java"
+    runCmd "apm install dash"; smsgn "APM Installing dash"
   fi
 }
 
-installAnjuta () {
+function installAnjuta () {
   msg "Installing Anjuta"
 
-  runCmd "sudo apt-get install -y anjuta anjuta-extras"; smsg "Installing anjuta anjuta-extras"
+  runCmd "sudo apt-get install -y anjuta anjuta-extras"; smsgn "Installing anjuta anjuta-extras"
 }
 
-installBrackets () {
+function installBrackets () {
   msg "Installing Brackets"
 
-  runCmd "sudo apt-get install -y brackets"; smsg "Installing brackets"
+  runCmd "sudo apt-get install -y brackets"; smsgn "Installing brackets"
 }
 
-installCodeBlocks () {
+function installCodeBlocks () {
   msg "Installing CodeBlocks"
 
-  runCmd "sudo apt-get install -y codeblocks codeblocks-contrib"; smsg "Installing codeblocks codeblocks-contrib"
+  runCmd "sudo apt-get install -y codeblocks codeblocks-contrib"; smsgn "Installing codeblocks codeblocks-contrib"
 }
 
-installGeany () {
+function installGeany () {
   msg "Installing Geany and extensions"
 
-  runCmd "sudo apt-get install -y geany"; smsg "Installing geany"
-  runCmd "sudo apt-get install -y geany-plugins"; smsg "Installing geany-plugins"
-  runCmd "sudo apt-get install -y geany-plugin-markdown"; smsg "Installing geany-plugin-markdown"
+  runCmd "sudo apt-get install -y geany"; smsgn "Installing geany"
+  runCmd "sudo apt-get install -y geany-plugins"; smsgn "Installing geany-plugins"
+  runCmd "sudo apt-get install -y geany-plugin-markdown"; smsgn "Installing geany-plugin-markdown"
 }
 
-installEclipse () {
+function installEclipse () {
   if which umake >/dev/null; then
     msg "Umake installing : Eclipse"
     sudo umake ide eclipse
   fi
 }
 
-installIdea () {
+function installIdea () {
   if which umake >/dev/null; then
     msg "Umake installing : Idea"
     sudo umake ide idea
   fi
 }
 
-installPyCharm () {
+function installPyCharm () {
   if which umake >/dev/null; then
     msg "Umake installing : PyCharm"
     sudo umake ide pycharm
   fi
 }
 
-installVisualStudioCode () {
+function installVisualStudioCode () {
   if which umake >/dev/null; then
     msg "Umake installing : Visual-studio-code"
     sudo umake web visual-studio-code
   fi
 }
 
-installAndroidStudio () {
+function installAndroidStudio () {
   if which umake >/dev/null; then
     msg "Umake installing : Android-Studio"
     sudo umake android android-studio
   fi
 }
 
-installCAD () {
+function installCAD () {
   msg "Installing CAD apps and tools"
 
-  runCmd "sudo apt-get install -y kicad kicad-locale-fr"; smsg "Installing kicad kicad-locale-fr"
-  runCmd "sudo apt-get install -y librecad"; smsg "Installing librecad"
-  runCmd "sudo apt-get install -y freecad"; smsg "Installing freecad"
+  runCmd "sudo apt-get install -y kicad kicad-locale-fr"; smsgn "Installing kicad kicad-locale-fr"
+  runCmd "sudo apt-get install -y librecad"; smsgn "Installing librecad"
+  runCmd "sudo apt-get install -y freecad"; smsgn "Installing freecad"
 }
 
-enableUFW () {
+function enableUFW () {
   msg "Enabling FireWall (UFW)"
 
-  runCmd "sudo ufw enable"; smsg "Enabling ufw"
+  runCmd "sudo ufw enable"; smsgn "Enabling ufw"
 }
 
-addNumLockXBashrc () {
+function addNumLockXBashrc () {
   msg "NumLockX ajouté à MDM Init Default"
+
   if which numlockx >/dev/null; then
   sudo sed -i -e '
   s!exit 0!#numlockx!
@@ -1227,29 +1224,28 @@ addNumLockXBashrc () {
   fi
 }
 
-enableTmpRAM () {
+function enableTmpRAM () {
   msg "Modif /etc/fstab pour avoir /tmp en RAM"
   sudo sh -c "echo 'tmpfs      /tmp            tmpfs        defaults,size=2g           0    0' >> /etc/fstab"
-
   msg "Reboot nécessaire"
 }
 
-addScreenfetchBashrc () {
+function addScreenfetchBashrc () {
   msg "Adding screenfetch to .bashrc"
   touch /home/$myHomedir/.bashrc
   echo "screenfetch" >> /home/"$myHomedir"/.bashrc
 }
 
-enableHistoryTS () {
+function enableHistoryTS () {
   msg "Activation du TimeStamp dans History"
   echo "export HISTTIMEFORMAT='%F %T  '" >> /home/"$myHomedir"/.bashrc
 }
 
-toolInxi () {
+function toolInxi () {
   inxi -F
 }
 
-toolSpeedtestCli () {
+function toolSpeedtestCli () {
   if which speedtest-cli >/dev/null; then
     sudo speedtest-cli
   else
@@ -1257,11 +1253,11 @@ toolSpeedtestCli () {
   fi
 }
 
-toolPacketLoss () {
+function toolPacketLoss () {
   ping -q -c 10 google.com
 }
 
-toolOptimizeFirefox () {
+function toolOptimizeFirefox () {
   msg "Optimisation des bases SQLite de Firefox"
   pressKey "Veuillez fermer Firefox AVANT de procéder, celui-ci sera killé juste après"
   pkill -9 firefox
@@ -1270,9 +1266,9 @@ toolOptimizeFirefox () {
   msg "Fin de l'optimisation des bases SQLite..."
 }
 
-toolAutoremove () {
+function toolAutoremove () {
   msg "Cleaning useless deb package(s)"
-  runCmd "sudo apt-get -y autoremove"; smsg "apt-get autoremove"
+  runCmd "sudo apt-get -y autoremove"; smsgn "apt-get autoremove"
 }
 
 #------------------------------------------------------------------------------#
