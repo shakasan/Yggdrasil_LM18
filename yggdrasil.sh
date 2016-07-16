@@ -258,8 +258,6 @@ addPPA () {
   runCmd "sudo add-apt-repository -y ppa:transmissionbt/ppa"; smsg "Adding ppa:transmissionbt/ppa PPA (Transmission-BT)" # bittorrent client
   runCmd "sudo add-apt-repository -y ppa:geary-team/releases"; smsg "Adding ppa:geary-team/releases PPA (Geary)" # email client
   runCmd "sudo add-apt-repository -y ppa:varlesh-l/papirus-pack"; smsg "Adding ppa:varlesh-l/papirus-pack PPA (themes)" # themes
-
-  #sudo add-apt-repository -y ppa:birdie-team/stable # birdie, twitter client # no longer maintained ?
   #sudo add-apt-repository -y ppa:mc3man/trusty-media # multimedia apps # no longer maintained ?
   #sudo add-apt-repository -y ppa:whatsapp-purple/ppa # WhatsApp plugin for Pidgin/libpurple # update ?
 
@@ -454,6 +452,7 @@ installInternet () {
   runCmd "sudo apt-get install -y geary"; smsg "Installing geary"
   runCmd "sudo apt-get install -y whatsie"; smsg "Installing whatsie"
   runCmd "sudo apt-get install -y ring-gnome"; smsg "Installing ring-gnome"
+  runCmd "sudo apt-get install -y corebird"; smsg "Installing corebird"
 }
 
 installInternetExt () {
