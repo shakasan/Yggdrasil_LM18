@@ -727,7 +727,6 @@ installRhythmBoxPlugins () {
 installPidginPlugins () {
   msg "Installing Pidgin extensions"
   # to add when available : pidgin-whatsapp
-
   runCmd "sudo apt-get install -y telegram-purple"; smsg "Installing telegram-purple"
   runCmd "sudo apt-get install -y pidgin-skype"; smsg "Installing pidgin-skype"
   runCmd "sudo apt-get install -y purple-facebook"; smsg "Installing purple-facebook"
