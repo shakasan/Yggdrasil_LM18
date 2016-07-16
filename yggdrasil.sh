@@ -211,12 +211,12 @@ addPPA () {
 
   runCmd "sudo dpkg --add-architecture i386"; smsg "Adding Arch i386"
 
-  runCmd "sudo apt-get install -y apt-transport-https"; smsg "Adding apt-transport-https package"
+  runCmd "sudo apt-get install -y apt-transport-https"; smsg "Intalling apt-transport-https"
 
   sudo sh -c "echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections" &>> $logFile && retCode $? && smsg "Accepting Oracle Java SE 7"
   sudo sh -c "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections" &>> $logFile && retCode $? && smsg "Accepting Oracle Java SE 8"
 
-  sudo sh -c "echo sience-config science-config/group select '$myHomedir ($myHomedir)' | sudo debconf-set-selections" &>> $logFile && retCode $? && smsg "Science-config package pre-config"
+  sudo sh -c "echo sience-config science-config/group select '$myHomedir ($myHomedir)' | sudo debconf-set-selections" &>> $logFile && retCode $? && smsg "Pre-configuring Science-config package"
 
   runCmd "sudo add-apt-repository -y ppa:noobslab/themes"; smsg "Adding ppa:noobslab/themes PPA (themes)" # themes from noobslab
   runCmd "sudo add-apt-repository -y ppa:noobslab/icons"; smsg "Adding ppa:noobslab/icons PPA (icons)" # icons from noobslab
@@ -258,7 +258,6 @@ addPPA () {
   runCmd "sudo add-apt-repository -y ppa:transmissionbt/ppa"; smsg "Adding ppa:transmissionbt/ppa PPA (Transmission-BT)" # bittorrent client
   runCmd "sudo add-apt-repository -y ppa:geary-team/releases"; smsg "Adding ppa:geary-team/releases PPA (Geary)" # email client
   runCmd "sudo add-apt-repository -y ppa:varlesh-l/papirus-pack"; smsg "Adding ppa:varlesh-l/papirus-pack PPA (themes)" # themes
-  #sudo add-apt-repository -y ppa:mc3man/trusty-media # multimedia apps # no longer maintained ?
   #sudo add-apt-repository -y ppa:whatsapp-purple/ppa # WhatsApp plugin for Pidgin/libpurple # update ?
 
   wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsg "Adding Opera repository key"
@@ -284,8 +283,8 @@ addPPA () {
   echo "deb http://mkvtoolnix.download/ubuntu/xenial/ ./"  | sudo tee /etc/apt/sources.list.d/mkv.list && retCode $? && smsg "Adding MKVToolnix repository"
   echo "deb-src http://mkvtoolnix.download/ubuntu/xenial/ ./ "  | sudo tee -a /etc/apt/sources.list.d/mkv.list && retCode $? && smsg "Adding MKVToolnix sources repository"
 
-  #wget -O- https://jgeboski.github.io/obs.key | sudo apt-key add - && retCode $? && smsg "Adding purple-facebook repository key"
-  #sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/jgeboski/xUbuntu_14.04/ ./' > /etc/apt/sources.list.d/jgeboski.list" && retCode $? && smsg "Adding purple-facebook repository"
+  wget -O- https://jgeboski.github.io/obs.key | sudo apt-key add - && retCode $? && smsg "Adding purple-facebook repository key"
+  sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/jgeboski/xUbuntu_16.04/ ./' > /etc/apt/sources.list.d/jgeboski.list" && retCode $? && smsg "Adding purple-facebook repository"
 
   sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 &>> $logFile && retCode $? && smsg "Adding Spotify repository key"
   echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list && retCode $? && smsg "Adding Spotify repository"
@@ -731,6 +730,7 @@ installPidginPlugins () {
 
   runCmd "sudo apt-get install -y telegram-purple"; smsg "Installing telegram-purple"
   runCmd "sudo apt-get install -y pidgin-skype"; smsg "Installing pidgin-skype"
+  runCmd "sudo apt-get install -y purple-facebook"; smsg "Installing purple-facebook"
   runCmd "sudo apt-get install -y purple-hangouts"; smsg "Installing purple-hangouts"
   runCmd "sudo apt-get install -y pidgin-hangouts"; smsg "Installing pidgin-hangouts"
 }
@@ -1368,7 +1368,7 @@ Source) #-----------------------------------------------------------------------
 clear
 
 msg "Change mirrors + add Sources repository"
-software-sources
+software-sources >/dev/null
 
 pressKey
 ;;
