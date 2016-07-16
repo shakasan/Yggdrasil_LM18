@@ -1289,8 +1289,6 @@ echo "--[ Yggdrasil log ]--[ "$cDate" ]--[ "$cTime" ]---------------------------
 # NEVER run the script as root or with sudo !!!!
 sudo echo
 
-headless=1
-
 if [ $headless == 1 ]; then
   msg "Headless/Batch mode enabled"
   exit
