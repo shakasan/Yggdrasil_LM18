@@ -374,9 +374,9 @@ function installMultimedia () {
   runCmd "sudo apt-get install -y birdfont"; smsgn "Installing birdfont"
   runCmd "sudo apt-get install -y moc"; smsgn "Installing moc"
 
-  # DarkDot theme for Moc
-  runCmd "echo 'alias mocp=\"mocp -T darkdot_theme\"' | tee -a /home/$myHomedir/.bashrc"
-  smsgn "Configuring DarkDot theme for Mocp"
+  # nightly theme for Moc
+  runCmd "echo 'alias mocp=\"mocp -T nightly_theme\"' | tee -a /home/$myHomedir/.bashrc"
+  smsgn "Configuring nightly theme for Mocp"
 }
 
 function installMultimediaExt () {
