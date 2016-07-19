@@ -735,6 +735,7 @@ function installPidginPlugins () {
   runCmd "sudo apt-get install -y purple-facebook"; smsgn "Installing purple-facebook"
   runCmd "sudo apt-get install -y purple-hangouts"; smsgn "Installing purple-hangouts"
   runCmd "sudo apt-get install -y pidgin-hangouts"; smsgn "Installing pidgin-hangouts"
+  runCmd "sudo apt-get install -y pidgin-skypeweb purple-skypeweb"; smsgn "Installing pidgin-skypeweb purple-skypeweb"
 }
 
 function installZsh () {
