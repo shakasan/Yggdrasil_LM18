@@ -512,6 +512,7 @@ function installInternetExt () {
   wget https://packagecloud.io/install/repositories/gyazo/gyazo-for-linux/script.deb.sh
 
   msg "Installation de Gyazo"
+  chmod +x script.deb.sh
   sudo os=ubuntu dist=xenial ./script.deb.sh
   sudo apt-get install -y gya
 
