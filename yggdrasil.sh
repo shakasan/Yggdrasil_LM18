@@ -470,7 +470,6 @@ function installInternet () {
   runCmd "sudo apt-get install -y midori"; smsgn "Installing midori"
   runCmd "sudo apt-get install -y geary"; smsgn "Installing geary"
   runCmd "sudo apt-get install -y whatsie"; smsgn "Installing whatsie"
-  runCmd "sudo apt-get install -y ring-gnome"; smsgn "Installing ring-gnome"
   runCmd "sudo apt-get install -y corebird"; smsgn "Installing corebird"
 }
 
