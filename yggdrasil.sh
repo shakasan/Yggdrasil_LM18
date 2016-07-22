@@ -25,16 +25,35 @@ cTime=$(date +%H:%M)
 cDate=$(date +%d-%m-%Y)
 
 # color codes
-VERT="\\033[1;32m"
-NORMAL="\\033[0;39m"
-ROUGE="\\033[1;31m"
-ROSE="\\033[1;35m"
-BLEU="\\033[1;34m"
-BLANC="\\033[0;02m"
-BLANCLAIR="\\033[1;08m"
-JAUNE="\\033[1;33m"
-CYAN="\\033[1;36m"
-INV="\\033[39;7m"
+#VERT="\\033[1;32m"
+#NORMAL="\\033[0;39m"
+#ROUGE="\\033[1;31m"
+#ROSE="\\033[1;35m"
+#BLEU="\\033[1;34m"
+#BLANC="\\033[0;02m"
+#BLANCLAIR="\\033[1;08m"
+#JAUNE="\\033[1;33m"
+#CYAN="\\033[1;36m"
+#INV="\\033[39;7m"
+
+UNDERLINE=$(tput sgr 0 1)
+BOLD=$(tput bold)
+ROUGE=$(tput setaf 1)
+VERT=$(tput setaf 2)
+JAUNE=$(tput setaf 3)
+BLEU=$(tput setaf 4)
+MAUVE=$(tput setaf 5)
+CYAN=$(tput setaf 6)
+BLANC=$(tput setaf 7)
+NORMAL=$(tput sgr0)
+INV=$(tput smso)
+BOLDROUGE=${BOLD}${ROUGE}
+BOLDVERT=${BOLD}${VERT}
+BOLDJAUNE=${BOLD}${JAUNE}
+BOLDBLEU=${BOLD}${BLEU}
+BOLDMAUVE=${BOLD}${MAUVE}
+BOLDCYAN=${BOLD}${CYAN}
+BOLDBLANC=${BOLD}${BLANC}
 
 #------------------------------------------------------------------------------#
 # Temp files for Dialog                                                        #
@@ -89,9 +108,9 @@ function retCode () {
   typeset ret_code="$1"
 
   if [ $ret_code == 0 ]; then
-    printf "[ ""$VERT""OK"$NORMAL" ] "
+    printf "[ ""$BOLDVERT""OK"$NORMAL" ] "
   else
-    printf "[ ""$ROUGE""!!"$NORMAL" ] "
+    printf "[ ""$BOLDROUGE""!!"$NORMAL" ] "
   fi
 }
 
@@ -104,9 +123,9 @@ function runCmd () {
   ret_code=$?
 
   if [ $ret_code == 0 ]; then
-    printf "[ ""$VERT""OK"$NORMAL" ] "
+    printf "[ ""$BOLDVERT""OK"$NORMAL" ] "
   else
-    printf "[ ""$ROUGE""!!"$NORMAL" ] "
+    printf "[ ""$BOLDROUGE""!!"$NORMAL" ] "
   fi
 }
 
@@ -141,6 +160,7 @@ function pressKey () {
   printf "$NORMAL"
 }
 
+#
 # system update
 function updateSystem () {
   msg "System update"
@@ -157,13 +177,13 @@ function updateSystem () {
 
 # check if running on the right OS ^^
 function osCheck () {
-  printf "$JAUNE""OS requirement checking\n\n""$NORMAL"
+  printf "$BOLDJAUNE""OS requirement checking\n\n""$NORMAL"
   OS=`lsb_release -d | gawk -F':' '{print $2}' | gawk -F'\t' '{print $2}'`
 
   if [[ $OS == *"Linux Mint 18"* ]]; then
-    printf "[ ""$VERT""OK"$NORMAL" ] Linux Mint 18.x\n"
+    printf "[ ""$BOLDVERT""OK"$NORMAL" ] Linux Mint 18.x\n"
   else
-    printf "[ ""$ROUGE""!!"$NORMAL" ] Linux Mint 18.x not found. Bye...\n"
+    printf "[ ""$BOLDROUGE""!!"$NORMAL" ] Linux Mint 18.x not found. Bye...\n"
     printf "\n"
     exit
   fi
@@ -171,39 +191,39 @@ function osCheck () {
 
 # dependencies used in the script checked and installed if necessary
 function depCheck () {
-  printf "$JAUNE""Script dependencies checking\n\n""$NORMAL"
+  printf "$BOLDJAUNE""Script dependencies checking\n\n""$NORMAL"
 
   # mpg123
   if which mpg123 >/dev/null; then
-    printf "[ ""$VERT""OK"$NORMAL" ] mpg123 found\n"
+    printf "[ ""$BOLDVERT""OK"$NORMAL" ] mpg123 found\n"
   else
     runCmd "sudo apt-get install -y mpg123"; smsgn "mpg123 not foud...Installing..."
   fi
 
   # libnotify-bin (cmd : notify-send)
   if which notify-send >/dev/null; then
-    printf "[ ""$VERT""OK"$NORMAL" ] libnotify-bin found\n"
+    printf "[ ""$BOLDVERT""OK"$NORMAL" ] libnotify-bin found\n"
   else
     runCmd "sudo apt-get install -y libnotify-bin"; smsgn "libnotify-bin not found...Installing..."
   fi
 
   # lsb_release
   if which lsb_release >/dev/null; then
-    printf "[ ""$VERT""OK"$NORMAL" ] lsb-release found\n"
+    printf "[ ""$BOLDVERT""OK"$NORMAL" ] lsb-release found\n"
   else
     runCmd "sudo apt-get install -y lsb-release"; smsgn "lsb-release not found...Installing..."
   fi
 
   # cifs-utils
   if which mount.cifs >/dev/null; then
-    printf "[ ""$VERT""OK"$NORMAL" ] cifs-utils found\n"
+    printf "[ ""$BOLDVERT""OK"$NORMAL" ] cifs-utils found\n"
   else
     runCmd "sudo apt-get install -y cifs-utils"; smsgn "cifs-utils not found...Installing..."
   fi
 
   # dialog
   if which dialog >/dev/null; then
-    printf "[ ""$VERT""OK"$NORMAL" ] dialog found\n"
+    printf "[ ""$BOLDVERT""OK"$NORMAL" ] dialog found\n"
   else
     runCmd "sudo apt-get install -y dialog"; smsgn "dialog not found...Installing..."
   fi
@@ -418,11 +438,8 @@ function installMultimediaExt () {
 
 function installEbook () {
   msg "Installation eBook apps and tools"
-
   runCmd "sudo apt-get install -y fbreader"; smsgn "Installing fbreader"
-
   cd /tmp
-
   runCmd "sudo -v && wget -q --no-check-certificate -nv -O- https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py | sudo python -c \"import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()\""
   smsgn "Installing calibre"
 }
@@ -585,7 +602,6 @@ function installWineDRI3 () {
 
 function installWineStaging () {
   msg "Installing Wine-Staging"
-
   runCmd "sudo add-apt-repository -y ppa:pipelight/stable"; smsgn "Adding WineStaging PPA"
   updateSystem
   runCmd "sudo apt-get install -y wine-staging-amd64"; smsgn "Installing wine-staging-amd64"
@@ -593,7 +609,6 @@ function installWineStaging () {
 
 function installKodiBETA () {
   msg "Installing Kodi BETA"
-
   runCmd "sudo add-apt-repository -y ppa:team-xbmc/unstable"; smsgn "Adding Kodi BETA PPA"
   updateSystem
   runCmd "sudo apt-get install -y kodi"; smsgn "Installing kodi"
@@ -601,7 +616,6 @@ function installKodiBETA () {
 
 function installKodiNightly () {
   msg "Installing Kodi Nightly"
-
   runCmd "sudo add-apt-repository -y ppa:team-xbmc/xbmc-nightly"; smsgn "Adding Kodi Nightly PPA"
   updateSystem
   runCmd "sudo apt-get install -y kodi"; smsgn "Installing kodi"
@@ -609,14 +623,12 @@ function installKodiNightly () {
 
 function installGames () {
   msg "Installing Games apps and tools"
-
   runCmd "sudo apt-get install -y steam"; smsgn "Installing steam"
   runCmd "sudo apt-get install -y jstest-gtk"; smsgn "Installing jstest-gtk"
 }
 
 function installBurningTools () {
   msg "Installing CD/DVD/BD Burning apps and tools"
-
   runCmd "sudo apt-get install -y brasero"; smsgn "Installing brasero"
   runCmd "sudo apt-get install -y k3b k3b-extrathemes"; smsgn "Installing k3b k3b-extrathemes"
   runCmd "sudo apt-get install -y xfburn"; smsgn "Installing xfburn"
@@ -909,7 +921,6 @@ function installDevApps () {
 
 function installJava () {
   msg "Installing Java apps and tools"
-
   runCmd "sudo apt-get install -y oracle-java7-installer"; smsgn "Installing oracle-java7-installer"
   runCmd "sudo apt-get install -y oracle-java8-installer"; smsgn "Installing oracle-java8-installer"
   runCmd "sudo apt-get install -y oracle-java8-set-default"; smsgn "Installing oracle-java8-set-default"
@@ -931,19 +942,16 @@ function installJavaScript () {
 
 function installPHP () {
   msg "Installing PHP apps and tools"
-
   runCmd "sudo apt-get install -y php7.0-cli"; smsgn "Installing php7.0-cli"
 }
 
 function installLUA () {
   msg "Installing LUA apps and tools"
-
   runCmd "sudo apt-get install -y luajit"; smsgn "Installing luajit"
 }
 
 function installRuby () {
   msg "Installing Ruby apps and tools"
-
   runCmd "sudo apt-get install -y ruby-dev"; smsgn "Installing ruby-dev"
 }
 
@@ -1137,25 +1145,21 @@ function installAtom () {
 
 function installAnjuta () {
   msg "Installing Anjuta"
-
   runCmd "sudo apt-get install -y anjuta anjuta-extras"; smsgn "Installing anjuta anjuta-extras"
 }
 
 function installBrackets () {
   msg "Installing Brackets"
-
   runCmd "sudo apt-get install -y brackets"; smsgn "Installing brackets"
 }
 
 function installCodeBlocks () {
   msg "Installing CodeBlocks"
-
   runCmd "sudo apt-get install -y codeblocks codeblocks-contrib"; smsgn "Installing codeblocks codeblocks-contrib"
 }
 
 function installGeany () {
   msg "Installing Geany and extensions"
-
   runCmd "sudo apt-get install -y geany"; smsgn "Installing geany"
   runCmd "sudo apt-get install -y geany-plugins"; smsgn "Installing geany-plugins"
   runCmd "sudo apt-get install -y geany-plugin-markdown"; smsgn "Installing geany-plugin-markdown"
@@ -1198,7 +1202,6 @@ function installAndroidStudio () {
 
 function installCAD () {
   msg "Installing CAD apps and tools"
-
   runCmd "sudo apt-get install -y kicad kicad-locale-fr"; smsgn "Installing kicad kicad-locale-fr"
   runCmd "sudo apt-get install -y librecad"; smsgn "Installing librecad"
   runCmd "sudo apt-get install -y freecad"; smsgn "Installing freecad"
@@ -1206,7 +1209,6 @@ function installCAD () {
 
 function enableUFW () {
   msg "Enabling FireWall (UFW)"
-
   runCmd "sudo ufw enable"; smsgn "Enabling ufw"
 }
 
@@ -1291,35 +1293,35 @@ if [ $headless == 1 ]; then
 fi
 
 printf "\n"
-printf "$JAUNE"
+printf "$BOLDJAUNE"
 printf "          __   __              _               _ _  \n"
 printf "          \ \ / /             | |             (_) | \n"
 printf "           \ V /__ _  __ _  __| |_ __ __ _ ___ _| | \n"
-printf "$NORMAL     _____ $JAUNE \ // _\` |/ _\` |/ _\` | '__/ _\` / __| | | \n"
-printf "$NORMAL _________ $JAUNE | | (_| | (_| | (_| | | | (_| \__ \ | | $NORMAL ___________________________________\n"
-printf "$JAUNE            \_/\__, |\__, |\__,_|_|  \__,_|___/_|_| $NORMAL _______________________________\n"
-printf "$JAUNE                __/ | __/ |                         \n"
-printf "               |___/ |___/  $ROUGE Customize Linux Mint 18 made easier\n"
-printf "$NORMAL                             ver "$version" - GPLv3 - Francois B. (Makotosan/Shakasan)\n"
+printf "$BOLDBLANC     _____ $BOLDJAUNE \ // _\` |/ _\` |/ _\` | '__/ _\` / __| | | \n"
+printf "$BOLDBLANC _________ $BOLDJAUNE | | (_| | (_| | (_| | | | (_| \__ \ | | $BOLDBLANC ___________________________________\n"
+printf "$BOLDJAUNE            \_/\__, |\__, |\__,_|_|  \__,_|___/_|_| $BOLDBLANC _______________________________\n"
+printf "$BOLDJAUNE                __/ | __/ |                         \n"
+printf "               |___/ |___/  $BOLDROUGE Customize Linux Mint 18 made easier\n"
+printf "$BOLDBLANC                             ver "$version" - GPLv3 - Francois B. (Makotosan/Shakasan)\n"
 
 printf "\n"
-printf "$VERT""User (userdir) :""$NORMAL"" $myHomedir\n"
-printf "$VERT""OS : ""$NORMAL"
+printf "$BOLDVERT""User (userdir) :""$NORMAL"" $myHomedir\n"
+printf "$BOLDVERT""OS : ""$NORMAL"
 lsb_release -d | gawk -F':' '{print $2}' | gawk -F'\t' '{print $2}'
-printf "$VERT""Kernel : ""$NORMAL"
+printf "$BOLDVERT""Kernel : ""$NORMAL"
 uname -r
-printf "$VERT""Architecture : ""$NORMAL"
+printf "$BOLDVERT""Architecture : ""$NORMAL"
 uname -m
-printf "$VERT""CPU :""$NORMAL"
+printf "$BOLDVERT""CPU :""$NORMAL"
 cat /proc/cpuinfo | grep "model name" -m1 | gawk -F':' '{print $2}'
 
-printf "$BLANC""__________________________________________________________________________________\n""$NORMAL"
+printf "$BOLDBLANC""__________________________________________________________________________________\n""$NORMAL"
 printf "\n"
 osCheck
 printf "\n"
 depCheck
 
-printf "$BLANC""__________________________________________________________________________________\n""$NORMAL"
+printf "$BOLDBLANC""__________________________________________________________________________________\n""$NORMAL"
 printf "\n"
 
 pressKey
