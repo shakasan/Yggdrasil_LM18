@@ -917,6 +917,7 @@ function installDevApps () {
   runCmd "sudo apt-get install -y meld"; smsgn "Installing meld"
   runCmd "sudo apt-get install -y bluegriffon"; smsgn "Installing bluegriffon"
   runCmd "sudo apt-get install -y zeal"; smsgn "Installing zeal"
+  runCmd "sudo apt-get install -y shellcheck"; smsgn "Installing shellcheck"
 }
 
 function installJava () {
