@@ -134,6 +134,7 @@ function smsgn () {
     printf "$*\n"
 }
 
+# display a simple message
 function smsg () {
     printf "$*"
 }
@@ -578,6 +579,7 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y diodon"; smsgn "Installing diodon"
   runCmd "sudo apt-get install -y pyrenamer"; smsgn "Installing pyrenamer"
   runCmd "sudo apt-get install -y apt-fast"; smsgn "Installing apt-fast"
+  runCmd "sudo apt-get install -y qt5ct"; smsgn "Installing qt5ct"
 }
 
 function installWine () {
