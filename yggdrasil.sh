@@ -582,9 +582,9 @@ function installMiscUtilities () {
 
 function installWine () {
   msg "Installing Wine"
-
   runCmd "sudo add-apt-repository -y ppa:ubuntu-wine/ppa"; smsgn "Adding Wine PPA"
   updateSystem
+  msg "Installing Wine"
   runCmd "sudo apt-get install -y wine1.8"; smsgn "Installing wine1.8"
   runCmd "sudo apt-get install -y winetricks"; smsgn "Installing winetricks"
   runCmd "sudo apt-get install -y playonlinux"; smsgn "Installing playonlinux"
