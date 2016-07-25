@@ -254,7 +254,6 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make"; smsgn "Adding ppa:ubuntu-desktop/ubuntu-make PPA (umake)" # ubuntu-make
   runCmd "sudo add-apt-repository -y ppa:nowrep/qupzilla"; smsgn "Adding ppa:nowrep/qupzilla PPA (qupzilla)" # web browser
   runCmd "sudo add-apt-repository -y ppa:atareao/atareao"; smsgn "Adding ppa:atareao/atareao PPA (pushbullet-indicator, imagedownloader, gqrcode, cpu-g)" # pushbullet-indicator, imagedownloader, gqrcode, cpu-g
-  runCmd "sudo add-apt-repository -y ppa:costales/anoise"; smsgn "Adding ppa:costales/anoise PPA (anoise)" # ambiance sounds
   runCmd "sudo add-apt-repository -y ppa:fossfreedom/rhythmbox-plugins"; smsgn "Adding ppa:fossfreedom/rhythmbox-plugins PPA (Rhythmbox plugins)" # Rhythmbox plugins
   runCmd "sudo add-apt-repository -y ppa:nilarimogard/webupd8"; smsgn "Adding ppa:nilarimogard/webupd8 PPA (Audacious, Grive2, Pidgin-indicator)" # Audacious, Grive2, Pidgin-indicator
   runCmd "sudo add-apt-repository -y ppa:oibaf/graphics-drivers"; smsgn "Adding ppa:oibaf/graphics-drivers PPA (free graphics-drivers + mesa)" # free graphics-drivers + mesa
@@ -559,7 +558,6 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y indicator-sound-switcher"; smsgn "Installing indicator-sound-switcher"
   runCmd "sudo apt-get install -y y-ppa-manager"; smsgn "Installing y-ppa-manager"
   runCmd "sudo apt-get install -y synapse"; smsgn "Installing synapse"
-  runCmd "sudo apt-get install -y anoise"; smsgn "Installing anoise"
   runCmd "sudo apt-get install -y acetoneiso"; smsgn "Installing acetoneiso"
   runCmd "sudo apt-get install -y guake"; smsgn "Installing guake"
   runCmd "sudo apt-get install -y tilda"; smsgn "Installing tilda"
