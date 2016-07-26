@@ -1029,30 +1029,13 @@ function installPython () {
 }
 
 function installAndroidEnv () {
-  msg="Installation d'un environnement Android"
+  msg="Installing Android environment"
 
-  cd /tmp
-
-  msg "Création des répertoires <tools> et <Android> pour le SDK Android, et les apps via umake plus tard"
-  mkdir /home/$myHomedir/tools
-  mkdir /home/$myHomedir/tools/Android
-
-  msg "Téléchargement du SDK Android"
-  for a_sdk in $( wget -qO- http://developer.android.com/sdk/index.html | egrep -o "http://dl.google.com[^\"']*linux.tgz" ); do
-    wget $a_sdk
-  done
-
-  msg "Installation du SDK Android"
-  tar --wildcards --no-anchored -xvzf android-sdk_*-linux.tgz
-  mv android-sdk-linux /home/$myHomedir/tools/Android/Sdk
-
-  msg "PATH dans .bashrc : Création fichier S/N"
+  msg "PATH in .bashrc"
   touch /home/$myHomedir/.bashrc
+  sh -c "echo '\n\nexport PATH=${PATH}:/home/'$myHomedir'/Android/Sdk/tools:/home/'$myHomedir'/Android/Sdk/platform-tools' >> /home/$myHomedir/.bashrc"
 
-  msg "PATH dans .bashrc : Ajout dans le fichier"
-  sh -c "echo '\n\nexport PATH=${PATH}:/home/'$myHomedir'/tools/Android/Sdk/tools:/home/'$myHomedir'/tools/Android/Sdk/platform-tools' >> /home/$myHomedir/.bashrc"
-
-  msg "Ajout règles UDEV"
+  msg "Adding UDEV rules"
   sudo sh -c "echo 'SUBSYSTEM==\"usb\", ATTR{idVendor}==\"0502\", MODE=\"0666\", OWNER=\""$myHomedir"\" # Acer\n\
   SUBSYSTEM==\"usb\", ATTR{idVendor}==\"0b05\", MODE=\"0666\", OWNER=\""$myHomedir"\" # Asus\n\
   SUBSYSTEM==\"usb\", ATTR{idVendor}==\"413c\", MODE=\"0666\", OWNER=\""$myHomedir"\" # Dell\n\
@@ -1092,10 +1075,10 @@ function installAndroidEnv () {
   SUBSYSTEM==\"usb\", ATTR{idVendor}==\"0930\", MODE=\"0666\", OWNER=\""$myHomedir"\" # Toshiba\n\
   SUBSYSTEM==\"usb\", ATTR{idVendor}==\"19d2\", MODE=\"0666\", OWNER=\""$myHomedir"\" # ZTE' > /etc/udev/rules.d/99-android.rules"
 
-  msg "On redémarre UDEV"
+  msg "Restarting UDEV service"
   sudo service udev restart
 
-  msg "Création du raccourci pour Android SDK"
+  msg "Creating Android SDK shortcut"
   sudo sh -c "echo '#!/usr/bin/env xdg-open\n\
   [Desktop Entry]\n\
   Version=1.0\n\
