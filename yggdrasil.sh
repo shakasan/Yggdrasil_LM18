@@ -579,6 +579,7 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y apt-fast"; smsgn "Installing apt-fast"
   runCmd "sudo apt-get install -y qt5ct"; smsgn "Installing qt5ct"
   runCmd "sudo apt-get install -y qt4-qtconfig"; smsgn "Installing qt4-qtconfig"
+  runCmd "sudo apt-get install -y byobu"; smsgn "Installing byobu"
 }
 
 function installWine () {
@@ -1259,6 +1260,11 @@ function toolAutoremove () {
   runCmd "sudo apt-get -y autoremove"; smsgn "apt-get autoremove"
 }
 
+function toolClearOldKernels () {
+  msg "Removing old kernels (keeping the 2 last kernels)"
+  sudo purge-old-kernels --keep 2
+}
+
 #------------------------------------------------------------------------------#
 # The main part of the script                                                  #
 #------------------------------------------------------------------------------#
@@ -1750,6 +1756,7 @@ speedtest-cli "Bandwidth test" \
 packetloss "Packetloss test (ping)" \
 OptimizeFirefox "Firefox SQLite databases optimization" \
 Autoremove "Remove useless Deb packages" \
+CleanOldKernels "Removing old kernels (keeping the 2 last kernels)" \
 Back "Back to the Main Menu" 2>"${menuSysToolsINPUT}"
 
 menuSysToolsItem=$(<"${menuSysToolsINPUT}")
@@ -1771,6 +1778,9 @@ clear; toolOptimizeFirefox; pressKey;;
 
 Autoremove)
 clear; toolAutoremove; pressKey;;
+
+CleanOldKernels)
+clear; toolClearOldKernels; pressKey;;
 
 Back) #-------------------------------------------------------------------------
 break
