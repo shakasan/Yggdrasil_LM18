@@ -578,6 +578,7 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y pyrenamer"; smsgn "Installing pyrenamer"
   runCmd "sudo apt-get install -y apt-fast"; smsgn "Installing apt-fast"
   runCmd "sudo apt-get install -y qt5ct"; smsgn "Installing qt5ct"
+  runCmd "sudo apt-get install -y qt4-qtconfig"; smsgn "Installing qt4-qtconfig"
 }
 
 function installWine () {
