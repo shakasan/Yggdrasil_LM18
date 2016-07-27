@@ -1026,6 +1026,9 @@ function installPython () {
 
     msg "PIP installing : waybackpack"
     sudo pip3 install waybackpack
+
+    msg "PIP installing : tweepy"
+    sudo pip3 install tweepy
   fi
 }
 
