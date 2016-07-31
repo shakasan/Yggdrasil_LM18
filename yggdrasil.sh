@@ -281,6 +281,7 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:transmissionbt/ppa"; smsgn "Adding ppa:transmissionbt/ppa PPA (Transmission-BT)" # bittorrent client
   runCmd "sudo add-apt-repository -y ppa:geary-team/releases"; smsgn "Adding ppa:geary-team/releases PPA (Geary)" # email client
   runCmd "sudo add-apt-repository -y ppa:varlesh-l/papirus-pack"; smsgn "Adding ppa:varlesh-l/papirus-pack PPA (themes)" # themes
+  runCmd "sudo add-apt-repository -y ppa:ubuntuhandbook1/corebird"; smsgn "Adding ppa:ubuntuhandbook1/corebird PPA (themes)" # corebird
   #sudo add-apt-repository -y ppa:whatsapp-purple/ppa # WhatsApp plugin for Pidgin/libpurple # update ?
 
   wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Opera repository key"
