@@ -1270,6 +1270,10 @@ function toolClearOldKernels () {
   sudo purge-old-kernels --keep 2
 }
 
+function toolSoundCardsDetection () {
+  sudo alsa force-reload
+}
+
 #------------------------------------------------------------------------------#
 # The main part of the script                                                  #
 #------------------------------------------------------------------------------#
@@ -1762,6 +1766,7 @@ packetloss "Packetloss test (ping)" \
 OptimizeFirefox "Firefox SQLite databases optimization" \
 Autoremove "Remove useless Deb packages" \
 CleanOldKernels "Removing old kernels (keeping the 2 last kernels)" \
+SoundCardsDetection "Sound Cards Detection (alsa force-reload)" \
 Back "Back to the Main Menu" 2>"${menuSysToolsINPUT}"
 
 menuSysToolsItem=$(<"${menuSysToolsINPUT}")
@@ -1786,6 +1791,9 @@ clear; toolAutoremove; pressKey;;
 
 CleanOldKernels)
 clear; toolClearOldKernels; pressKey;;
+
+SoundCardsDetection)
+clear; toolSoundCardsDetection; pressKey;;
 
 Back) #-------------------------------------------------------------------------
 break
