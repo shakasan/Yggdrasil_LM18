@@ -281,8 +281,9 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:transmissionbt/ppa"; smsgn "Adding ppa:transmissionbt/ppa PPA (Transmission-BT)" # bittorrent client
   runCmd "sudo add-apt-repository -y ppa:geary-team/releases"; smsgn "Adding ppa:geary-team/releases PPA (Geary)" # email client
   runCmd "sudo add-apt-repository -y ppa:varlesh-l/papirus-pack"; smsgn "Adding ppa:varlesh-l/papirus-pack PPA (themes)" # themes
-  runCmd "sudo add-apt-repository -y ppa:ubuntuhandbook1/corebird"; smsgn "Adding ppa:ubuntuhandbook1/corebird PPA (themes)" # corebird
+  runCmd "sudo add-apt-repository -y ppa:ubuntuhandbook1/corebird"; smsgn "Adding ppa:ubuntuhandbook1/corebird PPA" # corebird
   #sudo add-apt-repository -y ppa:whatsapp-purple/ppa # WhatsApp plugin for Pidgin/libpurple # update ?
+  runCmd "sudo add-apt-repository -y ppa:tista/adapta"; smsgn "Adding ppa:tista/adapta PPA (themes)" # corebird
 
   wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Opera repository key"
   echo "deb http://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera.list && retCode $? && smsgn "Adding Opera repository"
@@ -788,6 +789,7 @@ function installThemes () {
   runCmd "sudo apt-get install -y vibrancy-colors"; smsgn "Installing vibrancy-colors"
   runCmd "sudo apt-get install -y vivacious-colors"; smsgn "Installing vivacious-colors"
   runCmd "sudo apt-get install -y numix-gtk-theme"; smsgn "Installing numix-gtk-theme"
+  runCmd "sudo apt-get install -y adapta-gtk-theme"; smsgn "Installing adapta-gtk-theme"
 }
 
 function installIcons () {
