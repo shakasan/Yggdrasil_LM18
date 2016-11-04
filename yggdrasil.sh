@@ -906,6 +906,12 @@ function fixWirelessIntel6320 () {
   msg "!!! REBOOT Nécessaire !!!"
 }
 
+function logitechC310 () {
+  msg "Installing Apps needed for Logitech C310"
+  runCmd "sudo apt-get install -y guvcview"; smsgn "Installing guvcview"
+  runCmd "sudo apt-get install -y cheese"; smsgn "Installing cheese"
+}
+
 function installDevApps () {
   msg "Installing base Dev apps and tools"
 
@@ -1563,6 +1569,7 @@ eID "eID middleware" \
 EpsonV500Photo "Espon V500 Photo driver + iScan + Xsane" \
 Microcode "CPU Microcode update (Intel)" \
 WirelessIntel6320 "Intel Centrino Advanced-N 6320 config (Bluetooth/Wifi problems)" \
+LogitechC310 "Logitech C310 needed apps" \
 Back "Back to the Main Menu" 2>"${menuHWINPUT}"
 
 menuHWItem=$(<"${menuHWINPUT}")
@@ -1587,6 +1594,9 @@ clear; updateMicrocode; pressKey;;
 
 WirelessIntel6320)
 clear; fixWirelessIntel6320; pressKey;;
+
+LogitechC310)
+clear; logitechC310; pressKey;;
 
 Back) #-------------------------------------------------------------------------
 break
