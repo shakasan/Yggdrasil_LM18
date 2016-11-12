@@ -283,6 +283,7 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:ubuntuhandbook1/corebird"; smsgn "Adding ppa:ubuntuhandbook1/corebird PPA" # corebird
   #sudo add-apt-repository -y ppa:whatsapp-purple/ppa # WhatsApp plugin for Pidgin/libpurple # update ?
   runCmd "sudo add-apt-repository -y ppa:tista/adapta"; smsgn "Adding ppa:tista/adapta PPA (themes)" # corebird
+  runCmd "sudo add-apt-repository -y ppa:maarten-baert/simplescreenrecorder"; smsgn "Adding ppa:maarten-baert/simplescreenrecorder PPA" # simplescreenrecorder
 
   wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Opera repository key"
   echo "deb http://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera.list && retCode $? && smsgn "Adding Opera repository"
@@ -395,6 +396,7 @@ function installMultimedia () {
   runCmd "sudo apt-get install -y birdfont"; smsgn "Installing birdfont"
   runCmd "sudo apt-get install -y moc"; smsgn "Installing moc"
   runCmd "sudo apt-get install -y webp"; smsgn "Installing webp"
+  runCmd "sudo apt-get install -y simplescreenrecorder simplescreenrecorder-lib simplescreenrecorder-lib:i386"; smsgn "Installing simplescreenrecorder simplescreenrecorder-lib simplescreenrecorder-lib:i386"
 
   # nightly theme for Moc
   runCmd "echo 'alias mocp=\"mocp -T nightly_theme\"' | tee -a /home/$myHomedir/.bashrc"
