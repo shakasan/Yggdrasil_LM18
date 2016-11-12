@@ -582,6 +582,7 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y qt5ct"; smsgn "Installing qt5ct"
   runCmd "sudo apt-get install -y qt4-qtconfig"; smsgn "Installing qt4-qtconfig"
   runCmd "sudo apt-get install -y byobu"; smsgn "Installing byobu"
+  runCmd "sudo apt-get install -y mupdf mupdf-tools"; smsgn "Installing mupdf mupdf-tools"
 }
 
 function installWine () {
