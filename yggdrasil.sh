@@ -932,6 +932,7 @@ function installDevApps () {
   runCmd "sudo apt-get install -y bluegriffon"; smsgn "Installing bluegriffon"
   runCmd "sudo apt-get install -y zeal"; smsgn "Installing zeal"
   runCmd "sudo apt-get install -y shellcheck"; smsgn "Installing shellcheck"
+  runCmd "sudo apt-get install -y umbrello"; smsgn "Installing umbrello"
 }
 
 function installJava () {
