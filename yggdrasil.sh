@@ -1209,13 +1209,22 @@ function installCAD () {
   runCmd "sudo apt-get install -y freecad"; smsgn "Installing freecad"
 }
 
+function installTeamViewer7 () {
+  msg "Downloading Teamviewer 7"
+  wget -O teamviewer7.deb http://download.teamviewer.com/download/version_7x/teamviewer_linux_x64.deb
+
+  msg "Installing Teamviewer 7"
+  sudo dpkg -i teamviewer7.deb
+  sudo apt-get install -fy
+}
+
 function enableUFW () {
   msg "Enabling FireWall (UFW)"
   runCmd "sudo ufw enable"; smsgn "Enabling ufw"
 }
 
 function addNumLockXBashrc () {
-  msg "NumLockX ajouté à MDM Init Default"
+  msg "NumLockX added to MDM Init Default"
 
   if which numlockx >/dev/null; then
   sudo sed -i -e '
@@ -1641,6 +1650,7 @@ PyCharm "PyCharm (Python)" \
 VisualStudioCode "Visual Studio Code" \
 AndroidStudio "Android Studio (Android)" \
 CAD "CAD Apps and tools" \
+TeamViewer7 "TeamViewer 7" \
 Back "Back to the Main Menu" 2>"${menuDevINPUT}"
 
 menuDevItem=$(<"${menuDevINPUT}")
@@ -1707,6 +1717,9 @@ clear; installAndroidStudio; pressKey;;
 
 CAD)
 clear; installCAD; pressKey;;
+
+TeamViewer7)
+clear; installTeamViewer7; pressKey;;
 
 Back) #-------------------------------------------------------------------------
 break
