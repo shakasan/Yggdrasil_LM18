@@ -1210,6 +1210,8 @@ function installCAD () {
 }
 
 function installTeamViewer7 () {
+  cd /tmp
+  
   msg "Downloading Teamviewer 7"
   wget -O teamviewer7.deb http://download.teamviewer.com/download/version_7x/teamviewer_linux_x64.deb
 
