@@ -908,10 +908,20 @@ function fixWirelessIntel6320 () {
   msg "!!! REBOOT Nécessaire !!!"
 }
 
-function logitechC310 () {
+function installLogitechC310 () {
   msg "Installing Apps needed for Logitech C310"
   runCmd "sudo apt-get install -y guvcview"; smsgn "Installing guvcview"
   runCmd "sudo apt-get install -y cheese"; smsgn "Installing cheese"
+}
+
+function installNvidia370 () {
+  msg "Installing Nvidia 370 driver"
+  runCmd "sudo apt-get install -y nvidia-370 nvidia-settings nvidia-opencl-icd-370"; smsgn "Installing nvidia-370 nvidia-settings nvidia-opencl-icd-370"
+}
+
+function installNvidia375 () {
+  msg "Installing Nvidia 375 driver"
+  runCmd "sudo apt-get install -y nvidia-375 nvidia-settings nvidia-opencl-icd-375"; smsgn "Installing nvidia-375 nvidia-settings nvidia-opencl-icd-375"
 }
 
 function installDevApps () {
@@ -1211,7 +1221,7 @@ function installCAD () {
 
 function installTeamViewer7 () {
   cd /tmp
-  
+
   msg "Downloading Teamviewer 7"
   wget -O teamviewer7.deb http://download.teamviewer.com/download/version_7x/teamviewer_linux_x64.deb
 
@@ -1584,6 +1594,8 @@ EpsonV500Photo "Espon V500 Photo driver + iScan + Xsane" \
 Microcode "CPU Microcode update (Intel)" \
 WirelessIntel6320 "Intel Centrino Advanced-N 6320 config (Bluetooth/Wifi problems)" \
 LogitechC310 "Logitech C310 needed apps" \
+Nvidia370 "Nvidia 370 driver" \
+Nvidia375 "Nvidia 375 driver" \
 Back "Back to the Main Menu" 2>"${menuHWINPUT}"
 
 menuHWItem=$(<"${menuHWINPUT}")
@@ -1610,7 +1622,13 @@ WirelessIntel6320)
 clear; fixWirelessIntel6320; pressKey;;
 
 LogitechC310)
-clear; logitechC310; pressKey;;
+clear; installLogitechC310; pressKey;;
+
+Nvidia370)
+clear; installNvidia370; pressKey;;
+
+Nvidia375)
+clear; installNvidia375; pressKey;;
 
 Back) #-------------------------------------------------------------------------
 break
