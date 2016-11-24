@@ -397,6 +397,7 @@ function installMultimedia () {
   runCmd "sudo apt-get install -y moc"; smsgn "Installing moc"
   runCmd "sudo apt-get install -y webp"; smsgn "Installing webp"
   runCmd "sudo apt-get install -y simplescreenrecorder simplescreenrecorder-lib simplescreenrecorder-lib:i386"; smsgn "Installing simplescreenrecorder simplescreenrecorder-lib simplescreenrecorder-lib:i386"
+  runCmd "sudo apt-get install -y cuetools shntool flac"; smsgn "Installing cuetools shntool flac"
 
   # nightly theme for Moc
   runCmd "echo 'alias mocp=\"mocp -T nightly_theme\"' | tee -a /home/$myHomedir/.bashrc"
