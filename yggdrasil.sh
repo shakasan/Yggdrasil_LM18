@@ -517,20 +517,13 @@ function installInternetExt () {
   mv Telegram /home/$myHomedir/Apps
   sh -c "/home/"$myHomedir"/Apps/Telegram/Telegram &" && sleep 10 && pkill Telegram
 
-  msg "Téléchargement de Wickr"
-  wget -O wickr.deb https://dls.wickr.com/Downloads/wickr-me_2.6.0_amd64.deb
-
-  msg "Installation de Wickr"
-  sudo dpkg -i wickr.deb
-  sudo apt-get install -fy
-
-  msg "Téléchargement de Gyazo"
+    msg "Téléchargement de Gyazo"
   wget https://packagecloud.io/install/repositories/gyazo/gyazo-for-linux/script.deb.sh
 
   msg "Installation de Gyazo"
   chmod +x script.deb.sh
   sudo os=ubuntu dist=xenial ./script.deb.sh
-  sudo apt-get install -y gya
+  sudo apt-get install -y gyazo
 
   msg "Téléchargement de Franz"
   mkdir -p Franz
