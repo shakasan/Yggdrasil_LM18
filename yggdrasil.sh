@@ -804,7 +804,6 @@ function installIcons () {
   msg "Installing icons"
   # to add when available : elementary-icons paper-icon-theme
   runCmd "sudo apt-get install -y arc-icons"; smsgn "Installing arc-icons"
-  runCmd "sudo apt-get install -y papirus-gtk-icon-theme"; smsgn "Installing papirus-gtk-icon-theme"
   runCmd "sudo apt-get install -y ultra-flat-icons"; smsgn "Installing ultra-flat-icons"
   runCmd "sudo apt-get install -y myelementary"; smsgn "Installing myelementary"
   runCmd "sudo apt-get install -y ghost-flat-icons"; smsgn "Installing ghost-flat-icons"
