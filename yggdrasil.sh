@@ -517,7 +517,7 @@ function installInternetExt () {
   mv Telegram /home/$myHomedir/Apps
   sh -c "/home/"$myHomedir"/Apps/Telegram/Telegram &" && sleep 10 && pkill Telegram
 
-    msg "Téléchargement de Gyazo"
+  msg "Téléchargement de Gyazo"
   wget https://packagecloud.io/install/repositories/gyazo/gyazo-for-linux/script.deb.sh
 
   msg "Installation de Gyazo"
