@@ -286,18 +286,23 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:tista/adapta"; smsgn "Adding ppa:tista/adapta PPA (themes)" # corebird
   runCmd "sudo add-apt-repository -y ppa:maarten-baert/simplescreenrecorder"; smsgn "Adding ppa:maarten-baert/simplescreenrecorder PPA" # simplescreenrecorder
 
+  msg "Adding Opera repository"
   wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Opera repository key"
   echo "deb http://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera.list && retCode $? && smsgn "Adding Opera repository"
 
+  msg "Adding Chrome repository"
   wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Chrome repository key"
   echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list && retCode $? && smsgn "Adding Chrome repository"
 
+  msg "Adding Inscync repository"
   wget -qO - https://d2t3ff60b2tol4.cloudfront.net/services@insynchq.com.gpg.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding InSync repository key"
   echo "deb http://apt.insynchq.com/ubuntu xenial non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list && retCode $? && smsgn "Adding InSync repository"
 
+  msg "Adding Docker repository"
   sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D &>> $logFile && retCode $? && smsgn "Adding Docker repository key"
   echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main"  | sudo tee /etc/apt/sources.list.d/docker.list && retCode $? && smsgn "Adding Docker repository"
 
+  msg "Adding Syncthing repository"
   wget -qO - https://syncthing.net/release-key.txt | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding SyncThing repository key"
   echo "deb http://apt.syncthing.net/ syncthing release" | sudo tee /etc/apt/sources.list.d/syncthing.list && retCode $? && smsgn "Adding SyncThing repository"
 
@@ -305,23 +310,29 @@ function addPPA () {
   wget -qO - http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_16.04/Release.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding OwnCloud-Client repository key"
   echo "deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /" | sudo tee /etc/apt/sources.list.d/owncloud-client.list && retCode $? && smsgn "Adding OwnCloud-Client repository"
 
+  msg "Adding MKVToolnix repository"
   wget -q -O - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding MKVToolnix repository key"
   echo "deb http://mkvtoolnix.download/ubuntu/xenial/ ./"  | sudo tee /etc/apt/sources.list.d/mkv.list && retCode $? && smsgn "Adding MKVToolnix repository"
   echo "deb-src http://mkvtoolnix.download/ubuntu/xenial/ ./ "  | sudo tee -a /etc/apt/sources.list.d/mkv.list && retCode $? && smsgn "Adding MKVToolnix sources repository"
 
+  msg "Adding purple-facebook repository"
   wget -O- https://jgeboski.github.io/obs.key | sudo apt-key add - && retCode $? && smsgn "Adding purple-facebook repository key"
   sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/jgeboski/xUbuntu_16.04/ ./' > /etc/apt/sources.list.d/jgeboski.list" && retCode $? && smsgn "Adding purple-facebook repository"
 
+  msg "Adding Spotify repository"
   sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 &>> $logFile && retCode $? && smsgn "Adding Spotify repository key"
   echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list && retCode $? && smsgn "Adding Spotify repository"
 
+  msg "Adding VirtualBox repository"
   wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding VirtualBox repository old key"
   wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc -O- | sudo apt-key add - && retCode $? && smsgn "Adding VirtualBox repository key"
   echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list && retCode $? && smsgn "Adding VirtualBox repository"
 
+  msg "Adding Whatsie repository"
   gpg --keyserver pool.sks-keyservers.net --recv-keys 1537994D && gpg --export --armor 1537994D | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Whatsie repository key"
   echo "deb https://dl.bintray.com/aluxian/deb stable main" | sudo tee -a /etc/apt/sources.list.d/whatsie.list && retCode $? && smsgn "Adding Whatsie repository"
 
+  msg "Adding Getdeb repository"
   wget -q -O- http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Getdeb repository key"
   echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb apps" | sudo tee /etc/apt/sources.list.d/getdeb.list && retCode $? && smsgn "Adding Getdeb repository"
 
