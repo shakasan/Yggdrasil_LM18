@@ -255,6 +255,7 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:nowrep/qupzilla"; smsgn "Adding ppa:nowrep/qupzilla PPA (qupzilla)" # web browser
   runCmd "sudo add-apt-repository -y ppa:atareao/atareao"; smsgn "Adding ppa:atareao/atareao PPA (pushbullet-indicator, imagedownloader, gqrcode, cpu-g)" # pushbullet-indicator, imagedownloader, gqrcode, cpu-g
   runCmd "sudo add-apt-repository -y ppa:fossfreedom/rhythmbox-plugins"; smsgn "Adding ppa:fossfreedom/rhythmbox-plugins PPA (Rhythmbox plugins)" # Rhythmbox plugins
+  runCmd "sudo add-apt-repository -y ppa:fossfreedom/rhythmbox"; smsgn "Adding ppa:fossfreedom/rhythmbox PPA (Rhythmbox)" # Rhythmbox
   runCmd "sudo add-apt-repository -y ppa:nilarimogard/webupd8"; smsgn "Adding ppa:nilarimogard/webupd8 PPA (Audacious, Grive2, Pidgin-indicator)" # Audacious, Grive2, Pidgin-indicator
   runCmd "sudo add-apt-repository -y ppa:oibaf/graphics-drivers"; smsgn "Adding ppa:oibaf/graphics-drivers PPA (free graphics-drivers + mesa)" # free graphics-drivers + mesa
   runCmd "sudo add-apt-repository -y ppa:team-xbmc/ppa"; smsgn "Adding ppa:team-xbmc/ppa PPA (Kodi)" # Kodi
