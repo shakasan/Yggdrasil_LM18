@@ -13,6 +13,7 @@ Installation
 ```
 git clone https://github.com/shakasan/Yggdrasil_LM18.git
 cd Yggdrasil_LM18
+chmod +x yggdrasil.sh
 ./yggdrasil.sh
 ```
 
