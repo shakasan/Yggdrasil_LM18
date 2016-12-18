@@ -1235,14 +1235,14 @@ function installTeamViewer7 () {
   sudo apt-get install -fy
 }
 
-function installKernel49 () {
-  cd /tmp
-  rm -f linux-*.deb
-  wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9/linux-headers-4.9.0-040900_4.9.0-040900.201612111631_all.deb \
-  && wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9/linux-headers-4.9.0-040900-generic_4.9.0-040900.201612111631_amd64.deb \
-  && wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9/linux-image-4.9.0-040900-generic_4.9.0-040900.201612111631_amd64.deb \
-  && sudo dpkg -i linux-*.deb
-}
+#function installKernel49 () {
+#  cd /tmp
+#  rm -f linux-*.deb
+#  wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9/linux-headers-4.9.0-040900_4.9.0-040900.201612111631_all.deb \
+#  && wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9/linux-headers-4.9.0-040900-generic_4.9.0-040900.201612111631_amd64.deb \
+#  && wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9/linux-image-4.9.0-040900-generic_4.9.0-040900.201612111631_amd64.deb \
+#  && sudo dpkg -i linux-*.deb
+#}
 
 function enableUFW () {
   msg "Enabling FireWall (UFW)"
@@ -1775,7 +1775,6 @@ do
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ System Configuration ]" \
 --menu "System configuration" 32 95 24 \
-Kernel49 "Install Generic Kernel 4.9" \
 Ufw "Enable Firewall (ufw)" \
 NumLockX "NumLock Enabled at boot time" \
 TmpRAM "/tmp stored in RAM" \
@@ -1787,9 +1786,6 @@ menuConfigItem=$(<"${menuConfigINPUT}")
 
 # configMenu's actions ---------------------------------------------------------
 case $menuConfigItem in
-
-Kernel49)
-clear; installKernel49; pressKey;;
 
 Ufw)
 clear; enableUFW; pressKey;;
