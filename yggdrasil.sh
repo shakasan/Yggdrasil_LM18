@@ -604,6 +604,15 @@ function installWine () {
   runCmd "sudo apt-get install -y playonlinux"; smsgn "Installing playonlinux"
 }
 
+function installWineAlt () {
+  msg "Installing Wine"
+  updateSystem
+  msg "Installing Wine"
+  runCmd "sudo apt-get install -y winehq-devel"; smsgn "Installing winehq-devel"
+  runCmd "sudo apt-get install -y winetricks"; smsgn "Installing winetricks"
+  runCmd "sudo apt-get install -y playonlinux"; smsgn "Installing playonlinux"
+}
+
 function installWineDRI3 () {
   msg "Installing WineDRI3"
 
@@ -1451,7 +1460,8 @@ eBook "eBook apps and tools" \
 Internet "Internet apps and tools" \
 InternetExt "Internet apps and tools (others/external)" \
 MiscUtilities "Misc. utilities apps and tools" \
-Wine "Wine" \
+Wine "Wine (ppa:ubuntu-wine/ppa)" \
+WineAlt "Wine (GetDeb rep)" \
 WineDRI3 "WineDRI3 (Gallium3D) (oibaf PPA required)" \
 WineStaging "Unstable Wine beside Stable Wine" \
 KodiBETA "Beta/Unstable Kodi" \
@@ -1496,6 +1506,9 @@ clear; installMiscUtilities; pressKey;;
 
 Wine)
 clear; installWine; pressKey;;
+
+WineAlt)
+clear; installWineAlt; pressKey;;
 
 WineDRI3)
 clear; installWineDRI3; pressKey;;
