@@ -874,8 +874,8 @@ function installEid () {
   sudo mv 6773d225.gpg /etc/apt/trusted.gpg.d/eid-archive-released-builds.gpg
 
   msg "Installation de eID : installation du dépot"
-  sudo sh -c "echo 'deb http://files.eid.belgium.be/debian qiana main\n\
-  deb http://files2.eid.belgium.be/debian qiana main' > /etc/apt/sources.list.d/eid.list"
+  sudo sh -c "echo '#deb http://files.eid.belgium.be/debian selena main\n\
+  deb http://files2.eid.belgium.be/debian selena main' > /etc/apt/sources.list.d/eid.list"
 
   updateSystem
 
