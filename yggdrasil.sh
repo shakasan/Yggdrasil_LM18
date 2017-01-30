@@ -24,18 +24,6 @@ logFile="/home/"$myHomedir"/yggdrasil.log"
 cTime=$(date +%H:%M)
 cDate=$(date +%d-%m-%Y)
 
-# color codes
-#VERT="\\033[1;32m"
-#NORMAL="\\033[0;39m"
-#ROUGE="\\033[1;31m"
-#ROSE="\\033[1;35m"
-#BLEU="\\033[1;34m"
-#BLANC="\\033[0;02m"
-#BLANCLAIR="\\033[1;08m"
-#JAUNE="\\033[1;33m"
-#CYAN="\\033[1;36m"
-#INV="\\033[39;7m"
-
 UNDERLINE=$(tput sgr 0 1)
 BOLD=$(tput bold)
 ROUGE=$(tput setaf 1)
