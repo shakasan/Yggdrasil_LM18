@@ -270,7 +270,6 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:transmissionbt/ppa"; smsgn "Adding ppa:transmissionbt/ppa PPA (Transmission-BT)" # bittorrent client
   runCmd "sudo add-apt-repository -y ppa:geary-team/releases"; smsgn "Adding ppa:geary-team/releases PPA (Geary)" # email client
   runCmd "sudo add-apt-repository -y ppa:ubuntuhandbook1/corebird"; smsgn "Adding ppa:ubuntuhandbook1/corebird PPA" # corebird
-  #sudo add-apt-repository -y ppa:whatsapp-purple/ppa # WhatsApp plugin for Pidgin/libpurple # update ?
   runCmd "sudo add-apt-repository -y ppa:tista/adapta"; smsgn "Adding ppa:tista/adapta PPA (themes)" # corebird
   runCmd "sudo add-apt-repository -y ppa:maarten-baert/simplescreenrecorder"; smsgn "Adding ppa:maarten-baert/simplescreenrecorder PPA" # simplescreenrecorder
 
@@ -351,7 +350,6 @@ function installBase () {
 
 function installMultimedia () {
   msg "Installing Multimedia apps and tools"
-  # to add if available : fontmatrix qgifer arista
 
   runCmd "sudo apt-get install -y spotify-client"; smsgn "Installing spotify-client"
   runCmd "sudo apt-get install -y slowmovideo"; smsgn "Installing slowmovideo"
@@ -454,7 +452,6 @@ function installInternet () {
 
   echo "opera-stable opera-stable/add-deb-source boolean false" | sudo debconf-set-selections
 
-  # to add when available :  skype-wrapper tribler qtox birdie (pushbullet)
   runCmd "sudo apt-get install -y owncloud-client"; smsgn "Installing owncloud-client"
   runCmd "sudo apt-get install -y syncthing-gtk syncthing"; smsgn "Installing syncthing-gtk syncthing"
   runCmd "sudo apt-get install -y insync"; smsgn "Installing insync"
@@ -647,7 +644,6 @@ function installBurningTools () {
 
 function installNetTools () {
   msg "Installing Network apps and tools"
-  # to add when available : gtkvncviewer
 
   runCmd "sudo apt-get install -y whois"; smsgn "Installing whois"
   runCmd "sudo apt-get install -y iptraf"; smsgn "Installing iptraf"
@@ -752,7 +748,7 @@ function installRhythmBoxPlugins () {
 
 function installPidginPlugins () {
   msg "Installing Pidgin extensions"
-  # to add when available : pidgin-whatsapp
+
   runCmd "sudo apt-get install -y telegram-purple"; smsgn "Installing telegram-purple"
   runCmd "sudo apt-get install -y pidgin-skype"; smsgn "Installing pidgin-skype"
   runCmd "sudo apt-get install -y purple-facebook"; smsgn "Installing purple-facebook"
@@ -780,7 +776,7 @@ function installUnbound () {
 
 function installThemes () {
   msg "Installing themes"
-  # to add when available : ambiance-dark ambiance-dark-red mediterranean-theme polar-night-gtk hackstation-theme libra-theme zukitwo-dark-reloaded ceti-theme vertex-theme stylishdark-theme cenodark-gtk dorian-theme vimix-flat-themes delorean-dark dorian-theme-3.12 candra-gs-themes paper-gtk-theme
+
   runCmd "sudo apt-get install -y ambiance-crunchy"; smsgn "Installing ambiance-crunchy"
   runCmd "sudo apt-get install -y arc-theme"; smsgn "Installing arc-theme"
   runCmd "sudo apt-get install -y ambiance-colors"; smsgn "Installing ambiance-colors"
@@ -800,7 +796,7 @@ function installThemes () {
 
 function installIcons () {
   msg "Installing icons"
-  # to add when available : elementary-icons paper-icon-theme
+
   runCmd "sudo apt-get install -y arc-icons"; smsgn "Installing arc-icons"
   runCmd "sudo apt-get install -y ultra-flat-icons"; smsgn "Installing ultra-flat-icons"
   runCmd "sudo apt-get install -y myelementary"; smsgn "Installing myelementary"
@@ -1232,15 +1228,6 @@ function installTeamViewer7 () {
   sudo dpkg -i teamviewer7.deb
   sudo apt-get install -fy
 }
-
-#function installKernel49 () {
-#  cd /tmp
-#  rm -f linux-*.deb
-#  wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9/linux-headers-4.9.0-040900_4.9.0-040900.201612111631_all.deb \
-#  && wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9/linux-headers-4.9.0-040900-generic_4.9.0-040900.201612111631_amd64.deb \
-#  && wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9/linux-image-4.9.0-040900-generic_4.9.0-040900.201612111631_amd64.deb \
-#  && sudo dpkg -i linux-*.deb
-#}
 
 function enableUFW () {
   msg "Enabling FireWall (UFW)"
