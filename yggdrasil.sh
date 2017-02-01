@@ -272,6 +272,7 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:ubuntuhandbook1/corebird"; smsgn "Adding ppa:ubuntuhandbook1/corebird PPA" # corebird
   runCmd "sudo add-apt-repository -y ppa:tista/adapta"; smsgn "Adding ppa:tista/adapta PPA (themes)" # corebird
   runCmd "sudo add-apt-repository -y ppa:maarten-baert/simplescreenrecorder"; smsgn "Adding ppa:maarten-baert/simplescreenrecorder PPA" # simplescreenrecorder
+  runCmd "sudo add-apt-repository -y ppa:dhor/myway"; smsgn "Adding ppa:dhor/myway PPA" # rawtherapee (newer version)
 
   msg "Adding Opera repository"
   wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Opera repository key"
