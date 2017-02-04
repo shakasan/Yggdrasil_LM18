@@ -944,6 +944,7 @@ function installDevApps () {
   runCmd "sudo apt-get install -y zeal"; smsgn "Installing zeal"
   runCmd "sudo apt-get install -y shellcheck"; smsgn "Installing shellcheck"
   runCmd "sudo apt-get install -y umbrello"; smsgn "Installing umbrello"
+  runCmd "sudo apt-get install -y ack-grep"; smsgn "Installing ack-grep"
 }
 
 function installJava () {
