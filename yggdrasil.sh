@@ -274,6 +274,7 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:maarten-baert/simplescreenrecorder"; smsgn "Adding ppa:maarten-baert/simplescreenrecorder PPA" # simplescreenrecorder
   runCmd "sudo add-apt-repository -y ppa:dhor/myway"; smsgn "Adding ppa:dhor/myway PPA" # rawtherapee (newer version)
   runCmd "sudo add-apt-repository -y ppa:zeal-developers/ppa"; smsgn "Adding ppa:zeal-developers/ppa PPA" # Zeal (newer version)
+  runCmd "sudo add-apt-repository -y ppa:nextcloud-devs/client"; smsgn "Adding ppa:nextcloud-devs/client PPA" # NextCloud client
 
   msg "Adding Opera repository"
   wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Opera repository key"
@@ -475,6 +476,7 @@ function installInternet () {
   runCmd "sudo apt-get install -y geary"; smsgn "Installing geary"
   runCmd "sudo apt-get install -y whatsie"; smsgn "Installing whatsie"
   runCmd "sudo apt-get install -y corebird"; smsgn "Installing corebird"
+  runCmd "sudo apt-get install -y nextcloud-client nextcloud-client-caja"; smsgn "Installing NextCloud client"
 }
 
 function installInternetExt () {
