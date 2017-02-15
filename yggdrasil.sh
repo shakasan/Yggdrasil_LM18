@@ -588,7 +588,7 @@ function installWine () {
   runCmd "sudo add-apt-repository -y ppa:ubuntu-wine/ppa"; smsgn "Adding Wine PPA"
   updateSystem
   msg "Installing Wine"
-  runCmd "sudo apt-get install -y wine1.8"; smsgn "Installing wine1.8"
+  runCmd "sudo apt-get install -y wine2.0"; smsgn "Installing wine2.0"
   runCmd "sudo apt-get install -y winetricks"; smsgn "Installing winetricks"
   runCmd "sudo apt-get install -y playonlinux"; smsgn "Installing playonlinux"
 }
@@ -607,7 +607,7 @@ function installWineDRI3 () {
 
   runCmd "sudo add-apt-repository -y ppa:commendsarnex/winedri3"; smsgn "Adding WineDRI3 PPA"
   updateSystem
-  runCmd "sudo apt-get install -y wine1.9"; smsgn "Installing wine1.9"
+  runCmd "sudo apt-get install -y wine2.0"; smsgn "Installing wine2.0"
   runCmd "sudo apt-get install -y winetricks"; smsgn "Installing winetricks"
   runCmd "sudo apt-get install -y playonlinux"; smsgn "Installing playonlinux"
 }
