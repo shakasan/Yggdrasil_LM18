@@ -1156,6 +1156,8 @@ function installAtom () {
     runCmd "apm install linter-php"; smsgn "APM Installing linter-php"
     runCmd "apm install autocomplete-java"; smsgn "APM Installing autocomplete-java"
     runCmd "apm install dash"; smsgn "APM Installing dash"
+    runCmd "apm install tree-view-autoresize"; smsgn "APM Installing tree-view-autoresize"
+    runCmd "apm install tree-view-git-status"; smsgn "APM Installing tree-view-git-status"
   fi
 }
 
