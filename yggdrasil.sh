@@ -270,11 +270,12 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:transmissionbt/ppa"; smsgn "Adding ppa:transmissionbt/ppa PPA (Transmission-BT)" # bittorrent client
   runCmd "sudo add-apt-repository -y ppa:geary-team/releases"; smsgn "Adding ppa:geary-team/releases PPA (Geary)" # email client
   runCmd "sudo add-apt-repository -y ppa:ubuntuhandbook1/corebird"; smsgn "Adding ppa:ubuntuhandbook1/corebird PPA" # corebird
-  runCmd "sudo add-apt-repository -y ppa:tista/adapta"; smsgn "Adding ppa:tista/adapta PPA (themes)" # corebird
+  runCmd "sudo add-apt-repository -y ppa:tista/adapta"; smsgn "Adding ppa:tista/adapta PPA (themes)" # adapta gtk theme
   runCmd "sudo add-apt-repository -y ppa:maarten-baert/simplescreenrecorder"; smsgn "Adding ppa:maarten-baert/simplescreenrecorder PPA" # simplescreenrecorder
   runCmd "sudo add-apt-repository -y ppa:dhor/myway"; smsgn "Adding ppa:dhor/myway PPA" # rawtherapee (newer version)
   runCmd "sudo add-apt-repository -y ppa:zeal-developers/ppa"; smsgn "Adding ppa:zeal-developers/ppa PPA" # Zeal (newer version)
   runCmd "sudo add-apt-repository -y ppa:nextcloud-devs/client"; smsgn "Adding ppa:nextcloud-devs/client PPA" # NextCloud client
+  runCmd "sudo add-apt-repository -y ppa:deluge-team/ppa"; smsgn "Adding ppa:deluge-team/ppa PPA" # Deluge P2P client
 
   msg "Adding Opera repository"
   wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Opera repository key"
@@ -478,6 +479,7 @@ function installInternet () {
   runCmd "sudo apt-get install -y whatsie"; smsgn "Installing whatsie"
   runCmd "sudo apt-get install -y corebird"; smsgn "Installing corebird"
   runCmd "sudo apt-get install -y nextcloud-client nextcloud-client-caja"; smsgn "Installing NextCloud client"
+  runCmd "sudo apt-get install -y deluge"; smsgn "Installing deluge"
 }
 
 function installInternetExt () {
