@@ -584,6 +584,9 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y byobu"; smsgn "Installing byobu"
   runCmd "sudo apt-get install -y mupdf mupdf-tools"; smsgn "Installing mupdf mupdf-tools"
   runCmd "sudo apt-get install -y ukuu"; smsgn "Installing ukuu"
+  runCmd "sudo apt-get install -y fcrackzip"; smsgn "Installing fcrackzip"
+  runCmd "sudo apt-get install -y rarcrack"; smsgn "Installing rarcrack"
+  runCmd "sudo apt-get install -y pdfcrack"; smsgn "Installing pdfcrack"
 }
 
 function installWine () {
