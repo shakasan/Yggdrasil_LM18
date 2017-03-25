@@ -1062,6 +1062,9 @@ function installPython () {
 
     msg "PIP installing : tweepy"
     sudo pip3 install tweepy
+
+    msg "PIP installing : droopescan"
+    sudo pip3 install droopescan
   fi
 }
 
