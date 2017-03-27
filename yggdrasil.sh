@@ -979,6 +979,7 @@ function installJavaScript () {
 function installPHP () {
   msg "Installing PHP apps and tools"
   runCmd "sudo apt-get install -y php7.0-cli"; smsgn "Installing php7.0-cli"
+  runCmd "sudo apt-get install -y php-pear"; smsgn "Installing php-pear"
 }
 
 function installLUA () {
