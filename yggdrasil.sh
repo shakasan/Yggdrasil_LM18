@@ -1162,6 +1162,8 @@ function installAtom () {
     runCmd "apm install dash"; smsgn "APM Installing dash"
     runCmd "apm install tree-view-autoresize"; smsgn "APM Installing tree-view-autoresize"
     runCmd "apm install tree-view-git-status"; smsgn "APM Installing tree-view-git-status"
+    runCmd "apm install auto-hide-tree"; smsgn "APM Installing auto-hide-tree"
+    runCmd "apm install minimap-git-diff"; smsgn "APM Installing minimap-git-diff"
   fi
 }
 
