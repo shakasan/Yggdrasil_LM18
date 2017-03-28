@@ -265,7 +265,6 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:diodon-team/stable"; smsgn "Adding ppa:diodon-team/stable PPA (Diodon)" # clipboard manager
   runCmd "sudo add-apt-repository -y ppa:notepadqq-team/notepadqq"; smsgn "Adding ppa:notepadqq-team/notepadqq PPA (Notepadqq)" # notepad++ clone
   runCmd "sudo add-apt-repository -y ppa:mariospr/frogr"; smsgn "Adding ppa:mariospr/frogr PPA (Frogr)" # flickr manager
-  runCmd "sudo add-apt-repository -y ppa:saiarcot895/myppa"; smsgn "Adding ppa:saiarcot895/myppa PPA (apt-fast)" # apt-fast tools
   runCmd "sudo add-apt-repository -y ppa:ubuntuhandbook1/slowmovideo"; smsgn "Adding ppa:ubuntuhandbook1/slowmovideo PPA (Slowmovideo)" # slow motion video editor
   runCmd "sudo add-apt-repository -y ppa:transmissionbt/ppa"; smsgn "Adding ppa:transmissionbt/ppa PPA (Transmission-BT)" # bittorrent client
   runCmd "sudo add-apt-repository -y ppa:geary-team/releases"; smsgn "Adding ppa:geary-team/releases PPA (Geary)" # email client
@@ -546,11 +545,6 @@ function installInternetExt () {
 function installMiscUtilities () {
   msg "Installing misc. utility apps and tools"
 
-  echo "apt-fast	apt-fast/maxdownloads	string	5" | sudo debconf-set-selections
-  echo "apt-fast	apt-fast/dlflag	boolean	true" | sudo debconf-set-selections
-  echo "apt-fast	apt-fast/aptmanager	select	apt-get" | sudo debconf-set-selections
-  echo "apt-fast	apt-fast/downloader	select	aria2c" | sudo debconf-set-selections
-
   runCmd "sudo apt-get install -y qtqr"; smsgn "Installing qtqr"
   runCmd "sudo apt-get install -y cpu-g"; smsgn "Installing cpu-g"
   runCmd "sudo apt-get install -y screenfetch"; smsgn "Installing screenfetch"
@@ -578,7 +572,6 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y zim"; smsgn "Installing zim"
   runCmd "sudo apt-get install -y diodon"; smsgn "Installing diodon"
   runCmd "sudo apt-get install -y pyrenamer"; smsgn "Installing pyrenamer"
-  runCmd "sudo apt-get install -y apt-fast"; smsgn "Installing apt-fast"
   runCmd "sudo apt-get install -y qt5ct"; smsgn "Installing qt5ct"
   runCmd "sudo apt-get install -y qt4-qtconfig"; smsgn "Installing qt4-qtconfig"
   runCmd "sudo apt-get install -y byobu"; smsgn "Installing byobu"
