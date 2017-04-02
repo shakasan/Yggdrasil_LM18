@@ -761,6 +761,32 @@ function installPidginPlugins () {
   runCmd "sudo apt-get install -y pidgin-skypeweb purple-skypeweb"; smsgn "Installing pidgin-skypeweb purple-skypeweb"
 }
 
+function installNitrogen () {
+  if [[ $DESKTOP_SESSION == *"mate"* ]]; then
+    msg "Installing Nitrogen"
+    runCmd "sudo apt-get install -y nitrogen"; smsgn "Installing nitrogen"
+
+    msg "Disabling Desktop management from Mate in order to make Nitrogen work properly"
+    gsettings set org.mate.background draw-background false
+    gsettings set org.mate.background show-desktop-icons false
+
+    msg "Adding Nitrogen --restore to Apps launched at startup"
+
+    sh -c "echo '[Desktop Entry]\n\
+    Type=Application\n\
+    Exec=bash -c \"sleep 10; nitrogen --restore\"\n\
+    Hidden=false\n\
+    X-MATE-Autostart-enabled=true\n\
+    Name[fr_BE]=Nitrogen\n\
+    Name=Nitrogen\n\
+    Comment[fr_BE]=\n\
+    Comment=' > /home/"$myHomedir"/.config/autostart/nitrogen.desktop"
+  else
+    msg "Error : only Mate Desktop is currently supported"
+  fi
+
+}
+
 function installZsh () {
   runCmd "sudo apt-get install -y zsh"; smsgn "Installing zsh"
 
@@ -1468,6 +1494,7 @@ Gimp "Gimp extensions" \
 RhythmBox "RhythmBox extensions" \
 Pidgin "Pidgin/libpurple extensions" \
 Unbound "Unbound (DNS cache)" \
+Nitrogen "Multi Screens Wallpaper App" \
 Zsh "Shell ZSH + Oh-my-Zsh" \
 Back "Back to the Main Menu" 2>"${menuAppINPUT}"
 
@@ -1538,6 +1565,9 @@ clear; installRhythmBoxPlugins; pressKey;;
 
 Pidgin)
 clear; installPidginPlugins; pressKey;;
+
+Nitrogen)
+clear; installNitrogen; pressKey;;
 
 Zsh)
 clear; installZsh; pressKey;;
