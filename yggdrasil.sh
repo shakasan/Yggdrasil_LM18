@@ -9,7 +9,7 @@
 # Script's cons. and vars.                                                     #
 #------------------------------------------------------------------------------#
 
-version="0.2.1"
+version="0.2.2"
 
 # myHomedir is used in full paths to the homedir
 myHomedir=$(whoami)
@@ -1209,10 +1209,8 @@ function installIdea () {
 }
 
 function installPyCharm () {
-  if which umake >/dev/null; then
-    msg "Umake installing : PyCharm"
-    sudo umake ide pycharm
-  fi
+  msg "Installing PyCharm"
+  runCmd "sudo apt-get install -y pycharm"; smsgn "Installing pycharm"
 }
 
 function installVisualStudioCode () {
