@@ -1148,6 +1148,7 @@ function installAtom () {
     runCmd "apm install language-conky"; smsgn "APM Installing language-conky"
     runCmd "apm install language-lua"; smsgn "APM Installing language-lua"
     runCmd "apm install minimap"; smsgn "APM Installing minimap"
+    runCmd "apm install minimap-git-diff"; smsgn "APM Installing minimap-git-diff"
     runCmd "apm install highlight-selected"; smsgn "APM Installing highlight-selected"
     runCmd "apm install minimap-highlight-selected"; smsgn "APM Installing minimap-highlight-selected"
     runCmd "apm install pigments"; smsgn "APM Installing pigments"
@@ -1167,8 +1168,7 @@ function installAtom () {
     runCmd "apm install dash"; smsgn "APM Installing dash"
     runCmd "apm install tree-view-autoresize"; smsgn "APM Installing tree-view-autoresize"
     runCmd "apm install tree-view-git-status"; smsgn "APM Installing tree-view-git-status"
-    runCmd "apm install auto-hide-tree"; smsgn "APM Installing auto-hide-tree"
-    runCmd "apm install minimap-git-diff"; smsgn "APM Installing minimap-git-diff"
+    runCmd "apm install tree-view-git-branch"; smsgn "APM Installing tree-view-git-branch"
   fi
 }
 
