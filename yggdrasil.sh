@@ -927,6 +927,11 @@ function installNvidia375 () {
   runCmd "sudo apt-get install -y nvidia-375 nvidia-settings nvidia-opencl-icd-375"; smsgn "Installing nvidia-375 nvidia-settings nvidia-opencl-icd-375"
 }
 
+function installNvidia378 () {
+  msg "Installing Nvidia 378 driver"
+  runCmd "sudo apt-get install -y nvidia-378 nvidia-settings nvidia-opencl-icd-378 libcuda1-378"; smsgn "Installing nvidia-378 nvidia-settings nvidia-opencl-icd-378 libcuda1-378"
+}
+
 function installDevApps () {
   msg "Installing base Dev apps and tools"
 
@@ -1602,7 +1607,7 @@ do
 # hwMenu -----------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ Hardware Menu ]" \
---menu "Hardware : drivers & configration" 32 95 24 \
+--menu "Hardware : drivers & configration" 33 95 25 \
 Solaar "Solaar - Logitech Unifying Manager App" \
 CardReader "CardReader pcscd app" \
 eID "eID middleware" \
@@ -1612,6 +1617,7 @@ WirelessIntel6320 "Intel Centrino Advanced-N 6320 config (Bluetooth/Wifi problem
 LogitechC310 "Logitech C310 needed apps" \
 Nvidia370 "Nvidia 370 driver" \
 Nvidia375 "Nvidia 375 driver" \
+Nvidia378 "Nvidia 378 driver" \
 Back "Back to the Main Menu" 2>"${menuHWINPUT}"
 
 menuHWItem=$(<"${menuHWINPUT}")
@@ -1645,6 +1651,9 @@ clear; installNvidia370; pressKey;;
 
 Nvidia375)
 clear; installNvidia375; pressKey;;
+
+Nvidia378)
+clear; installNvidia378; pressKey;;
 
 Back) #-------------------------------------------------------------------------
 break
