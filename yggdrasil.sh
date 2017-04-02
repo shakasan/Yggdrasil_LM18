@@ -585,38 +585,12 @@ function installMiscUtilities () {
 
 function installWine () {
   msg "Installing Wine"
-  runCmd "sudo add-apt-repository -y ppa:ubuntu-wine/ppa"; smsgn "Adding Wine PPA"
-  updateSystem
-  msg "Installing Wine"
-  runCmd "sudo apt-get install -y wine2.0"; smsgn "Installing wine2.0"
-  runCmd "sudo apt-get install -y winetricks"; smsgn "Installing winetricks"
-  runCmd "sudo apt-get install -y playonlinux"; smsgn "Installing playonlinux"
-}
-
-function installWineAlt () {
-  msg "Installing Wine"
+  runCmd "sudo add-apt-repository -y ppa:wine/wine-builds"; smsgn "Adding ppa:wine/wine-builds PPA"
   updateSystem
   msg "Installing Wine"
   runCmd "sudo apt-get install -y winehq-devel"; smsgn "Installing winehq-devel"
   runCmd "sudo apt-get install -y winetricks"; smsgn "Installing winetricks"
   runCmd "sudo apt-get install -y playonlinux"; smsgn "Installing playonlinux"
-}
-
-function installWineDRI3 () {
-  msg "Installing WineDRI3"
-
-  runCmd "sudo add-apt-repository -y ppa:commendsarnex/winedri3"; smsgn "Adding WineDRI3 PPA"
-  updateSystem
-  runCmd "sudo apt-get install -y wine2.0"; smsgn "Installing wine2.0"
-  runCmd "sudo apt-get install -y winetricks"; smsgn "Installing winetricks"
-  runCmd "sudo apt-get install -y playonlinux"; smsgn "Installing playonlinux"
-}
-
-function installWineStaging () {
-  msg "Installing Wine-Staging"
-  runCmd "sudo add-apt-repository -y ppa:pipelight/stable"; smsgn "Adding WineStaging PPA"
-  updateSystem
-  runCmd "sudo apt-get install -y wine-staging-amd64"; smsgn "Installing wine-staging-amd64"
 }
 
 function installKodiBETA () {
@@ -1480,9 +1454,6 @@ Internet "Internet apps and tools" \
 InternetExt "Internet apps and tools (others/external)" \
 MiscUtilities "Misc. utilities apps and tools" \
 Wine "Wine (ppa:ubuntu-wine/ppa)" \
-WineAlt "Wine (GetDeb rep)" \
-WineDRI3 "WineDRI3 (Gallium3D) (oibaf PPA required)" \
-WineStaging "Unstable Wine beside Stable Wine" \
 KodiBETA "Beta/Unstable Kodi" \
 KodiNightly "Nightly Kodi" \
 Games "Steam, jstest-gtk" \
@@ -1526,15 +1497,6 @@ clear; installMiscUtilities; pressKey;;
 
 Wine)
 clear; installWine; pressKey;;
-
-WineAlt)
-clear; installWineAlt; pressKey;;
-
-WineDRI3)
-clear; installWineDRI3; pressKey;;
-
-WineStaging)
-clear; installWineStaging; pressKey;;
 
 KodiBETA)
 clear; installKodiBETA; pressKey;;
