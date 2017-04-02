@@ -1216,7 +1216,7 @@ function installPyCharm () {
 function installVisualStudioCode () {
   if which umake >/dev/null; then
     msg "Umake installing : Visual-studio-code"
-    sudo umake web visual-studio-code
+    sudo umake ide visual-studio-code
   fi
 }
 
