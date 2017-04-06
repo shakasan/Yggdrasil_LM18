@@ -581,6 +581,7 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y fcrackzip"; smsgn "Installing fcrackzip"
   runCmd "sudo apt-get install -y rarcrack"; smsgn "Installing rarcrack"
   runCmd "sudo apt-get install -y pdfcrack"; smsgn "Installing pdfcrack"
+  runCmd "sudo apt-get install -y figlet"; smsgn "Installing figlet"
 }
 
 function installWine () {
