@@ -582,6 +582,7 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y rarcrack"; smsgn "Installing rarcrack"
   runCmd "sudo apt-get install -y pdfcrack"; smsgn "Installing pdfcrack"
   runCmd "sudo apt-get install -y figlet"; smsgn "Installing figlet"
+  runCmd "sudo apt-get install -y mate-sensors-applet-nvidia"; smsgn "Installing mate-sensors-applet-nvidia"
 }
 
 function installWine () {
