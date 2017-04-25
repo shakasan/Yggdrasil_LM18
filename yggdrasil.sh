@@ -324,7 +324,7 @@ function addPPA () {
 
   msg "Adding Getdeb repository"
   wget -q -O- http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Getdeb repository key"
-  echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb apps" | sudo tee /etc/apt/sources.list.d/getdeb.list && retCode $? && smsgn "Adding Getdeb repository"
+  echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb apps games" | sudo tee /etc/apt/sources.list.d/getdeb.list && retCode $? && smsgn "Adding Getdeb repository"
 
   updateSystem
 }
