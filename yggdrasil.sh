@@ -318,10 +318,6 @@ function addPPA () {
   wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc -O- | sudo apt-key add - && retCode $? && smsgn "Adding VirtualBox repository key"
   echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list && retCode $? && smsgn "Adding VirtualBox repository"
 
-  msg "Adding Whatsie repository"
-  gpg --keyserver pool.sks-keyservers.net --recv-keys 1537994D && gpg --export --armor 1537994D | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Whatsie repository key"
-  echo "deb https://dl.bintray.com/aluxian/deb stable main" | sudo tee -a /etc/apt/sources.list.d/whatsie.list && retCode $? && smsgn "Adding Whatsie repository"
-
   msg "Adding Getdeb repository"
   wget -q -O- http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Getdeb repository key"
   echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb apps games" | sudo tee /etc/apt/sources.list.d/getdeb.list && retCode $? && smsgn "Adding Getdeb repository"
@@ -476,7 +472,6 @@ function installInternet () {
   runCmd "sudo apt-get install -y california"; smsgn "Installing california"
   runCmd "sudo apt-get install -y midori"; smsgn "Installing midori"
   runCmd "sudo apt-get install -y geary"; smsgn "Installing geary"
-  runCmd "sudo apt-get install -y whatsie"; smsgn "Installing whatsie"
   runCmd "sudo apt-get install -y corebird"; smsgn "Installing corebird"
   runCmd "sudo apt-get install -y nextcloud-client nextcloud-client-caja"; smsgn "Installing NextCloud client"
   runCmd "sudo apt-get install -y deluge"; smsgn "Installing deluge"
