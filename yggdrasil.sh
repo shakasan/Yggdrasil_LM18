@@ -275,6 +275,7 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:zeal-developers/ppa"; smsgn "Adding ppa:zeal-developers/ppa PPA" # Zeal (newer version)
   runCmd "sudo add-apt-repository -y ppa:nextcloud-devs/client"; smsgn "Adding ppa:nextcloud-devs/client PPA" # NextCloud client
   runCmd "sudo add-apt-repository -y ppa:deluge-team/ppa"; smsgn "Adding ppa:deluge-team/ppa PPA" # Deluge P2P client
+  runCmd "sudo add-apt-repository -y ppa:kritalime/ppa"; smsgn "Adding ppa:kritalime/ppa PPA" # Krita
 
   msg "Adding Opera repository"
   wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Opera repository key"
@@ -397,6 +398,7 @@ function installMultimedia () {
   runCmd "sudo apt-get install -y simplescreenrecorder simplescreenrecorder-lib simplescreenrecorder-lib:i386"; smsgn "Installing simplescreenrecorder simplescreenrecorder-lib simplescreenrecorder-lib:i386"
   runCmd "sudo apt-get install -y cuetools shntool flac"; smsgn "Installing cuetools shntool flac"
   runCmd "sudo apt-get install -y entangle"; smsgn "Installing entangle"
+  runCmd "sudo apt-get install -y krita"; smsgn "Installing krita"
 
   # nightly theme for Moc
   runCmd "echo 'alias mocp=\"mocp -T nightly_theme\"' | tee -a /home/$myHomedir/.bashrc"
