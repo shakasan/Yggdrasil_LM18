@@ -399,6 +399,7 @@ function installMultimedia () {
   runCmd "sudo apt-get install -y cuetools shntool flac"; smsgn "Installing cuetools shntool flac"
   runCmd "sudo apt-get install -y entangle"; smsgn "Installing entangle"
   runCmd "sudo apt-get install -y krita"; smsgn "Installing krita"
+  runCmd "sudo apt-get install -y soundconverter"; smsgn "Installing soundconverter"
 
   # nightly theme for Moc
   runCmd "echo 'alias mocp=\"mocp -T nightly_theme\"' | tee -a /home/$myHomedir/.bashrc"
