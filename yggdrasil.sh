@@ -225,7 +225,6 @@ function addPPA () {
 
   runCmd "sudo apt-get install -y apt-transport-https"; smsgn "Intalling apt-transport-https"
 
-  sudo sh -c "echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections" &>> $logFile && retCode $? && smsgn "Accepting Oracle Java SE 7"
   sudo sh -c "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections" &>> $logFile && retCode $? && smsgn "Accepting Oracle Java SE 8"
 
   sudo sh -c "echo sience-config science-config/group select '$myHomedir ($myHomedir)' | sudo debconf-set-selections" &>> $logFile && retCode $? && smsgn "Pre-configuring Science-config package"
@@ -957,7 +956,6 @@ function installDevApps () {
 
 function installJava () {
   msg "Installing Java apps and tools"
-  runCmd "sudo apt-get install -y oracle-java7-installer"; smsgn "Installing oracle-java7-installer"
   runCmd "sudo apt-get install -y oracle-java8-installer"; smsgn "Installing oracle-java8-installer"
   runCmd "sudo apt-get install -y oracle-java8-set-default"; smsgn "Installing oracle-java8-set-default"
 }
