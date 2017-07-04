@@ -166,6 +166,7 @@ function updateSystem () {
 
 # check if running on the right OS ^^
 function osCheck () {
+  printf "\n"
   printf "$BOLDJAUNE""OS requirement checking\n\n""$NORMAL"
   OS=`lsb_release -d | gawk -F':' '{print $2}' | gawk -F'\t' '{print $2}'`
 
@@ -173,6 +174,19 @@ function osCheck () {
     printf "[ ""$BOLDVERT""OK"$NORMAL" ] Linux Mint 18.x\n"
   else
     printf "[ ""$BOLDROUGE""!!"$NORMAL" ] Linux Mint 18.x not found. Bye...\n"
+    printf "\n"
+    exit
+  fi
+}
+
+# check if running on the right DE ^^
+function deCheck () {
+  printf "\n"
+  printf "$BOLDJAUNE""DEsktop requirement checking\n\n""$NORMAL"
+  if [[ $DESKTOP_SESSION == *"mate"* ]]; then
+    printf "[ ""$BOLDVERT""OK"$NORMAL" ] MATE\n"
+  else
+    printf "[ ""$BOLDROUGE""!!"$NORMAL" ] MATE not found. Bye...\n"
     printf "\n"
     exit
   fi
@@ -1348,7 +1362,7 @@ printf "$BOLDBLANC     _____ $BOLDJAUNE \ // _\` |/ _\` |/ _\` | '__/ _\` / __| 
 printf "$BOLDBLANC _________ $BOLDJAUNE | | (_| | (_| | (_| | | | (_| \__ \ | | $BOLDBLANC ___________________________________\n"
 printf "$BOLDJAUNE            \_/\__, |\__, |\__,_|_|  \__,_|___/_|_| $BOLDBLANC _______________________________\n"
 printf "$BOLDJAUNE                __/ | __/ |                         \n"
-printf "               |___/ |___/  $BOLDROUGE Customize Linux Mint 18 made easier\n"
+printf "               |___/ |___/  $BOLDROUGE Customize Linux Mint 18 MATE made easier\n"
 printf "$BOLDBLANC                             ver "$version" - GPLv3 - Francois B. (Makotosan/Shakasan)\n"
 
 printf "\n"
@@ -1363,8 +1377,8 @@ printf "$BOLDVERT""CPU :""$NORMAL"
 cat /proc/cpuinfo | grep "model name" -m1 | gawk -F':' '{print $2}'
 
 printf "$BOLDBLANC""__________________________________________________________________________________\n""$NORMAL"
-printf "\n"
 osCheck
+deCheck
 printf "\n"
 depCheck
 
