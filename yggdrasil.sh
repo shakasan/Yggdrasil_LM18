@@ -857,27 +857,15 @@ function installCardReader () {
 function installEid () {
   cd /tmp
 
-  msg "Installing eID middleware"
-
-  msg "Installation de eID : download du .deb"
-  wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0" http://eid.belgium.be/sites/default/files/downloads/eid-archive_2016.2_all.deb
-
-  msg "Installation de eID : extraction du .deb"
-  ar xv eid-archive_2016.2_all.deb
-  tar xvf data.tar.xz
-  cd /tmp/usr/share/eid-archive/keys
-
-  msg "Installation de eID : installation manuelle de la clé GPG"
-  sudo mv 6773d225.gpg /etc/apt/trusted.gpg.d/eid-archive-released-builds.gpg
-
-  msg "Installation de eID : installation du dépot"
-  sudo sh -c "echo '#deb http://files.eid.belgium.be/debian selena main\n\
-  deb http://files2.eid.belgium.be/debian selena main' > /etc/apt/sources.list.d/eid.list"
+  msg "Installing eID repository"
+  wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0" https://eid.belgium.be/sites/default/files/software/eid-archive_2017.4_all.deb
+  sudo dpkg -i eid-archive_2017.4_all.deb
+  sudo apt-get install -fy
 
   updateSystem
 
-  msg "Installation de eID : installation de eid-mw + libacr38u"
-  sudo apt-get install -y eid-mw libacr38u
+  msg "Installing eID middleware"
+  sudo apt-get install -y eid-mw eid-viewer libacr38u
 }
 
 function installEpsonV500Photo () {
