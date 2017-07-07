@@ -168,7 +168,7 @@ function updateSystem () {
 function osCheck () {
   printf "\n"
   printf "$BOLDJAUNE""OS requirement checking\n\n""$NORMAL"
-  OS=`lsb_release -d | gawk -F':' '{print $2}' | gawk -F'\t' '{print $2}'`
+  OS=`lsb_release -d | awk -F':' '{print $2}' | awk -F'\t' '{print $2}'`
 
   if [[ $OS == *"Linux Mint 18"* ]]; then
     printf "[ ""$BOLDVERT""OK"$NORMAL" ] Linux Mint 18.x\n"
@@ -1368,13 +1368,13 @@ printf "$BOLDBLANC                             ver "$version" - GPLv3 - Francois
 printf "\n"
 printf "$BOLDVERT""User (userdir) :""$NORMAL"" $myHomedir\n"
 printf "$BOLDVERT""OS : ""$NORMAL"
-lsb_release -d | gawk -F':' '{print $2}' | gawk -F'\t' '{print $2}'
+lsb_release -d | awk -F':' '{print $2}' | awk -F'\t' '{print $2}'
 printf "$BOLDVERT""Kernel : ""$NORMAL"
 uname -r
 printf "$BOLDVERT""Architecture : ""$NORMAL"
 uname -m
 printf "$BOLDVERT""CPU :""$NORMAL"
-cat /proc/cpuinfo | grep "model name" -m1 | gawk -F':' '{print $2}'
+cat /proc/cpuinfo | grep "model name" -m1 | awk -F':' '{print $2}'
 
 printf "$BOLDBLANC""__________________________________________________________________________________\n""$NORMAL"
 osCheck
