@@ -1247,14 +1247,14 @@ function installCAD () {
   runCmd "sudo apt-get install -y freecad"; smsgn "Installing freecad"
 }
 
-function installTeamViewer7 () {
+function installTeamViewer12 () {
   cd /tmp
 
-  msg "Downloading Teamviewer 7"
-  wget -O teamviewer7.deb http://download.teamviewer.com/download/version_7x/teamviewer_linux_x64.deb
+  msg "Downloading Teamviewer 12"
+  wget -O teamviewer12.deb https://download.teamviewer.com/download/teamviewer_i386.deb
 
-  msg "Installing Teamviewer 7"
-  sudo dpkg -i teamviewer7.deb
+  msg "Installing Teamviewer 12"
+  sudo dpkg -i teamviewer12.deb
   sudo apt-get install -fy
 }
 
@@ -1698,7 +1698,7 @@ PyCharm "PyCharm (Python)" \
 VisualStudioCode "Visual Studio Code" \
 AndroidStudio "Android Studio (Android)" \
 CAD "CAD Apps and tools" \
-TeamViewer7 "TeamViewer 7" \
+TeamViewer12 "TeamViewer 12" \
 Back "Back to the Main Menu" 2>"${menuDevINPUT}"
 
 menuDevItem=$(<"${menuDevINPUT}")
@@ -1766,8 +1766,8 @@ clear; installAndroidStudio; pressKey;;
 CAD)
 clear; installCAD; pressKey;;
 
-TeamViewer7)
-clear; installTeamViewer7; pressKey;;
+TeamViewer12)
+clear; installTeamViewer12; pressKey;;
 
 Back) #-------------------------------------------------------------------------
 break
