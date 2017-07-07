@@ -499,6 +499,13 @@ function installInternetExt () {
 
   cd /tmp
 
+  msg "Téléchargement de Skype"
+  wget https://go.skype.com/skypeforlinux-64.deb
+
+  msg "Installation de Skype"
+  sudo dpkg -i skypeforlinux-64.deb
+  sudo apt-get install -fy
+
   msg "Téléchargement de Viber"
   wget http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb
 
