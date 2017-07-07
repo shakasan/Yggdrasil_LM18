@@ -947,6 +947,11 @@ function installNvidia378 () {
   runCmd "sudo apt-get install -y nvidia-378 nvidia-settings nvidia-opencl-icd-378 libcuda1-378"; smsgn "Installing nvidia-378 nvidia-settings nvidia-opencl-icd-378 libcuda1-378"
 }
 
+function installNvidia381 () {
+  msg "Installing Nvidia 381 driver"
+  runCmd "sudo apt-get install -y nvidia-381 nvidia-settings nvidia-opencl-icd-381 libcuda1-381"; smsgn "Installing nvidia-381 nvidia-settings nvidia-opencl-icd-381 libcuda1-381"
+}
+
 function installDevApps () {
   msg "Installing base Dev apps and tools"
 
@@ -1622,6 +1627,7 @@ LogitechC310 "Logitech C310 needed apps" \
 Nvidia370 "Nvidia 370 driver" \
 Nvidia375 "Nvidia 375 driver" \
 Nvidia378 "Nvidia 378 driver" \
+Nvidia381 "Nvidia 381 driver" \
 Back "Back to the Main Menu" 2>"${menuHWINPUT}"
 
 menuHWItem=$(<"${menuHWINPUT}")
@@ -1658,6 +1664,9 @@ clear; installNvidia375; pressKey;;
 
 Nvidia378)
 clear; installNvidia378; pressKey;;
+
+Nvidia381)
+clear; installNvidia381; pressKey;;
 
 Back) #-------------------------------------------------------------------------
 break
