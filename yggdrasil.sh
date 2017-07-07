@@ -483,7 +483,6 @@ function installInternet () {
   runCmd "sudo apt-get install -y filezilla"; smsgn "Installing filezilla"
   runCmd "sudo apt-get install -y hexchat"; smsgn "Installing hexchat"
   runCmd "sudo apt-get install -y mumble"; smsgn "Installing mumble"
-  runCmd "sudo apt-get install -y skype"; smsgn "Installing skype"
   runCmd "sudo apt-get install -y imagedownloader"; smsgn "Installing imagedownloader"
   runCmd "sudo apt-get install -y california"; smsgn "Installing california"
   runCmd "sudo apt-get install -y midori"; smsgn "Installing midori"
