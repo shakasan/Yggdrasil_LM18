@@ -844,11 +844,6 @@ function installPlankThemes () {
   fi
 }
 
-function installIconsExt () {
-  msg "Installing extra icons pack"
-  mkdir -p /home/$myHomedir/.icons && cp icons.tar.gz /home/$myHomedir/.icons && cd /home/$myHomedir/.icons && tar xzf icons.tar.gz && rm icons.tar.gz retCode $? && smsgn "Installing extra icons"
-}
-
 function installSolaar () {
   msg "Installing Solaar"
   runCmd "sudo apt-get install -y solaar"; smsgn "Installing solaar"
@@ -1576,7 +1571,6 @@ dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 Themes "System themes" \
 Icons "System icons" \
 Plank "Plank themes" \
-Icons "Extra icons pack" \
 Back "Back to the Main Menu" 2>"${menuCustomINPUT}"
 
 menuCustomItem=$(<"${menuCustomINPUT}")
@@ -1592,9 +1586,6 @@ clear; installIcons; pressKey;;
 
 Plank)
 clear; installPlankThemes; pressKey;;
-
-Icons)
-clear; installIconsExt; pressKey;;
 
 Back) #-------------------------------------------------------------------------
 break
