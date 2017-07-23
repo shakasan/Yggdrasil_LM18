@@ -943,6 +943,11 @@ function installNvidia381 () {
   runCmd "sudo apt-get install -y nvidia-381 nvidia-settings nvidia-opencl-icd-381 libcuda1-381"; smsgn "Installing nvidia-381 nvidia-settings nvidia-opencl-icd-381 libcuda1-381"
 }
 
+function installNvidia384 () {
+  msg "Installing Nvidia 384 driver"
+  runCmd "sudo apt-get install -y nvidia-384 nvidia-settings nvidia-opencl-icd-384 libcuda1-384"; smsgn "Installing nvidia-384 nvidia-settings nvidia-opencl-icd-384 libcuda1-384"
+}
+
 function installDevApps () {
   msg "Installing base Dev apps and tools"
 
@@ -1615,6 +1620,7 @@ Nvidia370 "Nvidia 370 driver" \
 Nvidia375 "Nvidia 375 driver" \
 Nvidia378 "Nvidia 378 driver" \
 Nvidia381 "Nvidia 381 driver" \
+Nvidia384 "Nvidia 384 driver" \
 Back "Back to the Main Menu" 2>"${menuHWINPUT}"
 
 menuHWItem=$(<"${menuHWINPUT}")
@@ -1654,6 +1660,9 @@ clear; installNvidia378; pressKey;;
 
 Nvidia381)
 clear; installNvidia381; pressKey;;
+
+Nvidia384)
+clear; installNvidia384; pressKey;;
 
 Back) #-------------------------------------------------------------------------
 break
