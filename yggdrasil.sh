@@ -606,6 +606,12 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y woeusb"; smsgn "Installing woeusb"
 }
 
+function installLibreOffice54 () {
+  msg "Installing LibreOffice 5.4"
+  runCmd "sudo add-apt-repository -y ppa:libreoffice/libreoffice-5-4"; smsgn "Adding ppa:libreoffice/libreoffice-5-4 PPA"
+  updateSystem
+}
+
 function installWine () {
   msg "Installing Wine"
   runCmd "sudo add-apt-repository -y ppa:wine/wine-builds"; smsgn "Adding ppa:wine/wine-builds PPA"
@@ -1466,6 +1472,7 @@ eBook "eBook apps and tools" \
 Internet "Internet apps and tools" \
 InternetExt "Internet apps and tools (others/external)" \
 MiscUtilities "Misc. utilities apps and tools" \
+LibreOffice54 "LibreOffice 5.4" \
 Wine "Wine (ppa:ubuntu-wine/ppa)" \
 KodiBETA "Beta/Unstable Kodi" \
 KodiNightly "Nightly Kodi" \
@@ -1507,6 +1514,9 @@ clear; installInternetExt; pressKey;;
 
 MiscUtilities)
 clear; installMiscUtilities; pressKey;;
+
+LibreOffice54)
+clear; installLibreOffice54; pressKey;;
 
 Wine)
 clear; installWine; pressKey;;
