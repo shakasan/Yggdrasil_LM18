@@ -290,6 +290,7 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:deluge-team/ppa"; smsgn "Adding ppa:deluge-team/ppa PPA" # Deluge P2P client
   runCmd "sudo add-apt-repository -y ppa:kritalime/ppa"; smsgn "Adding ppa:kritalime/ppa PPA" # Krita
   runCmd "sudo add-apt-repository -y ppa:otto-kesselgulasch/gimp"; smsgn "Adding ppa:otto-kesselgulasch/gimp PPA" # Gmic2
+  runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:ozmartian/apps"; smsgn "Adding ppa:ozmartian/apps PPA" # Vidcutter
 
   msg "Adding Opera repository"
   wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Opera repository key"
@@ -415,6 +416,7 @@ function installMultimedia () {
   runCmd "sudo apt-get install -y krita"; smsgn "Installing krita"
   runCmd "sudo apt-get install -y soundconverter"; smsgn "Installing soundconverter"
   runCmd "sudo apt-get install -y gimp"; smsgn "Installing gimp"
+  runCmd "sudo apt-get install -y vidcutter"; smsgn "Installing vidcutter"
 
   # nightly theme for Moc
   runCmd "echo 'alias mocp=\"mocp -T nightly_theme\"' | tee -a /home/$myHomedir/.bashrc"
@@ -1086,6 +1088,9 @@ function installPython () {
 
     msg "PIP installing : droopescan"
     sudo pip3 install droopescan
+
+    msg "PIP installing : PyOpenGL"
+    sudo pip3 install --upgrade PyOpenGL
   fi
 }
 
