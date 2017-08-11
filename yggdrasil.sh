@@ -1276,6 +1276,11 @@ function installTeamViewer12 () {
 function enableUFW () {
   msg "Enabling FireWall (UFW)"
   runCmd "sudo ufw enable"; smsgn "Enabling ufw"
+
+  if which syncthing >/dev/null; then
+    msg "UFW Rules added for Syncthing"
+    sudo ufw allow syncthing
+  fi
 }
 
 function addNumLockXBashrc () {
