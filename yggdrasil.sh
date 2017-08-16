@@ -419,6 +419,7 @@ function installMultimedia () {
   runCmd "sudo apt-get install -y gimp"; smsgn "Installing gimp"
   runCmd "sudo apt-get install -y vidcutter"; smsgn "Installing vidcutter"
   runCmd "sudo apt-get install -y green-recorder"; smsgn "Installing green-recorder"
+  runCmd "sudo apt-get install -y radiotray"; smsgn "Installing radiotray"
 
   # nightly theme for Moc
   runCmd "echo 'alias mocp=\"mocp -T nightly_theme\"' | tee -a /home/$myHomedir/.bashrc"
