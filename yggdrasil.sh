@@ -1198,6 +1198,9 @@ function installAtom () {
     runCmd "apm install tree-view-autoresize"; smsgn "APM Installing tree-view-autoresize"
     runCmd "apm install tree-view-git-status"; smsgn "APM Installing tree-view-git-status"
     runCmd "apm install tree-view-git-branch"; smsgn "APM Installing tree-view-git-branch"
+    runCmd "apm install busy"; smsgn "APM Installing busy"
+    runCmd "apm install build"; smsgn "APM Installing build"
+    runCmd "apm install build-fpc"; smsgn "APM Installing build-fpc"
   fi
 }
 
