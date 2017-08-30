@@ -609,6 +609,7 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y alltray"; smsgn "Installing alltray"
   runCmd "sudo apt-get install -y mate-sensors-applet-nvidia"; smsgn "Installing mate-sensors-applet-nvidia"
   runCmd "sudo apt-get install -y woeusb"; smsgn "Installing woeusb"
+  runCmd "sudo apt-get install -y screenkey"; smsgn "Installing screenkey"
 }
 
 function installLibreOffice54 () {
