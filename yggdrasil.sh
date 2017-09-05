@@ -1052,6 +1052,7 @@ function installPython () {
   runCmd "sudo apt-get install -y python3-dev"; smsgn "Installing python3-dev"
   runCmd "sudo apt-get install -y python3-pip"; smsgn "Installing python3-pip"
   runCmd "sudo apt-get install -y python3-pyqt5"; smsgn "Installing python3-pyqt5"
+  runCmd "sudo apt-get install -y pyqt5-dev-tools"; smsgn "Installing pyqt5-dev-tools"
 
   if which pip3 >/dev/null; then
     msg "Upgrading PIP"
