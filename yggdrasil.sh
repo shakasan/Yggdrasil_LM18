@@ -340,6 +340,11 @@ function addPPA () {
   wget -q -O- http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Getdeb repository key"
   echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb apps games" | sudo tee /etc/apt/sources.list.d/getdeb.list && retCode $? && smsgn "Adding Getdeb repository"
 
+  msg "Adding Vivaldi repository"
+  wget -q -O- http://repo.vivaldi.com/stable/linux_signing_key.pub | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Vivaldi repository key"
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1397BC53640DB551 &>> $logFile && retCode $? && smsgn "Adding Vivaldi repository key"
+  echo "deb http://repo.vivaldi.com/stable/deb/ stable main " | sudo tee /etc/apt/sources.list.d/vivaldi.list && retCode $? && smsgn "Adding Vivaldi repository"
+
   updateSystem
 }
 
@@ -498,6 +503,7 @@ function installInternet () {
   runCmd "sudo apt-get install -y corebird"; smsgn "Installing corebird"
   runCmd "sudo apt-get install -y nextcloud-client nextcloud-client-caja"; smsgn "Installing NextCloud client"
   runCmd "sudo apt-get install -y deluge"; smsgn "Installing deluge"
+  runCmd "sudo apt-get install -y vivaldi-stable"; smsgn "Installing Vivaldi"
 }
 
 function installInternetExt () {
@@ -1492,7 +1498,7 @@ Internet "Internet apps and tools" \
 InternetExt "Internet apps and tools (others/external)" \
 MiscUtilities "Misc. utilities apps and tools" \
 LibreOffice54 "LibreOffice 5.4" \
-Wine "Wine (ppa:ubuntu-wine/ppa)" \
+Wine "Wine (ppa:wine/wine-builds)" \
 KodiBETA "Beta/Unstable Kodi" \
 KodiNightly "Nightly Kodi" \
 Games "Steam, jstest-gtk" \
