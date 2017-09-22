@@ -1057,46 +1057,46 @@ function installPython () {
 
   if which pip3 >/dev/null; then
     msg "Upgrading PIP"
-    sudo pip3 install --upgrade pip
+    sudo -H pip3 install --upgrade pip
 
     msg "PIP installing : setuptools"
-    sudo pip3 install setuptools
+    sudo -H pip3 install --upgrade setuptools
 
     msg "PIP installing : flake8"
-    sudo pip3 install flake8
+    sudo -H pip3 install flake8
 
     msg "PIP installing : MyCLI"
-    sudo pip3 install mycli
+    sudo -H pip3 install mycli
 
     msg "PIP installing : SpoofMAC"
-    sudo pip3 install SpoofMAC
+    sudo -H pip3 install SpoofMAC
 
     msg "PIP installing : speedtest-cli"
-    sudo pip3 install speedtest-cli
+    sudo -H pip3 install speedtest-cli
 
     msg "PIP installing : whatportis"
-    sudo pip3 install whatportis
+    sudo -H pip3 install whatportis
 
     msg "PIP installing : py-term"
-    sudo pip3 install py-term
+    sudo -H pip3 install py-term
 
     msg "PIP installing : weppy"
-    sudo pip3 install weppy
+    sudo -H pip3 install weppy
 
     msg "PIP installing : retext"
-    sudo pip3 install retext
+    sudo -H pip3 install retext
 
     msg "PIP installing : waybackpack"
-    sudo pip3 install waybackpack
+    sudo -H pip3 install waybackpack
 
     msg "PIP installing : tweepy"
-    sudo pip3 install tweepy
+    sudo -H pip3 install tweepy
 
     msg "PIP installing : droopescan"
-    sudo pip3 install droopescan
+    sudo -H pip3 install droopescan
 
     msg "PIP installing : PyOpenGL"
-    sudo pip3 install --upgrade PyOpenGL
+    sudo -H pip3 install --upgrade PyOpenGL
   fi
 }
 
