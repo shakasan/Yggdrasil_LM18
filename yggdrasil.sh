@@ -631,8 +631,19 @@ function installLibreOffice54 () {
 }
 
 function installWine () {
-  msg "Installing Wine"
+  msg "Adding Wine PPA"
   runCmd "sudo add-apt-repository -y ppa:wine/wine-builds"; smsgn "Adding ppa:wine/wine-builds PPA"
+  updateSystem
+  msg "Installing Wine"
+  runCmd "sudo apt-get install -y winehq-devel"; smsgn "Installing winehq-devel"
+  runCmd "sudo apt-get install -y winetricks"; smsgn "Installing winetricks"
+  runCmd "sudo apt-get install -y playonlinux"; smsgn "Installing playonlinux"
+}
+
+function installWineNew () {
+  msg "Adding Wine repository"
+  wget -q -O - https://dl.winehq.org/wine-builds/Release.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Wine repository key"
+  runCmd "sudo add-apt-repository -y 'https://dl.winehq.org/wine-builds/ubuntu/'"; smsgn "Adding wine repository"
   updateSystem
   msg "Installing Wine"
   runCmd "sudo apt-get install -y winehq-devel"; smsgn "Installing winehq-devel"
@@ -805,7 +816,6 @@ function installNitrogen () {
   else
     msg "Error : only Mate Desktop is currently supported"
   fi
-
 }
 
 function installZsh () {
@@ -1504,6 +1514,7 @@ InternetExt "Internet apps and tools (others/external)" \
 MiscUtilities "Misc. utilities apps and tools" \
 LibreOffice54 "LibreOffice 5.4" \
 Wine "Wine (ppa:wine/wine-builds)" \
+WineNew "Wine's new repository" \
 KodiBETA "Beta/Unstable Kodi" \
 KodiNightly "Nightly Kodi" \
 Games "Steam, jstest-gtk" \
@@ -1550,6 +1561,9 @@ clear; installLibreOffice54; pressKey;;
 
 Wine)
 clear; installWine; pressKey;;
+
+WineNew)
+clear; installWineNew; pressKey;;
 
 KodiBETA)
 clear; installKodiBETA; pressKey;;
