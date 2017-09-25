@@ -532,6 +532,11 @@ function installInternetExt () {
   sudo dpkg -i megasync-xUbuntu_16.04_amd64.deb
   sudo apt-get install -fy
 
+  msg "Installation de Discord"
+  wget -O discord.deb https://discordapp.com/api/download?platform=linux&format=deb
+  sudo dpkg -i discord.deb
+  sudo apt-get install -fy
+
   msg "Téléchargement de Telegram Desktop"
   wget -O tsetup.tar.xz https://tdesktop.com/linux
 
