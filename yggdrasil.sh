@@ -1018,7 +1018,7 @@ function installJavaScript () {
   runCmd "sudo apt-get install -y javascript-common"; smsgn "Installing javascript-common"
 
   if which npm >/dev/null; then
-    runCmd "sudo npm install remark-lint"; smsgn "NPM Installing qt4-dev-tools"
+    runCmd "sudo npm install remark-lint"; smsgn "NPM Installing remark-lint"
     runCmd "sudo npm install jshint"; smsgn "NPM Installing jshint"
     runCmd "sudo npm install jedi"; smsgn "NPM Installing jedi"
   fi
