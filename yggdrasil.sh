@@ -506,6 +506,13 @@ function installInternet () {
   runCmd "sudo apt-get install -y vivaldi-stable"; smsgn "Installing Vivaldi"
 }
 
+function installFirefoxDaily () {
+  msg "Installing Firefox Daily"
+  runCmd "sudo add-apt-repository -y ppa:ubuntu-mozilla-daily/ppa"; smsgn "Adding Firefox Daily PPA"
+  updateSystem
+  runCmd "sudo apt-get install -y firefox-trunk firefox-trunk-locale-fr"; smsgn "Installing firefox-trunk firefox-trunk-locale-fr"
+}
+
 function installInternetExt () {
   msg "Installing Internet apps and tools"
 
@@ -1510,6 +1517,7 @@ Multimedia "Multimedia apps and tools" \
 MultimediaExt "Multimedia apps and tools (others/external)" \
 eBook "eBook apps and tools" \
 Internet "Internet apps and tools" \
+FirefoxDaily "Install Firefox Daily by PPA" \
 InternetExt "Internet apps and tools (others/external)" \
 MiscUtilities "Misc. utilities apps and tools" \
 LibreOffice54 "LibreOffice 5.4" \
@@ -1549,6 +1557,9 @@ clear; installEbook; pressKey;;
 
 Internet)
 clear; installInternet; pressKey;;
+
+FirefoxDaily)
+clear; installFirefoxDaily; pressKey;;
 
 InternetExt)
 clear; installInternetExt; pressKey;;
