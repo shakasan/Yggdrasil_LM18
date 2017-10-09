@@ -3,7 +3,7 @@
 Yggdrasil for Linux Mint 18
 ===========================
 
-Warnings : this is an Beta version under dev !!
+Warnings : this is a Beta version under dev !!
 
 The purpose of this script is to provide a full set of tools to install, customize and tweak a fresh installation of Linux Mint 18.x (MATE, x86_64)
 
