@@ -293,6 +293,7 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:ozmartian/apps"; smsgn "Adding ppa:ozmartian/apps PPA" # Vidcutter
   runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:fossproject/ppa"; smsgn "Adding ppa:fossproject/ppa" # green-recorder
   runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:quiterss/quiterss"; smsgn "Adding ppa:quiterss/quiterss" # quiterss
+  runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:tmsu/ppa"; smsgn "Adding ppa:tmsu/ppa" # tmsu
 
   msg "Adding Opera repository"
   wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Opera repository key"
@@ -630,6 +631,7 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y mate-sensors-applet-nvidia"; smsgn "Installing mate-sensors-applet-nvidia"
   runCmd "sudo apt-get install -y woeusb"; smsgn "Installing woeusb"
   runCmd "sudo apt-get install -y screenkey"; smsgn "Installing screenkey"
+  runCmd "sudo apt-get install -y tmsu"; smsgn "Installing tmsu"
 }
 
 function installLibreOffice54 () {
