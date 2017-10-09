@@ -1322,17 +1322,23 @@ function enableUFW () {
 }
 
 function addNumLockXBashrc () {
-  msg "NumLockX added to MDM Init Default"
+  msg "Adding NumLockX to MDM/LightDM Default Init"
 
   if which numlockx >/dev/null; then
-  sudo sed -i -e '
-  s!exit 0!#numlockx!
-  ' /etc/mdm/Init/Default
-  sudo sh -c "echo 'if [ -x /usr/bin/numlockx ]; then\n\
-  exec /usr/bin/numlockx on\n\
-  fi\n\
-  \n\
-  exit 0' >> /etc/mdm/Init/Default"
+    if which mdm >/dev/null; then
+      sudo cp /etc/mdm/Init/Default /etc/mdm/Init/Default.yggbak
+      sudo sed -i -e '
+      s!exit 0!#numlockx!
+      ' /etc/mdm/Init/Default
+      sudo sh -c "echo 'if [ -x /usr/bin/numlockx ]; then\n\
+      exec /usr/bin/numlockx on\n\
+      fi\n\
+      \n\
+      exit 0' >> /etc/mdm/Init/Default"
+    elif which lightdm >/dev/null; then
+      sudo cp /etc/lightdm/lightdm.conf.d/70-linuxmint.conf /etc/lightdm/lightdm.conf.d/70-linuxmint.conf.yggbak
+      sudo bash -c "echo 'greeter-setup-script=/usr/bin/numlockx on' >> /etc/lightdm/lightdm.conf.d/70-linuxmint.conf"
+    fi
   fi
 }
 
