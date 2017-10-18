@@ -290,11 +290,11 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y ppa:deluge-team/ppa"; smsgn "Adding ppa:deluge-team/ppa PPA" # Deluge P2P client
   runCmd "sudo add-apt-repository -y ppa:kritalime/ppa"; smsgn "Adding ppa:kritalime/ppa PPA" # Krita
   runCmd "sudo add-apt-repository -y ppa:otto-kesselgulasch/gimp"; smsgn "Adding ppa:otto-kesselgulasch/gimp PPA" # Gmic2
-  runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:ozmartian/apps"; smsgn "Adding ppa:ozmartian/apps PPA" # Vidcutter
-  runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:fossproject/ppa"; smsgn "Adding ppa:fossproject/ppa" # green-recorder
-  runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:quiterss/quiterss"; smsgn "Adding ppa:quiterss/quiterss" # quiterss
-  runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:tmsu/ppa"; smsgn "Adding ppa:tmsu/ppa" # tmsu
-  runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:ansible/ansible"; smsgn "Adding ppa:ansible/ansible" # ansible
+  runCmd "sudo add-apt-repository -y ppa:ozmartian/apps"; smsgn "Adding ppa:ozmartian/apps PPA" # Vidcutter
+  runCmd "sudo add-apt-repository -y ppa:fossproject/ppa"; smsgn "Adding ppa:fossproject/ppa" # green-recorder
+  runCmd "sudo add-apt-repository -y ppa:quiterss/quiterss"; smsgn "Adding ppa:quiterss/quiterss" # quiterss
+  runCmd "sudo add-apt-repository -y ppa:tmsu/ppa"; smsgn "Adding ppa:tmsu/ppa" # tmsu
+  runCmd "sudo add-apt-repository -y ppa:ansible/ansible"; smsgn "Adding ppa:ansible/ansible" # ansible
 
   msg "Adding Opera repository"
   wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Opera repository key"
@@ -505,7 +505,7 @@ function installInternet () {
   runCmd "sudo apt-get install -y geary"; smsgn "Installing geary"
   runCmd "sudo apt-get install -y corebird"; smsgn "Installing corebird"
   runCmd "sudo apt-get install -y nextcloud-client nextcloud-client-caja"; smsgn "Installing NextCloud client"
-  runCmd "sudo apt-get install -y deluge"; smsgn "Installing deluge"
+  runCmd "sudo apt-get install -y deluge-gtk deluge-torrent"; smsgn "Installing deluge-gtk deluge-torrent"
   runCmd "sudo apt-get install -y vivaldi-stable"; smsgn "Installing Vivaldi"
 }
 
