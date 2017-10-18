@@ -294,6 +294,7 @@ function addPPA () {
   runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:fossproject/ppa"; smsgn "Adding ppa:fossproject/ppa" # green-recorder
   runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:quiterss/quiterss"; smsgn "Adding ppa:quiterss/quiterss" # quiterss
   runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:tmsu/ppa"; smsgn "Adding ppa:tmsu/ppa" # tmsu
+  runCmd "sudo add-apt-repository -y sudo add-apt-repository ppa:ansible/ansible"; smsgn "Adding ppa:ansible/ansible" # ansible
 
   msg "Adding Opera repository"
   wget -qO- http://deb.opera.com/archive.key | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Opera repository key"
@@ -1012,6 +1013,7 @@ function installDevApps () {
   runCmd "sudo apt-get install -y shellcheck"; smsgn "Installing shellcheck"
   runCmd "sudo apt-get install -y umbrello"; smsgn "Installing umbrello"
   runCmd "sudo apt-get install -y ack-grep"; smsgn "Installing ack-grep"
+  runCmd "sudo apt-get install -y ansible"; smsgn "Installing ansible"
 }
 
 function installJava () {
