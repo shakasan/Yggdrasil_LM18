@@ -9,7 +9,7 @@
 # Script's cons. and vars.                                                     #
 #------------------------------------------------------------------------------#
 
-version="0.2.2"
+version="0.2.3"
 
 # myHomedir is used in full paths to the homedir
 myHomedir=$(whoami)
@@ -346,6 +346,10 @@ function addPPA () {
   wget -q -O- http://repo.vivaldi.com/stable/linux_signing_key.pub | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Vivaldi repository key"
   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1397BC53640DB551 &>> $logFile && retCode $? && smsgn "Adding Vivaldi repository key"
   echo "deb http://repo.vivaldi.com/stable/deb/ stable main " | sudo tee /etc/apt/sources.list.d/vivaldi.list && retCode $? && smsgn "Adding Vivaldi repository"
+
+  msg "Adding Sublime-Text repository"
+  wget -q -O - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Sublime-Text repository key"
+  echo "deb https://download.sublimetext.com/ apt/dev/" | sudo tee /etc/apt/sources.list.d/sublime-text.list && retCode $? && smsgn "Adding Sublime-Text repository"
 
   updateSystem
 }
@@ -1292,6 +1296,11 @@ function installAndroidStudio () {
   fi
 }
 
+function installSublimeText() {
+  msg "Installing Sublime-Text"
+  runCmd "sudo apt-get install -y sublime-text"; smsgn "Installing sublime-text"
+}
+
 function installCAD () {
   msg "Installing CAD apps and tools"
   runCmd "sudo apt-get install -y kicad kicad-locale-fr"; smsgn "Installing kicad kicad-locale-fr"
@@ -1776,6 +1785,7 @@ Idea "Intellij IDEA (Java)" \
 PyCharm "PyCharm (Python)" \
 VisualStudioCode "Visual Studio Code" \
 AndroidStudio "Android Studio (Android)" \
+SublimeText "Sublime-Text" \
 CAD "CAD Apps and tools" \
 TeamViewer12 "TeamViewer 12" \
 Back "Back to the Main Menu" 2>"${menuDevINPUT}"
@@ -1841,6 +1851,9 @@ clear; installVisualStudioCode; pressKey;;
 
 AndroidStudio)
 clear; installAndroidStudio; pressKey;;
+
+SublimeText)
+clear; installSublimeText; pressKey;;
 
 CAD)
 clear; installCAD; pressKey;;
