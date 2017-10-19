@@ -1014,6 +1014,7 @@ function installDevApps () {
   runCmd "sudo apt-get install -y umbrello"; smsgn "Installing umbrello"
   runCmd "sudo apt-get install -y ack-grep"; smsgn "Installing ack-grep"
   runCmd "sudo apt-get install -y ansible"; smsgn "Installing ansible"
+  runCmd "sudo apt-get install -y composer"; smsgn "Installing composer"
 }
 
 function installJava () {
