@@ -1211,6 +1211,14 @@ function installAtom () {
     msg "Installing Atom extensions"
     runCmd "apm install sync-settings"; smsgn "APM Installing sync-settings"
   fi
+
+  if which composer >/dev/null; then
+    msg "Installing php-cs-fixer"
+    sudo composer global require friendsofphp/php-cs-fixer
+    msg "Adding php-cs-fixer to PATH in .bashrc"
+    touch /home/$myHomedir/.bashrc
+    sh -c "echo '\n\nexport PATH=${PATH}:/home/shakasan/.composer/vendor/bin' >> /home/$myHomedir/.bashrc"
+  fi
 }
 
 function installAnjuta () {
