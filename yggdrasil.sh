@@ -1096,44 +1096,38 @@ function installPython () {
     msg "PIP installing : setuptools"
     sudo -H pip3 install --upgrade setuptools
 
-    msg "PIP installing : flake8"
-    sudo -H pip3 install flake8
-
     msg "PIP installing : MyCLI"
-    sudo -H pip3 install mycli
+    sudo -H pip3 install --upgrade mycli
 
     msg "PIP installing : SpoofMAC"
-    sudo -H pip3 install SpoofMAC
+    sudo -H pip3 install --upgrade SpoofMAC
 
     msg "PIP installing : speedtest-cli"
-    sudo -H pip3 install speedtest-cli
+    sudo -H pip3 install --upgrade speedtest-cli
 
     msg "PIP installing : whatportis"
-    sudo -H pip3 install whatportis
+    sudo -H pip3 install --upgrade whatportis
 
     msg "PIP installing : py-term"
-    sudo -H pip3 install py-term
+    sudo -H pip3 install --upgrade py-term
 
     msg "PIP installing : weppy"
-    sudo -H pip3 install weppy
+    sudo -H pip3 install --upgrade weppy
 
     msg "PIP installing : retext"
-    sudo -H pip3 install retext
+    sudo -H pip3 install --upgrade retext
 
     msg "PIP installing : waybackpack"
-    sudo -H pip3 install waybackpack
+    sudo -H pip3 install --upgrade waybackpack
 
     msg "PIP installing : tweepy"
-    sudo -H pip3 install tweepy
+    sudo -H pip3 install --upgrade tweepy
 
     msg "PIP installing : droopescan"
-    sudo -H pip3 install droopescan
+    sudo -H pip3 install --upgrade droopescan
 
     msg "PIP installing : PyOpenGL"
     sudo -H pip3 install --upgrade PyOpenGL
-
-    msg "PIP installing : SQLParse"
-    sudo -H pip3 install --upgrade sqlparse
   fi
 }
 
@@ -1208,16 +1202,38 @@ function installAtom () {
   runCmd "sudo apt-get install -y atom"; smsgn "Installing atom"
 
   if which apm >/dev/null; then
-    msg "Installing Atom extensions"
+    msg "Apm installing Atom extensions"
     runCmd "apm install sync-settings"; smsgn "APM Installing sync-settings"
   fi
 
   if which composer >/dev/null; then
-    msg "Installing php-cs-fixer"
+    msg "Composer installing php-cs-fixer"
     sudo composer global require friendsofphp/php-cs-fixer
     msg "Adding php-cs-fixer to PATH in .bashrc"
     touch /home/$myHomedir/.bashrc
     sh -c "echo '\n\nexport PATH=${PATH}:/home/shakasan/.composer/vendor/bin' >> /home/$myHomedir/.bashrc"
+  else
+    installDevApps
+  fi
+
+  if which pip3 >/dev/null; then
+    msg "PIP installing : SQLParse"
+    sudo -H pip3 install --upgrade sqlparse
+
+    msg "PIP installing : flake8"
+    sudo -H pip3 install --upgrade flake8
+
+    msg "PIP installing : autopep8"
+    sudo -H pip3 install --upgrade autopep8
+  else
+    installPython
+  fi
+
+  if which gem >/dev/null; then
+    msg "Gem installing : htmlbeautifier"
+    sudo gem install htmlbeautifier
+  else
+    installRuby
   fi
 }
 
@@ -1350,7 +1366,7 @@ function toolSpeedtestCli () {
   if which speedtest-cli >/dev/null; then
     sudo speedtest-cli
   else
-    printf "Python apps and tools + speedtest-cli app are required (PIP)"
+    installPython
   fi
 }
 
