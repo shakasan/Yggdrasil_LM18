@@ -351,6 +351,10 @@ function addPPA () {
   wget -q -O - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add - &>> $logFile && retCode $? && smsgn "Adding Sublime-Text repository key"
   echo "deb https://download.sublimetext.com/ apt/dev/" | sudo tee /etc/apt/sources.list.d/sublime-text.list && retCode $? && smsgn "Adding Sublime-Text repository"
 
+  msg "Adding Etcher"
+  sudo apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 379CE192D401AB61 &>> $logFile && retCode $? && smsgn "Adding etcher repository key"
+  echo "deb https://dl.bintray.com/resin-io/debian stable etcher" | sudo tee /etc/apt/sources.list.d/etcher.list && retCode $? && smsgn "Adding etcher repository"
+
   updateSystem
 }
 
@@ -637,6 +641,7 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y woeusb"; smsgn "Installing woeusb"
   runCmd "sudo apt-get install -y screenkey"; smsgn "Installing screenkey"
   runCmd "sudo apt-get install -y tmsu"; smsgn "Installing tmsu"
+  runCmd "sudo apt-get install -y etcher-electron"; smsgn "Installing etcher-electron"
 }
 
 function installLibreOffice54 () {
