@@ -424,7 +424,7 @@ function installMultimedia () {
   runCmd "sudo apt-get install -y ffmpeg"; smsgn "Installing ffmpeg"
   runCmd "sudo apt-get install -y flacon"; smsgn "Installing flacon"
   runCmd "sudo apt-get install -y scribus"; smsgn "Installing scribus"
-  runCmd "sudo apt-get install -y birdfont"; smsgn "Installing birdfont"
+  runCmd "sudo apt-get install -y gnome-font-viewer"; smsgn "Installing gnome-font-viewer"
   runCmd "sudo apt-get install -y moc"; smsgn "Installing moc"
   runCmd "sudo apt-get install -y webp"; smsgn "Installing webp"
   runCmd "sudo apt-get install -y simplescreenrecorder simplescreenrecorder-lib simplescreenrecorder-lib:i386"; smsgn "Installing simplescreenrecorder simplescreenrecorder-lib simplescreenrecorder-lib:i386"
