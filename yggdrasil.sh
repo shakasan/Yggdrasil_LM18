@@ -379,6 +379,7 @@ function installBase () {
   runCmd "sudo apt-get install -y debconf-utils"; smsgn "Installing debconf-utils"
   runCmd "sudo apt-get install -y idle3-tools"; smsgn "Installing idle3-tools"
   runCmd "sudo apt-get install -y snapd"; smsgn "Installing snapd"
+  runCmd "sudo apt-get install -y sysstat"; smsgn "Installing sysstat"
 }
 
 function installMultimedia () {
