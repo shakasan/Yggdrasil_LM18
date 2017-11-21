@@ -1047,6 +1047,12 @@ function installJavaScript () {
   fi
 }
 
+function installNode8LTS () {
+  msg "Installing NodeJS 8 LTS"
+  curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - &>> $logFile && retCode $? && smsgn "Adding Node repository"
+  runCmd "sudo apt-get install -y nodejs"; smsgn "Installing nodejs"
+}
+
 function installPHP () {
   msg "Installing PHP apps and tools"
   runCmd "sudo apt-get install -y php7.0-cli"; smsgn "Installing php7.0-cli"
@@ -1775,6 +1781,7 @@ dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 DevApps "Base Dev apps and tools (Required)" \
 Java "Java Dev apps and tools" \
 JavaScript "JavaScript Dev apps and tools" \
+Node8LTS "NodeJS 8 LTS" \
 PHP "PHP Dev apps and tools" \
 LUA "LUA Dev apps and tools" \
 Ruby "Ruby Dev apps and tools" \
@@ -1809,6 +1816,9 @@ clear; installJava; pressKey;;
 
 JavaScript)
 clear; installJavaScript; pressKey;;
+
+Node8LTS)
+clear; installNode8LTS; pressKey;;
 
 PHP)
 clear; installPHP; pressKey;;
