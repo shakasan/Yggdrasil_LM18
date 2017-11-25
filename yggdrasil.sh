@@ -1003,6 +1003,11 @@ function installNvidia384 () {
   runCmd "sudo apt-get install -y nvidia-384 nvidia-settings nvidia-opencl-icd-384 libcuda1-384"; smsgn "Installing nvidia-384 nvidia-settings nvidia-opencl-icd-384 libcuda1-384"
 }
 
+function installTLP () {
+  msg "Installing TLP"
+  runCmd "sudo apt-get install -y tlp"; smsgn "Installing TLP"
+}
+
 function installDevApps () {
   msg "Installing base Dev apps and tools"
 
@@ -1716,6 +1721,7 @@ Nvidia375 "Nvidia 375 driver" \
 Nvidia378 "Nvidia 378 driver" \
 Nvidia381 "Nvidia 381 driver" \
 Nvidia384 "Nvidia 384 driver" \
+TLP "TLP battery usage optimizer" \
 Back "Back to the Main Menu" 2>"${menuHWINPUT}"
 
 menuHWItem=$(<"${menuHWINPUT}")
@@ -1758,6 +1764,9 @@ clear; installNvidia381; pressKey;;
 
 Nvidia384)
 clear; installNvidia384; pressKey;;
+
+TLP)
+clear; installTLP; pressKey;;
 
 Back) #-------------------------------------------------------------------------
 break
