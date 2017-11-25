@@ -1044,6 +1044,7 @@ function installJavaScript () {
     runCmd "sudo npm install remark-lint"; smsgn "NPM Installing remark-lint"
     runCmd "sudo npm install jshint"; smsgn "NPM Installing jshint"
     runCmd "sudo npm install jedi"; smsgn "NPM Installing jedi"
+    runCmd "sudo npm install coinmon"; smsgn "NPM Installing coinmon"
   fi
 }
 
