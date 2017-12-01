@@ -1056,7 +1056,6 @@ function installJavaScript () {
   msg "Installing JavaScript apps and tools"
 
   runCmd "sudo apt-get install -y npm"; smsgn "Installing npm"
-  runCmd "sudo apt-get install -y nodejs-legacy"; smsgn "Installing nodejs-legacy"
   runCmd "sudo apt-get install -y javascript-common"; smsgn "Installing javascript-common"
 
   if which npm >/dev/null; then
