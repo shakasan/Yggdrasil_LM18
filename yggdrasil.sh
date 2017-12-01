@@ -1046,10 +1046,15 @@ function installDevApps () {
   runCmd "sudo apt-get install -y composer"; smsgn "Installing composer"
 }
 
-function installJava () {
-  msg "Installing Java apps and tools"
+function installJava8 () {
+  msg "Installing Java8"
   runCmd "sudo apt-get install -y oracle-java8-installer"; smsgn "Installing oracle-java8-installer"
-  runCmd "sudo apt-get install -y oracle-java8-set-default"; smsgn "Installing oracle-java8-set-default"
+}
+
+function installJava9 () {
+  msg "Installing Java9 + set as Default"
+  runCmd "sudo apt-get install -y oracle-java9-installer"; smsgn "Installing oracle-java9-installer"
+  runCmd "sudo apt-get install -y oracle-java9-set-default"; smsgn "Installing oracle-java9-set-default"
 }
 
 function installJavaScript () {
@@ -1807,7 +1812,8 @@ dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ Dev Apps and tools Menu ]" \
 --menu "Dev apps and tools to install and configure" 32 85 24 \
 DevApps "Base Dev apps and tools (Required)" \
-Java "Java Dev apps and tools" \
+Java8 "Java8" \
+Java9 "Java9 (set as default)" \
 JavaScript "JavaScript Dev apps and tools" \
 Node8LTS "NodeJS 8 LTS" \
 PHP "PHP Dev apps and tools" \
@@ -1839,8 +1845,11 @@ case $menuDevItem in
 DevApps)
 clear; installDevApps; pressKey;;
 
-Java)
-clear; installJava; pressKey;;
+Java8)
+clear; installJava8; pressKey;;
+
+Java9)
+clear; installJava9; pressKey;;
 
 JavaScript)
 clear; installJavaScript; pressKey;;
