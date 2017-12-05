@@ -1169,6 +1169,9 @@ function installPython () {
 
     msg "PIP installing : PyOpenGL"
     sudo -H pip3 install --upgrade PyOpenGL
+
+    msg "PIP installing : tldr"
+    sudo -H pip3 install --upgrade tldr
   fi
 }
 
