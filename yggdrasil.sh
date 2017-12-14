@@ -1407,6 +1407,11 @@ function enableHistoryTS () {
   echo "export HISTTIMEFORMAT='%F %T  '" >> /home/"$myHomedir"/.bashrc
 }
 
+function installUnattendedUpgrades () {
+  msg "Installing unattended-upgrades"
+  runCmd "sudo apt-get install -y unattended-upgrades"; smsgn "Installing unattended-upgrades"
+}
+
 function toolInxi () {
   inxi -F
 }
@@ -1942,6 +1947,7 @@ NumLockX "NumLock Enabled at boot time" \
 TmpRAM "/tmp stored in RAM" \
 screenfetch "screenfetch added to .bashrc" \
 historyTS "TimeStamp enabled in Shell History" \
+unattendedUpgrades "Enable automatic security updates" \
 Back "Back to the Main Menu" 2>"${menuConfigINPUT}"
 
 menuConfigItem=$(<"${menuConfigINPUT}")
@@ -1963,6 +1969,9 @@ clear; addScreenfetchBashrc; pressKey;;
 
 historyTS)
 clear; enableHistoryTS; pressKey;;
+
+unattendedUpgrades)
+clear; installUnattendedUpgrades; pressKey;;
 
 Back) #-------------------------------------------------------------------------
 break
