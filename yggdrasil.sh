@@ -1079,6 +1079,9 @@ function installNode8LTS () {
 }
 
 function installMongoDB3CE () {
+  if which mongod >/dev/null; then
+    sudo systemctl stop mongodb && sudo rm -rf /var/log/mongodb && sudo rm -rf /var/lib/mongodb && sudo apt remove --purge mongodb &>> $logFile && retCode $? && smsgn "Removing old MongoDB installation"
+  fi
   msg "Installing MongoDB 3 CE"
   sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5 &>> $logFile && retCode $? && smsgn "Adding MongoDB repository key"
   echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/testing multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list  && retCode $? && smsgn "Adding MongoDB repository"
