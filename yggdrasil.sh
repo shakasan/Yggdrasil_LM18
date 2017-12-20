@@ -1078,6 +1078,14 @@ function installNode8LTS () {
   runCmd "sudo apt-get install -y nodejs"; smsgn "Installing nodejs"
 }
 
+function installMongoDB3CE () {
+  msg "Installing MongoDB 3 CE"
+  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5 &>> $logFile && retCode $? && smsgn "Adding MongoDB repository key"
+  echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/testing multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list  && retCode $? && smsgn "Adding MongoDB repository"
+  updateSystem
+  runCmd "sudo apt-get install -y mongodb-org"; smsgn "Installing mongodb-org"
+}
+
 function installPHP () {
   msg "Installing PHP apps and tools"
   runCmd "sudo apt-get install -y php7.0-cli"; smsgn "Installing php7.0-cli"
@@ -1516,7 +1524,7 @@ do
 # menu -------------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ Main Menu ]" \
---menu "This tools allow you to install extra apps and customize your fresh Linux Mint setup. Use it carefully ;-)" 32 85 24 \
+--menu "This tools allow you to install extra apps and customize your fresh Linux Mint setup. Use it carefully ;-)" 25 95 16 \
 ----------- "---Mandatory part----------------" \
 Source "Open Sotfware-Source, add source repository, change mirrors" \
 Update "System update" \
@@ -1573,7 +1581,7 @@ do
 # appMenu ----------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ Apps Menu ]" \
---menu "Choose apps to install" 34 85 26 \
+--menu "Choose apps to install" 33 95 25 \
 Base "Base apps and tools" \
 Multimedia "Multimedia apps and tools" \
 MultimediaExt "Multimedia apps and tools (others/external)" \
@@ -1696,7 +1704,7 @@ do
 # customMenu -------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ Customization Menu ]" \
---menu "System Customization" 33 85 25 \
+--menu "System Customization" 12 95 4 \
 Themes "System themes" \
 Icons "System icons" \
 Plank "Plank themes" \
@@ -1735,14 +1743,14 @@ do
 # hwMenu -----------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ Hardware Menu ]" \
---menu "Hardware : drivers & configration" 33 95 25 \
+--menu "Hardware : drivers & configration" 23 95 15 \
 Solaar "Solaar - Logitech Unifying Manager App" \
 CardReader "CardReader pcscd app" \
 eID "eID middleware" \
 EpsonV500Photo "Espon V500 Photo driver + iScan + Xsane" \
 Microcode "CPU Microcode update (Intel)" \
 WirelessIntel6320 "Intel Centrino Advanced-N 6320 config (Bluetooth/Wifi problems)" \
-LogitechC310 "Logitech C310 needed apps" \
+WebCam "WebCam needed apps" \
 Nvidia370 "Nvidia 370 driver" \
 Nvidia375 "Nvidia 375 driver" \
 Nvidia378 "Nvidia 378 driver" \
@@ -1818,12 +1826,13 @@ do
 # devMenu ----------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ Dev Apps and tools Menu ]" \
---menu "Dev apps and tools to install and configure" 32 85 24 \
+--menu "Dev apps and tools to install and configure" 34 95 26 \
 DevApps "Base Dev apps and tools (Required)" \
 Java8 "Java8" \
 Java9 "Java9 (set as default)" \
 JavaScript "JavaScript Dev apps and tools" \
 Node8LTS "NodeJS 8 LTS" \
+MongoDB3CE "MongoDB 3 CE" \
 PHP "PHP Dev apps and tools" \
 LUA "LUA Dev apps and tools" \
 Ruby "Ruby Dev apps and tools" \
@@ -1864,6 +1873,9 @@ clear; installJavaScript; pressKey;;
 
 Node8LTS)
 clear; installNode8LTS; pressKey;;
+
+MongoDB3CE)
+clear; installMongoDB3CE; pressKey;;
 
 PHP)
 clear; installPHP; pressKey;;
@@ -1941,7 +1953,7 @@ do
 # configMenu -------------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ System Configuration ]" \
---menu "System configuration" 32 95 24 \
+--menu "System configuration" 15 95 7 \
 Ufw "Enable Firewall (ufw)" \
 NumLockX "NumLock Enabled at boot time" \
 TmpRAM "/tmp stored in RAM" \
@@ -1992,7 +2004,7 @@ do
 # SysToolsMenu -----------------------------------------------------------------
 dialog --clear  --help-button --backtitle "Yggdrasil "$version \
 --title "[ System tools ]" \
---menu "System tools to diagnose and optimize" 32 95 24 \
+--menu "System tools to diagnose and optimize" 16 95 8 \
 inxi "System informations" \
 speedtest-cli "Bandwidth test" \
 packetloss "Packetloss test (ping)" \
