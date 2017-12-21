@@ -1172,6 +1172,9 @@ function installPython () {
 
     msg "PIP installing : tldr"
     sudo -H pip3 install --upgrade tldr
+
+    msg "PIP installing : s-tui"
+    sudo -H pip3 install --upgrade s-tui
   fi
 }
 
