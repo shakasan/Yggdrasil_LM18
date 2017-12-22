@@ -1186,6 +1186,9 @@ function installPython () {
 
     msg "PIP installing : s-tui"
     sudo -H pip3 install --upgrade s-tui
+
+    msg "PIP installing : beautysh"
+    sudo -H pip3 install --upgrade beautysh
   fi
 }
 
