@@ -643,6 +643,7 @@ function installMiscUtilities () {
   runCmd "sudo apt-get install -y screenkey"; smsgn "Installing screenkey"
   runCmd "sudo apt-get install -y tmsu"; smsgn "Installing tmsu"
   runCmd "sudo apt-get install -y etcher-electron"; smsgn "Installing etcher-electron"
+  runCmd "sudo apt-get install -y pdfgrep"; smsgn "Installing pdfgrep"
 }
 
 function installLibreOffice54 () {
